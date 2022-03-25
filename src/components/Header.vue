@@ -51,14 +51,12 @@
 <script setup lang="ts">
 import { watch, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { useToggleDark } from '~/hooks'
 
-import { useToggleDark } from "~/hooks";
-const { isDark, toggleDark } = useToggleDark();
-
+const { isDark, toggleDark } = useToggleDark()
 const router = useRouter()
 const store = useStore()
-
-import { useStore } from "vuex";
 
 //tab相关逻辑
 const activeKey = ref('/')
@@ -72,10 +70,8 @@ watch(darkSwitch, () => {
   toggleDark()
 })
 
-
 onMounted(() => {
   activeKey.value = router.currentRoute.value.path
-  store.dispatch("actionGetUserInfo")
+  store.dispatch('actionGetUserInfo')
 })
-
 </script>

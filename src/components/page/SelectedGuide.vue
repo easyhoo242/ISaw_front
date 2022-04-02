@@ -8,8 +8,8 @@
         class="item h-1/2 w-1/3 border-b-1 border-r-1 p-15px text-center dark:border-gray-300"
       >
         <div class="item-title flex items-center justify-between pb-2 dark:color">
-          <div class="title-left">{{ item.type }}</div>
-          <div class="title-right">{{ item.time }}</div>
+          <div class="title-tag">{{ item.type }}</div>
+          <div class="title-time">{{ item.time }}</div>
         </div>
 
         <div class="item-content text-left">
@@ -100,10 +100,37 @@ export default defineComponent({
       border-bottom: none;
     }
 
+    // type的背景颜色
+    &:nth-child(2) {
+      .item-title .title-tag {
+        background-color: #ffaf1e;
+      }
+    }
+    &:nth-child(3) {
+      .item-title .title-tag {
+        background-color: #c177ef;
+      }
+    }
+    &:nth-child(4) {
+      .item-title .title-tag {
+        background-color: #f7699e;
+      }
+    }
+    &:nth-child(5) {
+      .item-title .title-tag {
+        background-color: #19b6bd;
+      }
+    }
+    &:nth-child(6) {
+      .item-title .title-tag {
+        background-color: #02803a;
+      }
+    }
+
     .item-title {
       font-size: 12px;
 
-      .title-left {
+      .title-tag {
         height: 22px;
         width: 70px;
         line-height: 22px;

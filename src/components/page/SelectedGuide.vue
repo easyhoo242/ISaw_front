@@ -8,7 +8,7 @@
       >
         <div class="item-title flex items-center justify-between pb-2 dark:color">
           <div class="title-tag">{{ item.type }}</div>
-          <div class="title-time">{{ item.time }}</div>
+          <div class="title-time">{{ `🕞 ${item.time}` }}</div>
         </div>
 
         <div class="item-content text-left">

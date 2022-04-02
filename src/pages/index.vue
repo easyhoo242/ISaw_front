@@ -7,6 +7,7 @@
         <div class="flex flex-col w-full">
           <SwiperBar />
           <SelectedGuide title="精选导读" corner />
+          <HotList />
         </div>
       </div>
       <div class="flex flex-col w-400px pl-5 enter-y">
@@ -16,4 +17,6 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import HotList from '~/components/page/HotList.vue'
+</script>

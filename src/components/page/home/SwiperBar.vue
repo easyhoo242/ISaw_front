@@ -1,38 +1,42 @@
 <template>
   <Module class="">
-    <!-- <swiper
-      :slides-per-view="3"
-      :space-between="50"
-      @swiper="onSwiper"
-      @slideChange="onSlideChange"
-    >
-      <swiper-slide>Slide 1</swiper-slide>
-      <swiper-slide>Slide 2</swiper-slide>
-      <swiper-slide>Slide 3</swiper-slide>
-      ...
-    </swiper> -->
-    <a-carousel :after-change="onChange">
-      <div><h3>1</h3></div>
-      <div><h3>2</h3></div>
-      <div><h3>3</h3></div>
-      <div><h3>4</h3></div>
+    <a-carousel autoplay :after-change="onChange">
+      <div v-for="item in list" :key="item.id" class="img-box w-full">
+        <img :src="item.url" alt="" class="w-full" />
+      </div>
     </a-carousel>
   </Module>
 </template>
 
 <script setup lang="ts">
-// import { Navigation, Pagination, Scrollbar, A11y } from 'swiper'
-
-// import { Swiper, SwiperSlide } from 'swiper/vue'
-import Module from '~/components/global/module.vue'
-
-// const onSwiper = (swiper: any) => {
-//   console.log(swiper)
-// }
-// const onSlideChange = () => {
-//   console.log('slide change')
-// }
 const onChange = () => {}
+
+const list = [
+  {
+    id: 1,
+    url: 'https://www.talklee.com/zb_users/upload/2022/02/20220223160621164560358191210.jpg'
+  },
+  {
+    id: 2,
+    url: 'https://www.talklee.com/zb_users/upload/2020/12/20201228142020160913642049636.jpg'
+  },
+  {
+    id: 3,
+    url: 'https://www.talklee.com/zb_users/upload/2020/09/202009301601454770701462.jpg'
+  },
+  {
+    id: 4,
+    url: 'https://www.talklee.com/zb_users/upload/2020/09/202009301601456052683851.jpg'
+  }
+]
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+v-deep .slick-dots {
+  background-color: rgba(#000000, 0.2, 0.2, 0.2);
+  bottom: 6px !important;
+  height: 20px !important;
+  line-height: 20px !important;
+  padding-top: 10px !important;
+}
+</style>

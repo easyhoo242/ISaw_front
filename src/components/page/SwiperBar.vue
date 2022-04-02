@@ -1,5 +1,5 @@
 <template>
-  <Module class="h-500px">
+  <Module class="">
     <!-- <swiper
       :slides-per-view="3"
       :space-between="50"

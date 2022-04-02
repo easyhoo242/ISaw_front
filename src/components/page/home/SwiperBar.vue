@@ -32,8 +32,8 @@ const list = [
 </script>
 
 <style lang="less" scoped>
-v-deep .slick-dots {
-  background-color: rgba(#000000, 0.2, 0.2, 0.2);
+/deep/ .slick-dots {
+  background-color: rgba(#ccc, 0.4, 0.4, 0.4);
   bottom: 6px !important;
   height: 20px !important;
   line-height: 20px !important;

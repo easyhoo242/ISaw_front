@@ -1,6 +1,5 @@
 <template>
   <Module class="module mt-3">
-    <div class="title text-lg mx-2.5 pb-2.5 font-bold border-b-1">精选导读</div>
     <div class="content mt-4 items-center flex flex-wrap">
       <div
         v-for="item in listArr"

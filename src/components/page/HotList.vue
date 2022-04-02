@@ -1,14 +1,24 @@
 <template>
   <div class="hotlist flex flex-col">
     <Hot :data="list" />
+    <a-pagination
+      :default-current="2"
+      :total="500"
+      show-quick-jumper
+      class="my-3"
+      @change="onChange"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   setup() {
+    const currentPage = ref(0)
+    const onChange = () => {}
+
     return {
       list: [
         {
@@ -43,8 +53,21 @@ export default defineComponent({
           read: 1756,
           discuss: 6,
           img: 'https://www.talklee.com/zb_users/upload/2021/12/202112311640917749854303.png'
+        },
+        {
+          id: 2,
+          author: 'ISaw',
+          title: '恭喜你通关2021，进入下一关2022',
+          content:
+            '律回春渐，新元肇启，烟火夜白。朝朝暮暮，沉淀过往，迎来新光。还有十几个小时，我们将跨越2021，进入2022，你的时光列车即将出发。回顾这一年，你有没有哪一刻感觉自己被上天眷顾到了?这一年，人类仍然生活在扫雷游戏里。律回春渐，新元肇启，烟火夜白。朝朝暮暮，沉淀过往，迎来新光。还有十几个小时，我们将跨越2021，进入2022，你的时光列车即将出发。回顾这一年，你有没有哪一刻感觉自己被上天眷顾到了?这一年，人类仍然生活在扫雷游戏里。...',
+          time: '2021-12-31',
+          read: 1756,
+          discuss: 6,
+          img: 'https://www.talklee.com/zb_users/upload/2021/12/202112311640917749854303.png'
         }
-      ]
+      ],
+      currentPage,
+      onChange
     }
   }
 })

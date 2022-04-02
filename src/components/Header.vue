@@ -8,10 +8,7 @@
         <div class="flex items-center">
           <div class="flex mr-10">
             <logos:webplatform class="text-2xl mr-3" />
-            <span class="text-blue-900 dark:text-white font-semibold text-xs">
-              Website
-              <br />logo
-            </span>
+            <span class="text-blue-900 dark:text-white font-bold text-xl"> ISaw </span>
           </div>
           <a-tabs v-model:activeKey="activeKey" class="w-2/3 h-56px pt10">
             <a-tab-pane key="/">

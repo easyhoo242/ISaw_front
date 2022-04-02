@@ -1,23 +1,23 @@
-import { resolve } from "path";
+import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import WindiCSS from "vite-plugin-windicss";
-import Pages from "vite-plugin-pages";
-import Layouts from "vite-plugin-vue-layouts";
-import ViteComponents from "vite-plugin-components";
-import ViteIcons, { ViteIconsResolver } from "vite-plugin-icons";
+import WindiCSS from 'vite-plugin-windicss'
+import Pages from 'vite-plugin-pages'
+import Layouts from 'vite-plugin-vue-layouts'
+import ViteComponents from 'vite-plugin-components'
+import ViteIcons, { ViteIconsResolver } from 'vite-plugin-icons'
 
-import { viteThemePlugin, antdDarkThemePlugin } from 'vite-plugin-theme';
-import { getLessVars } from 'antd-theme-generator';
+import { viteThemePlugin, antdDarkThemePlugin } from 'vite-plugin-theme'
+import { getLessVars } from 'antd-theme-generator'
 // antd自定义变量和暗黑模式变量
 import antdCustomVars from './src/antd/custom'
 const antdDarkVars = getLessVars('./node_modules/ant-design-vue/lib/style/themes/dark.less')
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  resolve:{
+  resolve: {
     alias: {
-      '~/': `${resolve(__dirname, 'src')}/`,
+      '~/': `${resolve(__dirname, 'src')}/`
     }
   },
   // https://github.com/vueComponent/ant-design-vue/issues/4220
@@ -28,8 +28,9 @@ export default defineConfig({
         modifyVars: {
           'primary-color': '#7546c9'
         }
-      },
-    },
+        // additionalData: '@import "./src/assets/style/global.less"'
+      }
+    }
   },
   plugins: [
     vue(),
@@ -41,18 +42,17 @@ export default defineConfig({
       customComponentResolvers: [
         // https://github.com/antfu/vite-plugin-icons
         ViteIconsResolver({
-          componentPrefix: "",
+          componentPrefix: ''
         }),
         (name: string) => {
-          if (name.startsWith('A'))
-            return { importName: name.slice(1), path: 'ant-design-vue' }
-        },
-      ],
+          if (name.startsWith('A')) return { importName: name.slice(1), path: 'ant-design-vue' }
+        }
+      ]
     }),
     // https://github.com/antfu/vite-plugin-icons
     ViteIcons(),
     viteThemePlugin({
-      colorVariables: ['#7546c9'],
+      colorVariables: ['#7546c9']
     }),
     antdDarkThemePlugin({
       darkModifyVars: {
@@ -62,6 +62,6 @@ export default defineConfig({
     })
   ],
   server: {
-    host: '0.0.0.0',
+    host: '0.0.0.0'
   }
 })

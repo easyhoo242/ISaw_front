@@ -76,16 +76,6 @@ export default defineComponent({
 .module {
   position: relative;
 
-  &:before {
-    content: ' ';
-    position: absolute;
-    top: 0;
-    left: 26px;
-    height: 3px;
-    width: 30px;
-    background-color: #42a1ff;
-  }
-
   .item {
     &:nth-child(-n + 3) {
       padding-top: 0 !important;

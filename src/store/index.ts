@@ -3,7 +3,7 @@ import actions from '~/actions'
 
 export default createStore({
   state: {
-    userInfo: null
+    userInfo: 'dc'
   },
   mutations: {
     setUserInfo(state, playload) {

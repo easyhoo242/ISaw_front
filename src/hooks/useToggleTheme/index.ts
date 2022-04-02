@@ -1,4 +1,4 @@
-import { replaceStyleVariables } from 'vite-plugin-theme/es/client';
+import { replaceStyleVariables } from 'vite-plugin-theme/es/client'
 
 export function useToggleTheme(color: string) {
   const toggleTheme = async () => {

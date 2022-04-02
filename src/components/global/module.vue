@@ -29,6 +29,9 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
+.module {
+  position: relative;
+}
 .module-span {
   position: absolute;
   top: 0;

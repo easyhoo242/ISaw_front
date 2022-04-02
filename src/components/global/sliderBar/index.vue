@@ -33,6 +33,8 @@
         </div>
       </div>
     </div>
+
+    <Casual />
   </div>
 </template>
 

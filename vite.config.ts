@@ -28,7 +28,6 @@ export default defineConfig({
         modifyVars: {
           'primary-color': '#7546c9'
         }
-        // additionalData: '@import "./src/assets/style/global.less"'
       }
     }
   },

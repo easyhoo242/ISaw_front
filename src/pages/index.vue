@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="flex flex-col w-400px pl-5 enter-y">
-        <BlockThree />
+        <SliderBar />
       </div>
     </div>
   </div>

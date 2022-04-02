@@ -1,14 +1,15 @@
 <template>
   <div class="flex flex-col h-full">
+    <!-- 欢迎横幅 -->
     <WelcomeBar />
     <div class="flex w-full">
-      <div class="flex w-2/3 enter-x">
+      <div class="flex w-1000px enter-x">
         <div class="flex flex-col w-full">
-          <BlockOne />
+          <SwiperBar />
           <BlockTwo />
         </div>
       </div>
-      <div class="flex flex-col w-1/3 pl-4 enter-x">
+      <div class="flex flex-col w-400px pl-5 enter-y">
         <BlockThree />
       </div>
     </div>

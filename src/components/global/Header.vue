@@ -8,7 +8,9 @@
         <div class="flex items-center">
           <div class="flex mr-10">
             <logos:webplatform class="text-2xl mr-3" />
-            <span class="text-blue-900 dark:text-white font-bold text-xl"> ISaw </span>
+            <span class="text-blue-900 dark:text-white font-bold text-xl">
+              ISaw
+            </span>
           </div>
           <a-tabs v-model:activeKey="activeKey" class="w-2/3 h-56px">
             <a-tab-pane key="/">
@@ -32,7 +34,10 @@
 
         <!-- 右边 -->
         <div>
-          <a-switch v-model:checked="darkSwitch" class="bg-purple-500 my-switch">
+          <a-switch
+            v-model:checked="darkSwitch"
+            class="bg-purple-500 my-switch"
+          >
             <template #checkedChildren>
               <noto-v1:sun-with-face class="mt-0.5" />
             </template>

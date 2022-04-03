@@ -17,7 +17,8 @@
 
     <!-- 模板展示 -->
     <ModuleShow class="enter-y" />
-    <ModuleTo />
+    <!-- 模块跳转 -->
+    <ModuleTo class="enter-y" />
   </div>
 </template>
 

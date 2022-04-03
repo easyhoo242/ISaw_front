@@ -17,6 +17,7 @@
 
     <!-- 模板展示 -->
     <ModuleShow class="enter-y" />
+    <ModuleTo />
   </div>
 </template>
 

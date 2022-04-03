@@ -6,8 +6,8 @@
         :key="item.id"
         class="content-item flex-0 w-42 overflow-hidden mb-4 border-b-1px"
       >
-        <div class="logo w-full h-27 rounded-xl overflow-hidden flex items-center justify-center">
-          <img :src="item.url" alt="" class="m-w-full" />
+        <div class="logo w-full h-27 rounded-xl overflow-hidden">
+          <img :src="item.url" alt="" class="w-full h-full max-h-full" />
         </div>
         <div class="desc py-6px">没有内容的网站怎么去没有内容的网站怎么去</div>
       </div>

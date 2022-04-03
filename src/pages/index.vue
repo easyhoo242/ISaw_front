@@ -14,9 +14,13 @@
         <SliderBar />
       </div>
     </div>
+
+    <!-- 模板展示 -->
+    <ModuleShow class="enter-y" />
   </div>
 </template>
 
 <script setup lang="ts">
 import HotList from '~/components/page/HotList.vue'
+import ModuleShow from '~/components/page/home/ModuleShow.vue'
 </script>

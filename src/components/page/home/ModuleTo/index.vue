@@ -11,7 +11,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Module from '~/components/global/module.vue'
 
 export default defineComponent({
   setup() {
@@ -70,8 +69,7 @@ export default defineComponent({
     ]
 
     return { data }
-  },
-  components: { Module }
+  }
 })
 </script>
 

@@ -2,7 +2,9 @@
   <div class="w-full">
     <div class="w-full rounded-lg shadow-md z-10 overflow-hidden">
       <div class="header pt-12.5">
-        <div class="mx-auto w-23 h-23 overflow-hidden rounded-full border-white border-5 z-30">
+        <div
+          class="mx-auto w-23 h-23 overflow-hidden rounded-full border-white border-5 z-30"
+        >
           <img
             src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Finews.gtimg.com%2Fnewsapp_bt%2F0%2F14206928472%2F1000.jpg&refer=http%3A%2F%2Finews.gtimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1651510256&t=17fc44fffa91d0502d13a2869161b960"
             alt=""
@@ -11,7 +13,9 @@
         </div>
 
         <div class="slogan bg-white pb-2.5 px-5 text-center pt-2">
-          <div class="title text-gray-700 font-bold flex items-center justify-center">
+          <div
+            class="title text-gray-700 font-bold flex items-center justify-center"
+          >
             <div>ISaw</div>
             <div class="v px-1 ml-2">v</div>
           </div>
@@ -39,6 +43,8 @@
 
     <Casual />
     <HotSee />
+
+    <TimeLine />
   </div>
 </template>
 

@@ -1,3 +1,4 @@
+import { vue } from '@vitejs/plugin-vue'
 import { createApp } from 'vue'
 import App from './App.vue'
 import store from '~/store'
@@ -8,6 +9,7 @@ import generatedRoutes from 'pages-generated'
 import 'ant-design-vue/dist/antd.less'
 import 'virtual:windi.css'
 import './styles/main.less'
+// 引入animatecss
 ;(async () => {
   const app = createApp(App)
 

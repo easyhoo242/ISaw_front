@@ -6,18 +6,18 @@
       <div class="w-1400px flex items-center justify-between">
         <!-- 左边 -->
         <div class="flex items-center">
-          <div class="flex mr-10">
+          <div class="flex-0 flex mr-10">
             <logos:webplatform class="text-2xl mr-3" />
             <span class="text-blue-900 dark:text-white font-bold text-xl">
               ISaw
             </span>
           </div>
-          <a-tabs v-model:activeKey="activeKey" class="w-2/3 h-56px">
+          <a-tabs v-model:activeKey="activeKey" class="flex-1 h-56px">
             <a-tab-pane key="/">
               <template #tab>
                 <div class="py-2">
                   <dashicons:index-card class="mr-2" />
-                  <strong class="align-top">Tab1</strong>
+                  <strong class="align-top">首页</strong>
                 </div>
               </template>
             </a-tab-pane>
@@ -25,7 +25,15 @@
               <template #tab>
                 <span class="py-2">
                   <gg:menu-boxed class="mr-2" />
-                  <strong class="align-top">Tab2</strong>
+                  <strong class="align-top">互联网</strong>
+                </span>
+              </template>
+            </a-tab-pane>
+            <a-tab-pane key="/talk">
+              <template #tab>
+                <span class="py-2">
+                  <gg:menu-boxed class="mr-2" />
+                  <strong class="align-top">闲言碎语</strong>
                 </span>
               </template>
             </a-tab-pane>
@@ -33,7 +41,7 @@
         </div>
 
         <!-- 右边 -->
-        <div>
+        <div class="flex-0">
           <a-switch
             v-model:checked="darkSwitch"
             class="bg-purple-500 my-switch"

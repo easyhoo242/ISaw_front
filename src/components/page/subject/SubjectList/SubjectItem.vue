@@ -1,22 +1,18 @@
 <template>
-  <div
-    v-for="item in data"
-    :key="item.slogan.id"
-    class="rounded-md bg-white overflow-hidden"
-  >
+  <div class="rounded-md bg-white overflow-hidden">
     <div
       class="header h-64 bg-gray-300 mb-4 bg-cover"
-      :style="`background: url(${item.slogan.url})`"
+      :style="`background: url(${slogan.url})`"
     />
     <div class="body px-4 pt-4 pb-3">
       <div class="body-title mt-5px mb-10px text-xs text-gray-400">
-        {{ item.slogan.title }}
-        <span> · {{ item.slogan.count }} 篇文章</span>
+        {{ slogan.title }}
+        <span> · {{ slogan.count }} 篇文章</span>
       </div>
 
       <div class="body-content">
         <div
-          v-for="listItem in item.list"
+          v-for="listItem in list"
           :key="listItem.id"
           class="content-item flex justify-between items-center"
         >
@@ -36,32 +32,25 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-
-interface IDataList {
-  slogan: {
-    id: string
-    title: string
-    count: string
-    url: string
-  }
-  list: {
-    id: number
-    title: string
-    type: string
-  }[]
-}
-;[]
+import { ISlogan, IList } from './index.vue'
 
 export default defineComponent({
   props: {
-    data: {
-      type: Array as PropType<IDataList[]>,
+    slogan: {
+      type: Object as PropType<ISlogan>,
+      default: () => ({})
+    },
+    list: {
+      type: Array as PropType<IList[]>,
       default: () => []
     }
   },
-  setup() {}
+  setup() {
+    return {}
+  }
 })
 </script>
+
 <style lang="less" scoped>
 .content-item {
   .content-item-title {

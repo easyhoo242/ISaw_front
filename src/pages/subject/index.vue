@@ -2,9 +2,7 @@
   <div>
     <BranchCrumb route="专题目录" />
 
-    <div class="grid grid-cols-2 gap-4">
-      <SubjectList :data="dataList" />
-    </div>
+    <SubjectList :data="dataList" />
   </div>
 </template>
 

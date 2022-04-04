@@ -1,34 +1,40 @@
 <template>
-  <div class="item pb-4 bg-white rounded-md overflow-hidden">
+  <div class="wrap pb-4 bg-white rounded-md overflow-hidden">
     <a>
-      <div class="item-img h-54"></div>
+      <div class="img h-54"></div>
     </a>
 
-    <div class="item-content px-4">
-      <div class="item-content-time my-3 ml-3 pl-3">2021-12-21</div>
-      <div class="item-content-desc h-50px">
-        <a> 阿里旗下相互宝将于1月28日关停：今起用户不再参与分摊播 </a>
+    <div class="content px-4">
+      <div class="content-time my-3 ml-3 pl-3">{{ data.time }}</div>
+      <div class="content-desc h-50px">
+        <a> {{ data.title }} </a>
       </div>
-      <div class="tag flex items-center justify-between mt-3 text-gray-400">
-        <section>640 阅读</section>
-        <section>640 评论</section>
+      <div
+        class="content-tag flex items-center justify-between mt-3 text-gray-400"
+      >
+        <section>{{ data.read }} 阅读</section>
+        <section>{{ data.discuss }} 评论</section>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
+import { IDataType } from './index.vue'
 
 export default defineComponent({
-  setup() {
-    return {}
+  props: {
+    data: {
+      type: Object as PropType<IDataType>,
+      default: () => []
+    }
   }
 })
 </script>
 
 <style lang="less" scoped>
-.item {
+.wrap {
   transition: all 0.5s;
 
   &:hover {
@@ -36,13 +42,13 @@ export default defineComponent({
     transition: all 0.5s;
   }
 }
-.item-img {
+.img {
   background: url('https://www.talklee.com/zb_users/upload/2021/12/202112021638435849289398.jpg');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center center;
 }
-.item-content-time {
+.content-time {
   position: relative;
 
   &:before {
@@ -56,11 +62,11 @@ export default defineComponent({
     background-color: #42a1ff;
   }
 }
-.item-content-desc {
+.content-desc {
   line-height: 1.6;
 }
 
-.tag {
+.item-tag {
   user-select: none;
 }
 </style>

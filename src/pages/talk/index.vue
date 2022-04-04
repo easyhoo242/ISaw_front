@@ -1,9 +1,8 @@
 <template>
   <BranchCrumb route="闲言碎语" />
   <Navigation :data="navigationList" />
-  <div class="module-list grid grid-cols-4 gap-4 enter-x">
-    <TalkItem v-for="item in 11" :key="item" class="enter-y" />
-  </div>
+
+  <TalkList :data="talkList" />
 
   <a-pagination
     v-model="currentPage"
@@ -27,6 +26,26 @@ export default defineComponent({
   name: '闲言碎语',
   setup() {
     const currentPage = ref(1)
+
+    const data = {
+      time: '2021-12-21',
+      title: '阿里旗下相互宝将于1月28日关停：今起用户不再参与分摊播',
+      read: 640,
+      discuss: 265,
+      url: 'https://www.talklee.com/zb_users/upload/2021/12/202112021638435849289398.jpg'
+    }
+
+    const talkList = new Array(9)
+      .fill(null)
+      .map((res) => data)
+      .map((item) => {
+        let uid = 0
+        return {
+          id: ++uid,
+          ...item
+        }
+      })
+
     return {
       currentPage,
       onChange() {},
@@ -74,7 +93,8 @@ export default defineComponent({
             }
           ]
         }
-      ]
+      ],
+      talkList
     }
   }
 })

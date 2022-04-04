@@ -37,7 +37,7 @@ export default defineComponent({
 <style lang="less" scoped>
 .active-top {
   background-position-y: center center !important;
-  // background-size: 100% auto !important;
+  background-size: 100% auto !important;
 
   &:hover {
     section {

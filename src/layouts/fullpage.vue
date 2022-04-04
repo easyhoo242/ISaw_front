@@ -7,7 +7,7 @@
     <div class="flex-1 w-full min-h-0 mt-14">
       <ActiveTop />
 
-      <article class="w-full py-5 dark:bg-gray-800">
+      <article class="w-full py-5 bg-gray-200 dark:bg-gray-800">
         <router-view v-slot="{ Component }">
           <transition
             name="fade"

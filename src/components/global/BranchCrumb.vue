@@ -1,8 +1,10 @@
 <template>
-  <div>
+  <div class="my-3">
     <a-breadcrumb>
-      <a-breadcrumb-item><a href="/">首页</a></a-breadcrumb-item>
-      <a-breadcrumb-item class="active" v-if="route">
+      <a-breadcrumb-item>
+        <a href="/" class=""> 首页</a>
+      </a-breadcrumb-item>
+      <a-breadcrumb-item class="active text-gray-500" v-if="route">
         {{ route }}
       </a-breadcrumb-item>
     </a-breadcrumb>

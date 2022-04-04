@@ -1,6 +1,8 @@
 <template>
   <BranchCrumb route="闲言碎语" />
-  <div>123</div>
+  <div class="module-list grid grid-cols-4 gap-3">
+    <TalkItem v-for="item in 12" :key="item" />
+  </div>
 </template>
 
 <route lang="yaml">
@@ -19,4 +21,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped></style>
+<style lang="less" scoped></style>

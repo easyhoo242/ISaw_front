@@ -15,19 +15,15 @@
 import { defineComponent, computed } from 'vue'
 import { useRoute } from 'vue-router'
 
+interface IBgItemType {
+  title: string
+  url: string
+}
+
 interface IBgListType {
-  talk: {
-    title: string
-    url: string
-  }
-  about: {
-    title: string
-    url: string
-  }
-  subject: {
-    title: string
-    url: string
-  }
+  talk: IBgItemType
+  about: IBgItemType
+  subject: IBgItemType
 }
 
 export default defineComponent({

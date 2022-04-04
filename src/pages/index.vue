@@ -2,17 +2,18 @@
   <div class="flex flex-col h-full">
     <!-- 欢迎横幅 -->
     <WelcomeBar />
-    <div class="flex w-full">
-      <div class="flex-1 w-1000px enter-x">
-        <!-- <Overlay /> -->
+
+    <!-- 主体 -->
+    <FlexCol>
+      <template #body>
         <SwiperBar />
         <SelectedGuide />
         <HotList />
-      </div>
-      <div class="w-400px flex-0 pl-5 enter-y">
+      </template>
+      <template #side>
         <SliderBar />
-      </div>
-    </div>
+      </template>
+    </FlexCol>
 
     <!-- 模板展示 -->
     <ModuleShow class="enter-y" />
@@ -23,10 +24,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Overlay from '~/components/global/Overlay.vue'
 
 export default defineComponent({
-  name: '首页',
-  components: { Overlay }
+  name: '首页'
 })
 </script>

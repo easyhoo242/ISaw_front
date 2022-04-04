@@ -1,4 +1,5 @@
 <template>
+  <BranchCrumb route="闲言碎语" />
   <div>123</div>
 </template>
 
@@ -11,6 +12,7 @@ meta:
 import { defineComponent } from 'vue'
 
 export default defineComponent({
+  name: '闲言碎语',
   setup() {
     return {}
   }

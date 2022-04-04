@@ -1,7 +1,8 @@
 <template>
   <BranchCrumb route="闲言碎语" />
-  <div class="module-list grid grid-cols-4 gap-4">
-    <TalkItem v-for="item in 12" :key="item" />
+  <Navigation :data="navigationList" />
+  <div class="module-list grid grid-cols-4 gap-4 enter-x">
+    <TalkItem v-for="item in 11" :key="item" class="enter-y" />
   </div>
 
   <a-pagination
@@ -26,10 +27,54 @@ export default defineComponent({
   name: '闲言碎语',
   setup() {
     const currentPage = ref(1)
-
     return {
       currentPage,
-      onChange() {}
+      onChange() {},
+      navigationList: [
+        {
+          title: '分类',
+          children: [
+            {
+              title: '教程笔记',
+              url: ''
+            },
+            {
+              title: '闲言碎语',
+              url: ''
+            },
+            {
+              title: '互联网',
+              url: ''
+            }
+          ]
+        },
+        {
+          title: '子类',
+          children: [
+            {
+              title: '爱摄影',
+              url: ''
+            }
+          ]
+        },
+        {
+          title: '排序',
+          children: [
+            {
+              title: '最新',
+              url: ''
+            },
+            {
+              title: '浏览',
+              url: ''
+            },
+            {
+              title: '评论',
+              url: ''
+            }
+          ]
+        }
+      ]
     }
   }
 })

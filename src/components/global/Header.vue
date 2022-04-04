@@ -37,6 +37,14 @@
                 </span>
               </template>
             </a-tab-pane>
+            <a-tab-pane key="/subject">
+              <template #tab>
+                <span class="py-2">
+                  <gg:menu-boxed class="mr-2" />
+                  <strong class="align-top">专题</strong>
+                </span>
+              </template>
+            </a-tab-pane>
           </a-tabs>
         </div>
 

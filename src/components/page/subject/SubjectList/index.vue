@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-2 gap-4">
+  <div class="grid grid-cols-2 gap-4 mt-6">
     <SubjectItem
       v-for="item in data"
       :key="item.slogan.id"

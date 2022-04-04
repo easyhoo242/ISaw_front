@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-md bg-white overflow-hidden">
+  <div class="active rounded-md bg-white overflow-hidden">
     <div
       class="header h-64 bg-gray-300 mb-4 bg-cover"
       :style="`background: url(${slogan.url})`"
@@ -69,6 +69,15 @@ export default defineComponent({
   .content-item-type {
     height: 24px;
     cursor: pointer;
+  }
+}
+
+.active {
+  transition: all 0.5s;
+
+  &:hover {
+    transform: translateY(-10px);
+    transition: all 0.5s;
   }
 }
 </style>

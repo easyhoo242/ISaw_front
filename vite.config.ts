@@ -11,7 +11,9 @@ import { viteThemePlugin, antdDarkThemePlugin } from 'vite-plugin-theme'
 import { getLessVars } from 'antd-theme-generator'
 // antd自定义变量和暗黑模式变量
 import antdCustomVars from './src/antd/custom'
-const antdDarkVars = getLessVars('./node_modules/ant-design-vue/lib/style/themes/dark.less')
+const antdDarkVars = getLessVars(
+  './node_modules/ant-design-vue/lib/style/themes/dark.less'
+)
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -44,7 +46,8 @@ export default defineConfig({
           componentPrefix: ''
         }),
         (name: string) => {
-          if (name.startsWith('A')) return { importName: name.slice(1), path: 'ant-design-vue' }
+          if (name.startsWith('A'))
+            return { importName: name.slice(1), path: 'ant-design-vue' }
         }
       ]
     }),

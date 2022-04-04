@@ -32,7 +32,7 @@ const list = [
 </script>
 
 <style lang="less" scoped>
-/deep/ .slick-dots {
+:deep(.slick-dots) {
   background-color: rgba(#ccc, 0.4, 0.4, 0.4);
   bottom: 6px !important;
   height: 20px !important;

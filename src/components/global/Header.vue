@@ -33,7 +33,7 @@
               <template #tab>
                 <span class="py-2">
                   <gg:menu-boxed class="mr-2" />
-                  <strong class="align-top">闲言碎语</strong>
+                  <strong class="align-top">随便看看</strong>
                 </span>
               </template>
             </a-tab-pane>

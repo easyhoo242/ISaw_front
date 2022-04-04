@@ -3,7 +3,10 @@
     class="w-full min-h-full flex flex-col items-center bg-gray-100 dark:bg-black text-gray-700 dark:text-gray-200 overflow-none"
   >
     <Header class="w-full fixed top-0 z-50" />
+
     <div class="flex-1 w-full min-h-0 mt-14">
+      <ActiveTop />
+
       <article class="w-full py-5 dark:bg-gray-800">
         <router-view v-slot="{ Component }">
           <transition

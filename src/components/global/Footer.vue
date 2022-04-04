@@ -32,10 +32,7 @@
             <span class="rt-memory mr-3">占用内存：3.47MB</span>
           </div>
           <span>
-            <a>
-              <img src="/zb_users/theme/koilee/style/images/icp.png" alt="" />
-              辽ICP备150xxxxx号
-            </a>
+            <a> 辽ICP备150xxxxx号 </a>
           </span>
         </div>
       </div>

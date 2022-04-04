@@ -1,12 +1,14 @@
 <template>
-  <Module class="module mt-3">
+  <Module title="精选导读" corner class="module mt-3">
     <div class="content mt-4 items-center flex flex-wrap">
       <div
         v-for="item in listArr"
         :key="item.id"
         class="item h-1/2 w-1/3 border-b-1 border-r-1 p-15px text-center dark:border-gray-300"
       >
-        <div class="item-title flex items-center justify-between pb-2 dark:color">
+        <div
+          class="item-title flex items-center justify-between pb-2 dark:color"
+        >
           <div class="title-tag">{{ item.type }}</div>
           <div class="title-time">{{ `🕞 ${item.time}` }}</div>
         </div>

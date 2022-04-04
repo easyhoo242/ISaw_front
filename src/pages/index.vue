@@ -3,14 +3,12 @@
     <!-- 欢迎横幅 -->
     <WelcomeBar />
     <div class="flex w-full">
-      <div class="flex w-1000px enter-x">
-        <div class="flex flex-col w-full">
-          <SwiperBar />
-          <SelectedGuide title="精选导读" corner />
-          <HotList />
-        </div>
+      <div class="flex-1 w-1000px enter-x">
+        <SwiperBar />
+        <SelectedGuide />
+        <HotList />
       </div>
-      <div class="flex flex-col w-400px pl-5 enter-y">
+      <div class="w-400px flex-0 pl-5 enter-y">
         <SliderBar />
       </div>
     </div>

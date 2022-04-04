@@ -1,6 +1,6 @@
 <template>
   <main
-    class="w-full min-h-full flex flex-col items-center bg-gray-100 dark:bg-black text-gray-700 dark:text-gray-200 overflow-none"
+    class="main w-full min-h-full flex flex-col items-center dark:bg-black text-gray-700 dark:text-gray-200 overflow-none"
   >
     <Header class="w-full fixed top-0 z-50" />
     <div class="flex-1 w-full min-h-0 mt-14">

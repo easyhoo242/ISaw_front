@@ -4,6 +4,7 @@
     <WelcomeBar />
     <div class="flex w-full">
       <div class="flex-1 w-1000px enter-x">
+        <!-- <Overlay /> -->
         <SwiperBar />
         <SelectedGuide />
         <HotList />
@@ -22,8 +23,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import Overlay from '~/components/global/Overlay.vue'
 
 export default defineComponent({
-  name: '首页'
+  name: '首页',
+  components: { Overlay }
 })
 </script>

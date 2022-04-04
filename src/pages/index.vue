@@ -22,7 +22,10 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import HotList from '~/components/page/HotList.vue'
-import ModuleShow from '~/components/page/home/ModuleShow.vue'
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: '首页'
+})
 </script>

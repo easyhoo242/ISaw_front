@@ -1,6 +1,6 @@
 <template>
   <BranchCrumb route="闲言碎语" />
-  <div class="module-list grid grid-cols-4 gap-3">
+  <div class="module-list grid grid-cols-4 gap-4">
     <TalkItem v-for="item in 12" :key="item" />
   </div>
 

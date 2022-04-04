@@ -28,6 +28,14 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
+.item {
+  transition: all 0.5s;
+
+  &:hover {
+    transform: translateY(-10px);
+    transition: all 0.5s;
+  }
+}
 .item-img {
   background: url('https://www.talklee.com/zb_users/upload/2021/12/202112021638435849289398.jpg');
   background-size: 100% 100%;

@@ -6,9 +6,9 @@
       :key="item.title"
       class="item-children flex items-center"
     >
-      <A :href="item.url"
-        ><div class="item-child">{{ item.title }}</div></A
-      >
+      <A :href="item.url">
+        <div class="item-child">{{ item.title }}</div>
+      </A>
     </div>
   </div>
 </template>

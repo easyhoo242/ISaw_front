@@ -12,12 +12,14 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 
+export interface IChildType {
+  title: string
+  url: string
+}
+
 interface IDataType {
   title: string
-  children: {
-    title: string
-    url: string
-  }[]
+  children: IChildType[]
 }
 
 export default defineComponent({

@@ -15,6 +15,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
+import { IChildType } from './index.vue'
 
 export default defineComponent({
   props: {
@@ -23,12 +24,7 @@ export default defineComponent({
       default: ''
     },
     children: {
-      type: Array as PropType<
-        {
-          title: string
-          url: string
-        }[]
-      >,
+      type: Array as PropType<IChildType[]>,
       default: () => []
     }
   },

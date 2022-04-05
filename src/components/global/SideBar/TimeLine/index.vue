@@ -1,5 +1,5 @@
 <template>
-  <Module title="时间轴" corner class="my-3 pb-0">
+  <Module title="时间轴" corner class="mt-3 pb-0">
     <div class="mt-3 pt-2 px-3">
       <a-timeline>
         <a-timeline-item color="green">
@@ -21,13 +21,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Message from './Message.vue'
 
 export default defineComponent({
   setup() {
     return {}
-  },
-  components: { Message }
+  }
 })
 </script>
 

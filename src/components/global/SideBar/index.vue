@@ -1,7 +1,6 @@
 <template>
   <div class="w-full">
-    <slot name="default"> </slot>
-    <!-- 头像 -->
+    <slot name="default" />
   </div>
 </template>
 

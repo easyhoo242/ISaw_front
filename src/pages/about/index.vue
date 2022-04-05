@@ -5,7 +5,7 @@
 
     <FlexCol>
       <template #body>
-        <Overlay />
+        <Overlay class="mb-0" />
         <HotList />
       </template>
       <template #side>
@@ -15,8 +15,6 @@
           <Casual />
           <!-- 热门文章 -->
           <HotSee />
-          <!-- 时间线热门评论 -->
-          <TimeLine />
         </SideBar>
       </template>
     </FlexCol>

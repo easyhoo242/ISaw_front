@@ -49,7 +49,7 @@
         </div>
 
         <!-- 右边 -->
-        <div class="flex-0">
+        <div class="flex-0 flex items-center">
           <a-switch
             v-model:checked="darkSwitch"
             class="bg-purple-500 my-switch"

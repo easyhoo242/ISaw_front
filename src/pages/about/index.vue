@@ -10,6 +10,7 @@
       </template>
       <template #side>
         <SideBar>
+          <Lately />
           <!-- 随便看看 -->
           <Casual />
           <!-- 热门文章 -->

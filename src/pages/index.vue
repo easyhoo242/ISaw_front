@@ -10,8 +10,17 @@
         <SelectedGuide />
         <HotList />
       </template>
+
       <template #side>
-        <SliderBar />
+        <SliderBar>
+          <HeadLogo />
+          <!-- 随便看看 -->
+          <Casual />
+          <!-- 热门文章 -->
+          <HotSee />
+          <!-- 时间线热门评论 -->
+          <TimeLine />
+        </SliderBar>
       </template>
     </FlexCol>
 

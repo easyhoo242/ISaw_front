@@ -12,7 +12,7 @@
       </template>
 
       <template #side>
-        <SliderBar>
+        <SideBar>
           <HeadLogo />
           <!-- 随便看看 -->
           <Casual />
@@ -20,7 +20,7 @@
           <HotSee />
           <!-- 时间线热门评论 -->
           <TimeLine />
-        </SliderBar>
+        </SideBar>
       </template>
     </FlexCol>
 

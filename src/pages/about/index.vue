@@ -9,14 +9,14 @@
         <HotList />
       </template>
       <template #side>
-        <SliderBar>
+        <SideBar>
           <!-- 随便看看 -->
           <Casual />
           <!-- 热门文章 -->
           <HotSee />
           <!-- 时间线热门评论 -->
           <TimeLine />
-        </SliderBar>
+        </SideBar>
       </template>
     </FlexCol>
   </div>

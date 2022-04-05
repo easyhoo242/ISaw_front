@@ -2,7 +2,7 @@
   <div
     class="py-5 bg-gray-300 flex justify-center bg-gray-700 bg-opacity-80 border-blue-400 border-t-1"
   >
-    <div class="footer w-1400px px-4 flex justify-between items-center">
+    <div class="footer w-1400px pl-4 flex justify-between items-center">
       <!-- 左 -->
       <div class="footer-left flex-1">
         <!-- 左上 -->

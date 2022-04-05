@@ -24,12 +24,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Navigation from '~/components/global/Navigation/index.vue'
-import BranchCrumb from '~/components/global/BranchCrumb.vue'
-import FlexCol from '~/components/global/Layout/FlexCol.vue'
-import Overlay from '~/components/global/Overlay.vue'
-import HotList from '~/components/page/HotList.vue'
-import SliderBar from '~/components/global/sliderBar/index.vue'
 
 export default defineComponent({
   name: '关于',
@@ -68,8 +62,7 @@ export default defineComponent({
         }
       ]
     }
-  },
-  components: { Navigation, BranchCrumb, FlexCol, Overlay, HotList, SliderBar }
+  }
 })
 </script>
 

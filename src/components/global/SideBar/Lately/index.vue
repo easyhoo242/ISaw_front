@@ -14,6 +14,7 @@ import type { ILatelyType } from '~/api'
 export default defineComponent({
   setup() {
     const data = ref<ILatelyType[]>([])
+
     const getData = async () => {
       const res = (await getLatelyData()) as ILatelyType[]
       data.value = res

@@ -1,10 +1,10 @@
 <template>
   <Module title="随便看看" corner class="mt-3">
-    <div class="content mt-4 flex flex-wrap justify-between">
+    <div class="content mt-4 grid grid-cols-2 gap-3 px-2">
       <div
         v-for="item in list"
         :key="item.id"
-        class="content-item flex-0 w-42 overflow-hidden mb-4 border-b-1px"
+        class="content-item flex-0 overflow-hidden border-b-1px"
       >
         <div class="logo w-full h-27 rounded-xl overflow-hidden">
           <img :src="item.url" alt="" class="w-full h-full max-h-full" />

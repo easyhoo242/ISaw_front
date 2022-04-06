@@ -1,13 +1,15 @@
 <template>
   <Module v-for="item in data" :key="item.id" class="module flex mt-3">
     <div class="logo flex-0 w-210px h-158px rounded-md overflow-hidden mr-5">
-      <img :src="item.img" alt="" />
+      <A :href="`/blog/${item.id}`"> <img :src="item.img" alt="" /></A>
     </div>
 
     <div class="hotlist-content flex-1 pr-3">
       <div class="title flex items-center text-gray-700">
         <div v-if="item.read > 500" class="hot-tag mr-2">热文</div>
-        <div class="text-lg">{{ item.title }}</div>
+        <A :href="`/blog/${item.id}`">
+          <div class="text-lg">{{ item.title }}</div>
+        </A>
       </div>
 
       <div class="content text-sm my-3 text-gray-500">
@@ -22,7 +24,7 @@
         </div>
         <div class="who flex-0">
           <!-- <a-icon></a-icon> -->
-          🏆 {{ item.author }}
+          <A href="/user">🏆 {{ item.author }}</A>
         </div>
       </div>
     </div>

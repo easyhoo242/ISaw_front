@@ -1,5 +1,5 @@
 <template>
-  <div class="module-list grid grid-cols-4 gap-4 enter-y">
+  <div class="module-list grid grid-cols-4 gap-4 mt-6 enter-y">
     <TalkItem v-for="item in data" :key="item.id" :data="item" />
   </div>
 </template>

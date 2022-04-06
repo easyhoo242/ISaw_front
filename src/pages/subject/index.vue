@@ -1,7 +1,6 @@
 <template>
   <div>
     <BranchCrumb route="专题目录" />
-
     <SubjectList :data="dataList" />
   </div>
 </template>
@@ -59,9 +58,7 @@ export default defineComponent({
         }
       ]
     }
-
     const dataList = new Array(7).fill(null).map((res) => data)
-
     return {
       dataList
     }

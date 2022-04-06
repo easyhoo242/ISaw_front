@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex justify-between w-full h-24 p-4 enter-x bg-white dark:bg-gray-900 mb-4 rounded-lg shadow-md"
+    class="flex justify-between w-full h-24 p-4 enter-x bg-white dark:bg-gray-900 rounded-lg shadow-md"
   >
     <div class="flex flex-row w-2/3 justify-between items-center">
       <div class="w-1/2">

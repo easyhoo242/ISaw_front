@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full rounded-lg shadow-md z-10 overflow-hidden">
+  <div class="w-full rounded-lg shadow-md z-10 overflow-hidden mt-3">
     <div class="header pt-12.5">
       <div
         class="mx-auto w-23 h-23 overflow-hidden rounded-full border-white border-5 z-30"

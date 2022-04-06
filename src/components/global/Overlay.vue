@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-200 mb-4 rounded-md overflow-hidden relative">
+  <div class="bg-gray-200 mb-4 rounded-md overflow-hidden relative mt-3">
     <div class="bg-img h-300px" :style="`background-image: url(${data.url});`">
       <div></div>
     </div>

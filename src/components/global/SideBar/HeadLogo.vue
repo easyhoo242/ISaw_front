@@ -15,7 +15,7 @@
         <div
           class="title text-gray-700 font-bold flex items-center justify-center"
         >
-          <div>ISaw</div>
+          <div><A href="/user">ISaw</A></div>
           <div class="v px-1 ml-2">v</div>
         </div>
         <div class="desc mt-5px text-gray-500">

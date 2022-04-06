@@ -1,6 +1,6 @@
 <template>
   <BranchCrumb route="正文" />
-  <Module> 123 </Module>
+  <BlogHeader />
   <FlexCol>
     <template #body>
       <Content />
@@ -20,12 +20,13 @@
 import { defineComponent } from 'vue'
 import Content from '../../components/page/blog/Content.vue'
 import Comment from '../../components/page/blog/Comment.vue'
+import BlogHeader from '~/components/page/blog/BlogHeader.vue'
 
 export default defineComponent({
   setup() {
     return {}
   },
-  components: { Content, Comment }
+  components: { Content, Comment, BlogHeader }
 })
 </script>
 

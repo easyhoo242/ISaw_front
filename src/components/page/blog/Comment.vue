@@ -23,9 +23,7 @@
       <a-list
         v-if="comments.length"
         :data-source="comments"
-        :header="`${comments.length} ${
-          comments.length > 1 ? 'replies' : 'reply'
-        }`"
+        :header="`${comments.length} 条评论`"
         item-layout="horizontal"
       >
         <template #renderItem="{ item }">
@@ -51,6 +49,10 @@
           </a-list-item>
         </template>
       </a-list>
+
+      <Module v-else title="评论列表" class="empty mt-0 p-0">
+        <a-empty :description="null" class="py-6" />
+      </Module>
     </a-comment>
   </Module>
 </template>
@@ -113,4 +115,8 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.empty {
+  box-shadow: none !important;
+}
+</style>

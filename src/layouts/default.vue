@@ -3,7 +3,11 @@
     class="main w-full min-h-full flex flex-col items-center dark:bg-black text-gray-700 dark:text-gray-200 overflow-none"
   >
     <Header class="w-full fixed top-0 z-50" />
-    <div class="flex-1 w-full min-h-0 mt-14">
+    <UserInfo v-if="currentPath === 'user'" class="mt-14" />
+    <div
+      class="flex-1 w-full min-h-0"
+      :class="currentPath !== 'user' ? 'mt-14' : ''"
+    >
       <article class="w-full py-5 dark:bg-gray-800">
         <router-view v-slot="{ Component }">
           <transition
@@ -25,3 +29,12 @@
     <Footer class="w-full z-50" />
   </main>
 </template>
+
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import UserInfo from '~/components/page/user/UserInfo.vue'
+
+const route = useRoute()
+const currentPath = computed(() => route.path.split('/')[1])
+</script>

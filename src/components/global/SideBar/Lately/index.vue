@@ -1,5 +1,5 @@
 <template>
-  <Module title="最近发表" corner>
+  <Module title="最近发表" corner logo>
     <div class="mt-4 px-3 pr-5">
       <LatelyItem v-for="item in data" :key="item.id" :data="item" />
     </div>

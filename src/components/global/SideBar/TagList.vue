@@ -1,5 +1,5 @@
 <template>
-  <Module title="标签列表" corner>
+  <Module title="标签列表" corner logo>
     <div class="flex items-center flex-wrap">
       <section
         v-for="item in tags"

@@ -1,5 +1,5 @@
 <template>
-  <Module title="热门文章" corner class="pb-1">
+  <Module title="热门文章" corner logo class="pb-1">
     <div class="hot mt-3">
       <div
         v-for="item in list"

@@ -1,5 +1,5 @@
 <template>
-  <UserForm>
+  <UserForm type="register">
     <section class="user">
       <a-form
         :model="formState"
@@ -26,18 +26,18 @@
           <a-input-password v-model:value="formState.password" />
         </a-form-item>
 
-        <a-form-item name="remember">
-          <div class="flex items-center justify-between">
-            <a-checkbox v-model:checked="formState.remember">
-              记住密码
-            </a-checkbox>
-            <div><A>忘记密码</A></div>
-          </div>
+        <a-form-item
+          label="确认密码"
+          name="password"
+          :rules="[{ required: true, message: '请输入密码' }]"
+        >
+          <a-input-password v-model:value="formState.password" />
         </a-form-item>
+
         <a-form-item class="mt-10">
           <input
             class="submit w-full font-bold text-stroke-cool-light-50 text-center py-2 rounded-lg"
-            value="登 录"
+            value="注 册"
             type="submit"
           />
         </a-form-item>

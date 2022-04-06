@@ -31,7 +31,7 @@
           name="password"
           :rules="[{ required: true, message: '请输入密码' }]"
         >
-          <a-input-password v-model:value="formState.password" />
+          <a-input-password v-model:value="formState.rePassword" />
         </a-form-item>
 
         <a-form-item class="mt-10">
@@ -57,6 +57,7 @@ import { defineComponent, reactive } from 'vue'
 interface FormState {
   username: string
   password: string
+  rePassword: string
   remember: boolean
 }
 export default defineComponent({
@@ -64,6 +65,7 @@ export default defineComponent({
     const formState = reactive<FormState>({
       username: '',
       password: '',
+      rePassword: '',
       remember: true
     })
     const onFinish = (values: any) => {

@@ -1,7 +1,7 @@
 <template>
   <div
-    class="active-top h-103 bg-gray-400 flex items-center justify-center"
-    :style="`background: url(${list.url})`"
+    class="active-top h-103 flex items-center justify-center"
+    :style="`background-image: url(${list.url})`"
   >
     <section
       class="m-auto w-100 h-12 flex items-center justify-center rounded-full"
@@ -55,29 +55,39 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less" scoped>
+<style scoped>
 .active-top {
-  background-position-y: center center !important;
-  background-size: 100% auto !important;
+  background-position: 50% 0% !important;
+  animation: bgsize linear 30s infinite;
+}
 
-  &:hover {
-    section {
-      background-color: white;
-      color: #000;
-      transition: all 0.5s;
-    }
+@keyframes bgsize {
+  0% {
+    background-size: 100% 100%;
   }
-
-  section {
-    color: white;
-    border: 1px solid white;
-    transition: all 0.5s;
-
-    span {
-      user-select: none;
-      font-size: 17.5px;
-      letter-spacing: 0.5em;
-    }
+  50% {
+    background-size: 120% 120%;
   }
+  100% {
+    background-size: 100% 100%;
+  }
+}
+
+.active-top:hover section {
+  background-color: white;
+  color: #000;
+  transition: all 0.5s;
+}
+
+.active-top section {
+  color: white;
+  border: 1px solid white;
+  transition: all 0.5s;
+}
+
+.active-top section span {
+  user-select: none;
+  font-size: 17.5px;
+  letter-spacing: 0.5em;
 }
 </style>

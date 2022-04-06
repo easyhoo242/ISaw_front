@@ -61,6 +61,8 @@
               <noto-v1:last-quarter-moon-face class="mt-0.5" />
             </template>
           </a-switch>
+
+          <LoginRegist />
         </div>
       </div>
     </div>

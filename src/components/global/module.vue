@@ -6,6 +6,8 @@
     <div v-if="title" class="title text-lg mx-2.5 pb-2.5 font-bold border-b-1">
       {{ title }}
     </div>
+
+    <div v-if="isShowLogo" class="logo"></div>
     <slot name="default" />
   </div>
 </template>
@@ -19,14 +21,17 @@ export default defineComponent({
       type: String,
       default: ''
     },
-    corner: Boolean
+    corner: Boolean,
+    logo: Boolean
   },
   setup(props) {
     // 是否展示角标 类似elementUI
     const isShowCorner = !!props.corner
+    const isShowLogo = !!props.logo
 
     return {
-      isShowCorner
+      isShowCorner,
+      isShowLogo
     }
   }
 })
@@ -35,6 +40,20 @@ export default defineComponent({
 <style lang="less" scoped>
 .module {
   position: relative;
+
+  .logo {
+    z-index: 1;
+    content: ' ';
+    position: absolute;
+    border-radius: 50%;
+    background: #f92900 !important;
+    width: 12px;
+    height: 12px;
+    box-shadow: 20px 0 #fbc606, 40px 0 #448ef6;
+    right: 65px;
+    top: 24px;
+    border-color: transparent;
+  }
 }
 .module-span {
   position: absolute;

@@ -1,15 +1,37 @@
 <template>
-  <div>user</div>
+  <Module title="作者发布的文章" class="user">
+    <FlexCol class="px-2">
+      <template #body>
+        <HotList />
+      </template>
+
+      <template #side>
+        <SideBar>
+          <Casual />
+        </SideBar>
+      </template>
+    </FlexCol>
+  </Module>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import HotList from '~/components/page/HotList.vue'
+import FlexCol from '~/components/global/Layout/FlexCol.vue'
+import SideBar from '~/components/global/SideBar/index.vue'
+import Casual from '~/components/global/SideBar/Casual.vue'
 
 export default defineComponent({
   setup() {
     return {}
-  }
+  },
+  components: { HotList, FlexCol, SideBar, Casual }
 })
 </script>
 
-<style scoped></style>
+<style lang="less" scoped>
+.user {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+</style>

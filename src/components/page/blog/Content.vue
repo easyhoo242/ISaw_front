@@ -1,5 +1,5 @@
 <template>
-  <Module>
+  <Module class="pt-10">
     <a-typography>
       <a-typography-title>介绍</a-typography-title>
       <a-typography-paragraph>

@@ -1,5 +1,17 @@
 <template>
-  <Module title="作者发布的文章"></Module>
+  <Module title="作者发布的文章" class="user-center">
+    <FlexCol>
+      <template #body>
+        <HotList />
+      </template>
+
+      <template #side>
+        <SideBar>
+          <Casual />
+        </SideBar>
+      </template>
+    </FlexCol>
+  </Module>
 </template>
 
 <script lang="ts">
@@ -12,4 +24,9 @@ export default defineComponent({
 })
 </script>
 
-<style scoped></style>
+<style lang="less" scoped>
+.user-center {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+</style>

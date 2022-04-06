@@ -25,9 +25,7 @@
 <style scoped>
 main {
   background: url(~/assets/img/login-bg.jpeg);
-  background-size: 100% 100%;
-  background-position: cover;
-
+  background-position: 50% 50%;
   animation: bgsize linear 20s infinite;
 }
 

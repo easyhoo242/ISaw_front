@@ -42,7 +42,7 @@ export default defineComponent({
       },
       subject: {
         title: '专题目录',
-        url: 'https://www.bing.com/th?id=OHR.CrystalCave_ZH-CN1284839856_1920x1080.jpg'
+        url: 'https://cn.bing.com/th?id=OHR.SiberianSunset_ZH-CN5711093662_1920x1080.jpg&rf=LaDigue_1920x1080.jpg?https://cn.bing.com/th?id=OHR.SiestaKey_ZH-CN1759696989_1920x1080.jpg'
       }
     }
 

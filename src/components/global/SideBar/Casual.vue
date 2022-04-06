@@ -1,5 +1,5 @@
 <template>
-  <Module title="随便看看" corner class="mt-3">
+  <Module title="随便看看" corner>
     <div class="content mt-4 grid grid-cols-2 gap-3 px-2">
       <div
         v-for="item in list"

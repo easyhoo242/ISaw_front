@@ -1,5 +1,7 @@
 <template>
-  <div class="module p-15px bg-white dark:bg-gray-900 rounded-lg shadow-md p-4">
+  <div
+    class="module p-15px bg-white dark:bg-gray-900 rounded-lg shadow-md p-4 mt-3"
+  >
     <span v-if="isShowCorner" class="module-span"></span>
     <div v-if="title" class="title text-lg mx-2.5 pb-2.5 font-bold border-b-1">
       {{ title }}

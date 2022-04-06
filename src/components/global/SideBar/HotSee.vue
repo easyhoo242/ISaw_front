@@ -1,5 +1,5 @@
 <template>
-  <Module title="热门文章" corner class="mt-3 pb-1">
+  <Module title="热门文章" corner class="pb-1">
     <div class="hot mt-3">
       <div
         v-for="item in list"
@@ -10,7 +10,9 @@
         <a class="item-bg__wrap rounded-xl"> <span></span></a>
         <div class="item-content text-white w-full p-2">
           <div class="item-content__desc pt-2">{{ item.title }}</div>
-          <div class="item-content__tag text-xs mt-1">{{ item.read }} 阅读 ， {{ item.time }}</div>
+          <div class="item-content__tag text-xs mt-1">
+            {{ item.read }} 阅读 ， {{ item.time }}
+          </div>
         </div>
       </div>
     </div>
@@ -39,7 +41,8 @@ export default defineComponent({
           url: 'https://www.talklee.com/zb_users/upload/2022/03/202203021646208396364255.png'
         },
         {
-          title: 'zblog怎么搭建专题页？如何实现调用多个tag及tag所属文章的图文教程',
+          title:
+            'zblog怎么搭建专题页？如何实现调用多个tag及tag所属文章的图文教程',
           id: 3,
           read: 1366,
           time: '05-36',

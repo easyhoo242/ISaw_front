@@ -1,5 +1,5 @@
 <template>
-  <Module title="精选导读" corner class="module mt-3">
+  <Module title="精选导读" corner class="module">
     <div class="content mt-4 items-center flex flex-wrap">
       <div
         v-for="item in listArr"

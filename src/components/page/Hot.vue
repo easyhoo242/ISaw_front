@@ -1,5 +1,5 @@
 <template>
-  <Module v-for="item in data" :key="item.id" class="module flex mt-3">
+  <Module v-for="item in data" :key="item.id" class="module flex">
     <div class="logo flex-0 w-210px h-158px rounded-md overflow-hidden mr-5">
       <!-- <A :href="`/blog/${item.id}`"> <img :src="item.img" alt="" /></A> -->
       <A href="/blog"> <img :src="item.img" alt="" /></A>

@@ -1,5 +1,5 @@
 <template>
-  <Module class="navigation mt-4 mb-7 bg-gray-400 enter-y pl-10">
+  <Module class="navigation mt-4 mb-7 bg-white enter-y pl-10">
     <NavigationItem
       v-for="item in data"
       :key="item.title"

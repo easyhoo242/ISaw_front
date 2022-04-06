@@ -57,19 +57,21 @@ export default defineComponent({
 
 <style scoped>
 .active-top {
-  background-position: 50% 0% !important;
-  animation: bgsize linear 30s infinite;
+  background-position: 0 !important;
+  animation: bgsize linear 40s infinite;
 }
 
 @keyframes bgsize {
   0% {
-    background-size: 100% 100%;
+    background-position: 100% 100% !important;
+    background-size: 100%;
   }
   50% {
-    background-size: 120% 120%;
+    background-size: 110%;
   }
   100% {
-    background-size: 100% 100%;
+    background-position: 100% 100% !important;
+    background-size: 100%;
   }
 }
 

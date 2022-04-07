@@ -1,7 +1,9 @@
 <template>
-  <div class="blog-header -enter-y text-white rounded-md pt-13 text-center overflow-hidden">
+  <div
+    class="blog-header -enter-y text-white rounded-md pt-13 text-center overflow-hidden"
+  >
     <div class="blog-header-title font-bold text-3xl pb-6">
-      记录Apche环境下手动配置和部署SSL证书的图文教程
+      记录Vue3 + TypeScript传递给子组件引用类型参数的类型赋予
     </div>
 
     <div class="desc-wrap">
@@ -15,9 +17,12 @@
         />
       </div>
       <div class="desc relative -top-6">
-        <div class="desc-name py-2">🧛‍♀️ ISaw</div>
+        <div class="desc-name py-2 text-xl flex items-center justify-center">
+          <!-- <span class="text-base">🧛‍♀️</span> -->
+          ISaw
+        </div>
         <div class="desc-tag">
-          🕗3-17 <span class="mx-1">👁‍🗨1.66k阅读</span> 💬2评论
+          🕗3-17 <span class="mx-1">👁‍🗨1.66k 阅读</span> 💬2 评论
         </div>
       </div>
     </div>

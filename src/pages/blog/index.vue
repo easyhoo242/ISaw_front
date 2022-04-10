@@ -18,15 +18,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Content from '../../components/page/blog/Content.vue'
-import Comment from '../../components/page/blog/Comment.vue'
-import BlogHeader from '~/components/page/blog/BlogHeader.vue'
 
 export default defineComponent({
   setup() {
     return {}
-  },
-  components: { Content, Comment, BlogHeader }
+  }
 })
 </script>
 

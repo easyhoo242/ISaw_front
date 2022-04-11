@@ -28,7 +28,7 @@
 
         <a-form-item
           label="确认密码"
-          name="password"
+          name="rePassword"
           :rules="[{ required: true, message: '请输入密码' }]"
         >
           <a-input-password v-model:value="formState.rePassword" />
@@ -53,6 +53,7 @@ meta:
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
+import { registUser, IRegistUserType } from '~/api'
 
 interface FormState {
   username: string
@@ -68,11 +69,26 @@ export default defineComponent({
       rePassword: '',
       remember: true
     })
+
+    const getData = async () => {
+      const data: IRegistUserType = {
+        username: formState.username,
+        password: formState.password
+      }
+
+      const res = await registUser(data)
+      console.log(res)
+    }
+
     const onFinish = (values: any) => {
       console.log('Success:', values)
+      console.log(formState)
+      getData()
     }
 
     const onFinishFailed = (errorInfo: any) => {
+      console.log(formState)
+
       console.log('Failed:', errorInfo)
     }
 

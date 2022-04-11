@@ -33,15 +33,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import axios from 'axios'
+import { getMomentByIdC } from '~/api'
 
 export default defineComponent({
   name: '首页',
   setup() {
     const getData = async () => {
-      const res = await axios.get('api/moment/3')
-
-      console.log(res)
+      const resC = await getMomentByIdC()
+      console.log(resC)
     }
 
     getData()

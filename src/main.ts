@@ -31,11 +31,13 @@ import './styles/main.less'
       }
     }
 
-    // if (to.path.indexOf('/main') !== -1) {
-    //   if (to.name === 'notFound') {
-    //     to.name = 'user'
-    //   }
-    // }
+    if (to.path === '/login') {
+      if (localCache.getCache('token'))
+        message.warning('您当前已经登陆, 请勿重复登录~', 2)
+      message.success('已为您跳转到首页~', 3)
+
+      return '/'
+    }
   })
 
   app.use(router)

@@ -53,6 +53,7 @@ meta:
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
+import { login, IUserType } from '~/api'
 
 interface FormState {
   username: string
@@ -66,8 +67,20 @@ export default defineComponent({
       password: '',
       remember: true
     })
+
+    const userLogin = async () => {
+      const data: IUserType = {
+        username: formState.username,
+        password: formState.password
+      }
+      const res = await login(data)
+
+      console.log(res)
+    }
+
     const onFinish = (values: any) => {
       console.log('Success:', values)
+      userLogin()
     }
 
     const onFinishFailed = (errorInfo: any) => {

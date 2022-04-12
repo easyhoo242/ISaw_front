@@ -9,7 +9,6 @@ export interface IResponsType<T> {
 
 export interface IUserInfoType {
   age: number
-  createAt: string
   desc: string
   email: string
   id: number
@@ -17,11 +16,12 @@ export interface IUserInfoType {
   sex: string
   telPhone: string
   type: number
-  updataAt: string
   username: string
   vip: number
   logo: string
   look: number
+  momentCount: number
+  commentCount: number
 }
 
 enum UserDetailApi {

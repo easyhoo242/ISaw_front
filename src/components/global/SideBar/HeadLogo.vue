@@ -26,11 +26,15 @@
 
     <div class="tag bg-white flex items-center pb-5">
       <div class="tag-item">
-        <div class="tag-item__count mb-3 text-gray-700">644</div>
+        <div class="tag-item__count mb-3 text-gray-700">
+          {{ data.momentCount }}
+        </div>
         <div class="tag-item__title text-gray-500">文章数</div>
       </div>
       <div class="tag-item">
-        <div class="tag-item__count mb-3 text-gray-700">34673</div>
+        <div class="tag-item__count mb-3 text-gray-700">
+          {{ data.commentCount }}
+        </div>
         <div class="tag-item__title text-gray-500">评论数</div>
       </div>
       <div class="tag-item">

@@ -28,9 +28,6 @@ import './styles/main.less'
       }
     }
 
-    console.log(router.getRoutes())
-    console.log(to)
-
     if (to.path.indexOf('/main') !== -1) {
       if (to.name === 'notFound') {
         to.name = 'user'

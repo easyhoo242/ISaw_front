@@ -55,7 +55,7 @@ meta:
 import { defineComponent, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import localCache from '~/utils/cache'
-import { requestUserLogin, IUserType } from '~/service/login/login'
+import { requestUserLogin, IUserType } from '~/api'
 import { message } from 'ant-design-vue'
 
 interface FormState {

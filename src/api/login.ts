@@ -1,27 +1,37 @@
-import request from './basic'
+import hyRequest from '~/service'
+
+export interface IAccount {
+  name: string
+  password: string
+}
+
+export interface ILoginResult {
+  id: number
+  username: string
+  token: string
+}
+
+export interface ILoginType<T = any> {
+  flag: boolean
+  code: number
+  data: ILoginResult
+  msg: string
+}
+
+enum LoginAPI {
+  AccountLogin = '/login',
+  LoginUserInfo = '/users/', // 用法: /users/1
+  UserMenus = '/role/' // 用法: role/1/menu
+}
 
 export interface IUserType {
   username: string
   password: string
 }
 
-export interface IFlag {
-  flag: boolean
-  data: {
-    id: number
-    username: string
-    token: string
-  }
-}
-
-export const registUser = (data: IUserType) => {
-  return request.post('/users', data)
-}
-
-export const login = (data: IUserType) => {
-  return request.post<IFlag>('/login', data)
-}
-
-export const getTest = () => {
-  return request.get('/moment?page=1&page_size=10')
+export function requestUserLogin(account: IUserType) {
+  return hyRequest.post<ILoginType>({
+    url: LoginAPI.AccountLogin,
+    data: account
+  })
 }

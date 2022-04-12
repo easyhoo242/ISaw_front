@@ -53,6 +53,9 @@ meta:
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
+import { useRouter } from 'vue-router'
+import { message } from 'ant-design-vue'
+import { handleUserLogin } from '~/hooks'
 import { registUser, IRegistUserType } from '~/api'
 
 interface FormState {
@@ -61,8 +64,11 @@ interface FormState {
   rePassword: string
   remember: boolean
 }
+
 export default defineComponent({
   setup() {
+    const router = useRouter()
+
     const formState = reactive<FormState>({
       username: '',
       password: '',
@@ -76,19 +82,28 @@ export default defineComponent({
         password: formState.password
       }
 
-      const res = await registUser(data)
-      console.log(res)
+      const { flag, msg } = await registUser(data)
+
+      if (!flag) {
+        message.error(msg)
+        return
+      }
+
+      if (await handleUserLogin(data)) {
+        router.push('/')
+      }
     }
 
-    const onFinish = (values: any) => {
-      console.log('Success:', values)
-      console.log(formState)
+    const onFinish = () => {
+      if (!(formState.password === formState.rePassword)) {
+        message.error('两次密码输入不一致', 3)
+        return
+      }
+
       getData()
     }
 
     const onFinishFailed = (errorInfo: any) => {
-      console.log(formState)
-
       console.log('Failed:', errorInfo)
     }
 

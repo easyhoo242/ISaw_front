@@ -54,51 +54,32 @@ meta:
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import localCache from '~/utils/cache'
-import { requestUserLogin, IUserType } from '~/api'
-import { message } from 'ant-design-vue'
+import { IUserType } from '~/api'
+import { handleUserLogin } from '~/hooks/userLogin'
 
 interface FormState {
   username: string
   password: string
   remember: boolean
 }
+
 export default defineComponent({
   setup() {
     const router = useRouter()
+
     const formState = reactive<FormState>({
       username: '',
       password: '',
       remember: true
     })
 
-    const setToken = (flag: boolean, token: string) => {
-      if (!flag) {
-        return
-      }
+    const onFinish = async (value: IUserType) => {
+      console.log(value)
 
-      localCache.setCache('token', token)
-      router.push('/')
+      const flag = await handleUserLogin(value)
+
+      flag && router.push('/')
     }
-
-    const userLogin = async () => {
-      const loginData: IUserType = {
-        username: formState.username,
-        password: formState.password
-      }
-
-      const { flag, data, msg } = await requestUserLogin(loginData)
-
-      if (!flag) {
-        console.log(msg)
-        message.warn(msg, 3)
-      } else {
-        setToken(flag, data.token)
-        message.success(msg, 3)
-      }
-    }
-
-    const onFinish = () => userLogin()
 
     const onFinishFailed = (errorInfo: any) => {
       console.log('Failed:', errorInfo)

@@ -74,8 +74,6 @@ export default defineComponent({
     })
 
     const onFinish = async (value: IUserType) => {
-      console.log(value)
-
       const flag = await handleUserLogin(value)
 
       flag && router.push('/')

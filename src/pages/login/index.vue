@@ -53,7 +53,10 @@ meta:
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
-import { login, IUserType } from '~/api'
+import { useRouter } from 'vue-router'
+import localCache from '~/utils/cache'
+import { requestUserLogin, IUserType } from '~/service/login/login'
+import { message } from 'ant-design-vue'
 
 interface FormState {
   username: string
@@ -62,26 +65,40 @@ interface FormState {
 }
 export default defineComponent({
   setup() {
+    const router = useRouter()
     const formState = reactive<FormState>({
       username: '',
       password: '',
       remember: true
     })
 
+    const setToken = (flag: boolean, token: string) => {
+      if (!flag) {
+        return
+      }
+
+      localCache.setCache('token', token)
+      router.push('/')
+    }
+
     const userLogin = async () => {
-      const data: IUserType = {
+      const loginData: IUserType = {
         username: formState.username,
         password: formState.password
       }
-      const res = await login(data)
 
-      console.log(res)
+      const { flag, data, msg } = await requestUserLogin(loginData)
+
+      if (!flag) {
+        console.log(msg)
+        message.warn(msg, 3)
+      } else {
+        setToken(flag, data.token)
+        message.success(msg, 3)
+      }
     }
 
-    const onFinish = (values: any) => {
-      console.log('Success:', values)
-      userLogin()
-    }
+    const onFinish = () => userLogin()
 
     const onFinishFailed = (errorInfo: any) => {
       console.log('Failed:', errorInfo)

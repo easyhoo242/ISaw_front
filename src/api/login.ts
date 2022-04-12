@@ -5,12 +5,21 @@ export interface IUserType {
   password: string
 }
 
+export interface IFlag {
+  flag: boolean
+  data: {
+    id: number
+    username: string
+    token: string
+  }
+}
+
 export const registUser = (data: IUserType) => {
   return request.post('/users', data)
 }
 
 export const login = (data: IUserType) => {
-  return request.post('/login', data)
+  return request.post<IFlag>('/login', data)
 }
 
 export const getTest = () => {

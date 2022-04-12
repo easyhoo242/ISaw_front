@@ -33,17 +33,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { getMomentByIdC, getTest } from '~/api'
 
 export default defineComponent({
   name: '首页',
   setup() {
-    const getData = async () => {
-      await getMomentByIdC()
-
-      const res = await getTest()
-      console.log(res)
-    }
+    const getData = async () => {}
 
     getData()
   }

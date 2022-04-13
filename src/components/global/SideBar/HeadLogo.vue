@@ -2,7 +2,7 @@
   <div class="w-full rounded-lg shadow-md z-10 overflow-hidden mt-3">
     <div class="header pt-12.5">
       <div
-        class="mx-auto w-23 h-23 overflow-hidden rounded-full border-white border-5 z-30"
+        class="mx-auto w-23 h-23 overflow-hidden rounded-full border-white border-5 z-30 mb-3"
       >
         <img :src="data.logo" alt="" class="w-full max-h-full" />
       </div>
@@ -18,7 +18,7 @@
           </div>
           <div v-if="!!data.vip" class="v px-1 ml-2">v</div>
         </div>
-        <div class="desc mt-5px text-gray-500">
+        <div class="desc mt-5px text-gray-500 min-h-42px">
           {{ data.desc }}
         </div>
       </div>
@@ -80,7 +80,7 @@ export default defineComponent({
   &::before {
     content: ' ';
     position: absolute;
-    top: 24px;
+    top: 10px;
     width: 100%;
     height: 60%;
     background: linear-gradient(to bottom, transparent, transparent, #fff);

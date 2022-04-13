@@ -12,10 +12,12 @@ const hyRequest = new HYRequest({
       // 携带token的拦截
       const token = localCache.getCache('token')
       if (!token) {
+        console.log('咩有token！')
         return config
       }
 
-      config.headers.Authorization = token
+      console.log(token)
+      config.headers.Authorization = `Bearer ${token}`
 
       return config
     },

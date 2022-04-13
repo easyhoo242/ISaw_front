@@ -48,7 +48,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, computed } from 'vue'
 import { useStore } from 'vuex'
 import { IUserInfoType } from '~/api'
 
@@ -62,7 +62,7 @@ export default defineComponent({
   setup(_) {
     const store = useStore()
 
-    const data = store.state.userInfo
+    const data = computed(() => store.state.userInfo)
     return {
       data
     }
@@ -80,7 +80,7 @@ export default defineComponent({
   &::before {
     content: ' ';
     position: absolute;
-    top: 27px;
+    top: 24px;
     width: 100%;
     height: 60%;
     background: linear-gradient(to bottom, transparent, transparent, #fff);

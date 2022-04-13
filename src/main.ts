@@ -29,14 +29,15 @@ import './styles/main.less'
         return '/login'
       }
     }
-    if (to.path === '/login') {
-      const token = localCache.getCache('token')
-      if (token) {
-        message.warning('您当前已经登陆, 请勿重复登录~', 2)
-        message.success('已为您跳转到首页~', 3)
-      }
-      return '/'
-    }
+
+    // if (to.path === '/login') {
+    //   const token = localCache.getCache('token')
+    //   if (token) {
+    //     message.warning('您当前已经登陆, 请勿重复登录~', 2)
+    //     message.success('已为您跳转到首页~', 3)
+    //   }
+    //   return '/'
+    // }
   })
   app.use(store)
 

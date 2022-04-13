@@ -1,5 +1,5 @@
 import localCache from '~/utils/cache'
-import { requestUserLogin, IUserType } from '~/api'
+import { requestUserLogin, IUserType, getUserDetail } from '~/api'
 import { message } from 'ant-design-vue'
 
 export const handleUserLogin = async (accountInfo: IUserType) => {
@@ -11,6 +11,12 @@ export const handleUserLogin = async (accountInfo: IUserType) => {
   }
 
   localCache.setCache('token', data.token)
+
+  const { data: userInfo } = await getUserDetail(data.id)
+
+  localCache.setCache('user', userInfo)
+
+  // 将用户信息存储到state
   message.success(msg, 3)
 
   return true

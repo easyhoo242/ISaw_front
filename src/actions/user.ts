@@ -1,10 +1,10 @@
-const userId = 27
+import localCache from '~/utils/cache'
 
-export async function getUserInfo() {
+export const getUserInfo = async () => {
+  const userInfo = localCache.getCache('user')
+
   return {
     code: 0,
-    data: {
-      id: userId
-    }
+    data: userInfo
   }
 }

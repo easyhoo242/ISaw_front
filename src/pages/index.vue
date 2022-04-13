@@ -13,7 +13,7 @@
 
       <template #side>
         <SideBar>
-          <HeadLogo :data="userInfo[0]" />
+          <HeadLogo />
           <!-- 随便看看 -->
           <Casual />
           <!-- 热门文章 -->
@@ -32,25 +32,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import { getUserDetail, IUserInfoType } from '~/api'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: '首页',
   setup() {
-    const userInfo = ref<IUserInfoType[]>([])
-
-    const getData = async () => {
-      const res = await getUserDetail(23)
-
-      userInfo.value[0] = res.data as IUserInfoType
-    }
+    const getData = async () => {}
 
     getData()
 
-    return {
-      userInfo
-    }
+    return {}
   }
 })
 </script>

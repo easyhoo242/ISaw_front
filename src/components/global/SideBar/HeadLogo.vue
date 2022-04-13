@@ -13,7 +13,7 @@
         >
           <div class="flex items-center">
             <a href="/user" style="line-height: 22px">
-              {{ data.username }}
+              {{ data.name }}
             </a>
           </div>
           <div v-if="!!data.vip" class="v px-1 ml-2">v</div>
@@ -49,17 +49,23 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
+import { useStore } from 'vuex'
 import { IUserInfoType } from '~/api'
 
 export default defineComponent({
   props: {
-    data: {
+    data1: {
       type: Object as PropType<IUserInfoType>,
       default: () => ({})
     }
   },
   setup(_) {
-    return {}
+    const store = useStore()
+
+    const data = store.state.userInfo
+    return {
+      data
+    }
   }
 })
 </script>

@@ -65,8 +65,6 @@ export default defineComponent({
       }
     })
 
-    console.log(listArr)
-
     return {
       listArr
     }

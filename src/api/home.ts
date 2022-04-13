@@ -8,15 +8,15 @@ export interface IResponsType<T> {
 }
 
 export interface IUserInfoType {
-  age: number
-  desc: string
-  email: string
   id: number
-  password: string
+  username: string
+  name: string
+  desc: string
+  age: number
   sex: string
   telPhone: string
+  email: string
   type: number
-  username: string
   vip: number
   logo: string
   look: number

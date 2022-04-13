@@ -1,6 +1,10 @@
-export function getUserInfo() {
+import { getUserDetail, IUserInfoType } from '~/api'
+
+export async function getUserInfo() {
+  const res = await getUserDetail(23)
+
   return {
     code: 0,
-    data: { name: '' }
+    data: res.data as IUserInfoType
   }
 }

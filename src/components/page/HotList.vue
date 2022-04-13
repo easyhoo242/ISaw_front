@@ -2,9 +2,11 @@
   <div class="hotlist flex flex-col">
     <Hot :data="list" />
     <a-pagination
-      :default-current="2"
-      :total="500"
+      :current="currentPage"
+      :pageSize="10"
+      :total="200"
       show-quick-jumper
+      hideOnSinglePage
       class="my-3"
       @change="onChange"
     />
@@ -13,11 +15,23 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+import { requestBlogList } from '~/api'
 
 export default defineComponent({
   setup() {
-    const currentPage = ref(0)
-    const onChange = () => {}
+    const currentPage = ref(1)
+
+    const getData = async () => {
+      const res = await requestBlogList(currentPage.value, 10)
+
+      console.log(res)
+    }
+
+    const onChange = (page: number) => {
+      currentPage.value = page
+
+      getData()
+    }
 
     return {
       list: [

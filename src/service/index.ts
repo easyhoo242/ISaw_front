@@ -11,9 +11,12 @@ const hyRequest = new HYRequest({
     requestInterceptor: (config) => {
       // 携带token的拦截
       const token = localCache.getCache('token')
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`
+      if (!token) {
+        return config
       }
+
+      config.headers.Authorization = token
+
       return config
     },
     requestInterceptorCatch: (err) => {

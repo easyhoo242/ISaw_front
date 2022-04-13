@@ -26,16 +26,15 @@ import './styles/main.less'
       const token = localCache.getCache('token')
       if (!token) {
         message.error('未登录，正在跳转到登录页...', 2)
-
         return '/login'
       }
     }
-
     if (to.path === '/login') {
-      if (localCache.getCache('token'))
+      const token = localCache.getCache('token')
+      if (token) {
         message.warning('您当前已经登陆, 请勿重复登录~', 2)
-      message.success('已为您跳转到首页~', 3)
-
+        message.success('已为您跳转到首页~', 3)
+      }
       return '/'
     }
   })

@@ -2,30 +2,39 @@
   <Module v-for="item in data" :key="item.id" class="module flex">
     <div class="logo flex-0 w-210px h-158px rounded-md overflow-hidden mr-5">
       <!-- <A :href="`/blog/${item.id}`"> <img :src="item.img" alt="" /></A> -->
-      <A href="/blog"> <img :src="item.img" alt="" /></A>
+      <A href="/blog">
+        <img
+          :src="
+            item.logo ||
+            'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.3xm.com.cn%2Fimages%2Fb%2F204%2F3702022602375856066119.jpg&refer=http%3A%2F%2Fimg.3xm.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1652477933&t=e22aae556d7468713c7c49ce3d2537fd'
+          "
+          alt=""
+      /></A>
     </div>
 
     <div class="hotlist-content flex-1 pr-3">
       <div class="title flex items-center text-gray-700">
-        <div v-if="item.read > 500" class="hot-tag mr-2">热文</div>
+        <div v-if="item.like > 100" class="hot-tag mr-2">热文</div>
         <A href="/blog">
-          <div class="text-lg">{{ item.title }}</div>
+          <div class="text-lg">
+            {{ item.title || '这个人也太懒了吧 居然忘了取标题' }}
+          </div>
         </A>
       </div>
 
-      <div class="content text-sm my-3 text-gray-500">
-        {{ item.content }}
+      <div class="content text-sm my-3 text-gray-500 min-h-77px">
+        {{ item.content || '这是内容' }}
       </div>
 
       <div class="footer pt-2 flex items-center justify-between text-gray-400">
         <div class="tag flex-1 flex items-center">
-          <div>🕒 {{ item.time }}</div>
-          <div>👁‍🗨 {{ item.read }} 阅读</div>
-          <div>💬 {{ item.discuss }} 评论</div>
+          <div>🕒 {{ item.createTime.split('T')[0] }}</div>
+          <div>{{ item.like }} 点赞</div>
+          <div>💬 {{ item.commentCount }} 评论</div>
         </div>
         <div class="who flex-0">
           <!-- <a-icon></a-icon> -->
-          <A href="/user">🏆 {{ item.author }}</A>
+          <A :href="`/user/${item.users.id}`">🏆 {{ item.users.name }}</A>
         </div>
       </div>
     </div>
@@ -36,14 +45,18 @@
 import { PropType, defineComponent } from 'vue'
 
 interface IDataType {
-  author: string
+  name: string
   id: number
-  img: string
+  logo: string
   title: string
   content: string
-  time: string
-  read: number
-  discuss: number
+  createTime: string
+  like: number
+  commentCount: number
+  users: {
+    id: number
+    name: string
+  }
 }
 
 export default defineComponent({

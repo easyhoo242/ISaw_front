@@ -16,7 +16,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { useStore } from 'vuex'
 import HotList from '~/components/page/HotList.vue'
 import FlexCol from '~/components/global/Layout/FlexCol.vue'
 import SideBar from '~/components/global/SideBar/index.vue'
@@ -24,9 +23,6 @@ import Casual from '~/components/global/SideBar/Casual.vue'
 
 export default defineComponent({
   setup() {
-    const store = useStore()
-
-    console.log(store.state.userInfo.id)
     return {}
   },
   components: { HotList, FlexCol, SideBar, Casual }

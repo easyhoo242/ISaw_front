@@ -80,7 +80,7 @@ export default defineComponent({
   &::before {
     content: ' ';
     position: absolute;
-    top: 5px;
+    top: 27px;
     width: 100%;
     height: 60%;
     background: linear-gradient(to bottom, transparent, transparent, #fff);

@@ -38,11 +38,11 @@ import './styles/main.less'
       return '/'
     }
   })
+  app.use(store)
 
   app.use(router)
 
   // Configure vuex store
-  app.use(store)
 
   app.mount('#app', true)
 })()

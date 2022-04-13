@@ -2,34 +2,38 @@
   <div class="user-info h-90 w-full">
     <div class="mx-auto flex flex-col items-center">
       <div class="logo h-30 w-30 rounded-full overflow-hidden mt-5">
-        <img
-          src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Finews.gtimg.com%2Fnewsapp_bt%2F0%2F14206928472%2F1000.jpg&refer=http%3A%2F%2Finews.gtimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1651510256&t=17fc44fffa91d0502d13a2869161b960"
-          alt="头像"
-          class="w-full h-full"
-        />
+        <img :src="userInfo.logo" :alt="userInfo.name" class="w-full h-full" />
       </div>
 
       <div class="slogan flex items-center justify-center mt-4 mb-3">
-        <div class="slogan-title">ISaw</div>
-        <div class="slogan-tag">V</div>
-        <div class="slogan-tag">管理员</div>
+        <div class="slogan-title">
+          {{ userInfo.name }}
+        </div>
+        <div v-if="userInfo.vip" class="slogan-tag">V</div>
+        <div v-if="userInfo.type === 4" class="slogan-tag">管理员</div>
       </div>
 
       <div class="desc flex items-center justify-center">
-        <div>文章 234 篇</div>
+        <div>文章 {{ userInfo.momentCount }} 篇</div>
         <i class="mx-2"> | </i>
-        <div>评论 234 次</div>
+        <div>评论 {{ userInfo.commentCount }} 次</div>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
+import { useStore } from 'vuex'
 
 export default defineComponent({
   setup() {
-    return {}
+    const store = useStore()
+    const userInfo = computed(() => store.state.userInfo)
+
+    return {
+      userInfo
+    }
   }
 })
 </script>

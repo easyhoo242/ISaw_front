@@ -23,17 +23,17 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { requestCauseList, ICauseListType } from '~/api'
+import { requestCauseList, IListType } from '~/api'
 import { BASE_LOGO } from '~/api'
 
 export default defineComponent({
   setup() {
-    const list = ref<ICauseListType[]>([])
+    const list = ref<IListType[]>([])
 
     const getData = async () => {
       const res = await requestCauseList(3)
 
-      list.value = res.data as ICauseListType[]
+      list.value = res.data as IListType[]
     }
 
     getData()

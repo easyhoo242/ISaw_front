@@ -1,7 +1,7 @@
 import hyRequest from '~/service'
 import { IResponsType } from './index'
 
-export interface ICauseListType {
+export interface IListType {
   content: string
   createAt: string
   id: number
@@ -13,14 +13,21 @@ export interface ICauseListType {
 }
 
 enum CauseApi {
-  list = '/cause'
+  caustList = '/cause',
+  hotseeList = '/hotsee'
 }
 
 export const requestCauseList = (id: number) => {
-  return hyRequest.get<IResponsType<ICauseListType[]>>({
-    url: CauseApi.list,
+  return hyRequest.get<IResponsType<IListType[]>>({
+    url: CauseApi.caustList,
     params: {
       page: id.toString()
     }
+  })
+}
+
+export const requestHotseeList = () => {
+  return hyRequest.get<IResponsType<IListType[]>>({
+    url: CauseApi.hotseeList
   })
 }

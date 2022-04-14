@@ -19,7 +19,14 @@
           <div v-if="!!data.vip" class="v px-1 ml-2">v</div>
         </div>
         <div class="desc mt-5px text-gray-500 min-h-42px">
-          {{ data.desc }}
+          <a-popover trigger="hover" placement="bottom">
+            <template #content>
+              {{ data.desc }}
+            </template>
+            <div>
+              {{ data.desc }}
+            </div>
+          </a-popover>
         </div>
       </div>
     </div>

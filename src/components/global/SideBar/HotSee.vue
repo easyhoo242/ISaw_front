@@ -1,6 +1,6 @@
 <template>
   <Module title="热门文章" corner logo class="pb-1">
-    <div class="hot mt-3">
+    <div class="hot mt-3 px-1">
       <div
         v-for="item in list"
         :key="item.id"
@@ -15,7 +15,7 @@
             {{ item.title || item.content }}
           </div>
           <div class="item-content__tag text-xs mt-1">
-            {{ item.like }} 点赞 ， {{ item.createAt }}
+            {{ item.like }} 点赞 ， {{ item?.createAt.split('T')[0] }}
           </div>
         </div>
       </div>

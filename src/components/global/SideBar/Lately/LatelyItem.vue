@@ -5,7 +5,7 @@
         <A :href="`about/${data.id}`"> {{ data.title || data.content }} </A>
       </div>
       <div class="item-desc mt-1 flex items-center">
-        {{ data?.user.name }} <i class="mx-2"></i>
+        {{ data?.user.name || 'ISawer~' }} <i class="mx-2"></i>
         {{ data?.updateAt?.split('T')[0] }}
       </div>
     </div>

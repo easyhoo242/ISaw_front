@@ -33,15 +33,22 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { requestMomentAll } from '~/api'
+import HotList from '~/components/page/home/HotList/index.vue'
 
 export default defineComponent({
   name: '首页',
   setup() {
-    const getData = async () => {}
+    const getData = async () => {
+      const res = await requestMomentAll(1, 10)
+
+      console.log(res)
+    }
 
     getData()
 
     return {}
-  }
+  },
+  components: { HotList }
 })
 </script>

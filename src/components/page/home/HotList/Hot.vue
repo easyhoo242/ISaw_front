@@ -2,14 +2,7 @@
   <Module v-for="item in data" :key="item.id" class="module flex">
     <div class="logo flex-0 w-210px h-158px rounded-md overflow-hidden mr-5">
       <!-- <A :href="`/blog/${item.id}`"> <img :src="item.img" alt="" /></A> -->
-      <A href="/blog">
-        <img
-          :src="
-            item.logo ||
-            'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.3xm.com.cn%2Fimages%2Fb%2F204%2F3702022602375856066119.jpg&refer=http%3A%2F%2Fimg.3xm.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1652477933&t=e22aae556d7468713c7c49ce3d2537fd'
-          "
-          alt=""
-      /></A>
+      <A href="/blog"> <img :src="BASE_LOGO" alt="" /></A>
     </div>
 
     <div class="hotlist-content flex-1 pr-3">
@@ -28,13 +21,13 @@
 
       <div class="footer pt-2 flex items-center justify-between text-gray-400">
         <div class="tag flex-1 flex items-center">
-          <div>🕒 {{ item.createTime.split('T')[0] }}</div>
+          <div>🕒 {{ item?.createTime?.split('T')[0] }}</div>
           <div>{{ item.like }} 点赞</div>
           <div>💬 {{ item.commentCount }} 评论</div>
         </div>
         <div class="who flex-0">
           <!-- <a-icon></a-icon> -->
-          <A :href="`/user/${item.users.id}`">🏆 {{ item.users.name }}</A>
+          <A :href="`/user/${item?.user?.id}`">🏆 {{ item?.user?.name }}</A>
         </div>
       </div>
     </div>
@@ -43,27 +36,19 @@
 
 <script lang="ts">
 import { PropType, defineComponent } from 'vue'
-
-interface IDataType {
-  name: string
-  id: number
-  logo: string
-  title: string
-  content: string
-  createTime: string
-  like: number
-  commentCount: number
-  users: {
-    id: number
-    name: string
-  }
-}
+import { IBlogResultListType } from '~/api'
+import { BASE_LOGO } from '~/api'
 
 export default defineComponent({
   props: {
     data: {
-      type: Array as PropType<IDataType[]>,
+      type: Array as PropType<IBlogResultListType[]>,
       default: () => []
+    }
+  },
+  setup() {
+    return {
+      BASE_LOGO
     }
   }
 })

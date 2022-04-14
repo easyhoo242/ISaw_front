@@ -19,6 +19,10 @@ export interface IBlogResultListType {
   momentCount: number
   title: string
   updateTime: string
+  user: {
+    id: number
+    name: string
+  }
 }
 
 enum BlogApi {

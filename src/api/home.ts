@@ -19,6 +19,8 @@ export interface IUserInfoType {
   commentCount: number
 }
 
+import type { IBlogResultListType } from './blog'
+
 export interface IModuleTo<T> {
   list: T
   name: string
@@ -32,7 +34,8 @@ export interface IModuleToList {
 }
 enum HomelApi {
   Detail = '/users/', // /users/ + id
-  ModuleTo = '/momentByType'
+  ModuleTo = '/momentByType',
+  MomentAll = '/momentListAll'
 }
 
 export const getUserDetail = (userId: number) => {
@@ -44,5 +47,15 @@ export const getUserDetail = (userId: number) => {
 export const requestModuleTo = () => {
   return hyRequest.get<IResponsType<IModuleTo<IModuleToList[]>>>({
     url: HomelApi.ModuleTo
+  })
+}
+
+export const requestMomentAll = (page: number, pagesize: number) => {
+  return hyRequest.get<IResponsType<IBlogResultListType[]>>({
+    url: HomelApi.MomentAll,
+    params: {
+      page,
+      pagesize
+    }
   })
 }

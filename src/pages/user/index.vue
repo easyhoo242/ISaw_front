@@ -16,16 +16,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import HotList from '~/components/page/HotList.vue'
-import FlexCol from '~/components/global/Layout/FlexCol.vue'
-import SideBar from '~/components/global/SideBar/index.vue'
-import Casual from '~/components/global/SideBar/Casual.vue'
 
 export default defineComponent({
   setup() {
     return {}
-  },
-  components: { HotList, FlexCol, SideBar, Casual }
+  }
 })
 </script>
 

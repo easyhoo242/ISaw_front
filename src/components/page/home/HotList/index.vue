@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { requestBlogList, IBlogResultListType } from '~/api'
+import { requestMomentAll, IBlogResultListType } from '~/api'
 
 export default defineComponent({
   setup() {
@@ -23,14 +23,16 @@ export default defineComponent({
     const dataList = ref<IBlogResultListType[]>([])
 
     const getData = async () => {
-      const res = await requestBlogList(currentPage.value, 10)
+      const res = await requestMomentAll(currentPage.value, 10)
 
-      dataList.value = res.data
+      dataList.value = res.data as IBlogResultListType[]
     }
 
     const onChange = (page: number) => {
       currentPage.value = page
       getData()
+
+      console.log(dataList.value)
 
       window.scrollTo({
         top: 0,

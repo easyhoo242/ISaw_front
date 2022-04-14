@@ -2,10 +2,11 @@
   <a-timeline-item color="blue" class="pb-1">
     <div class="item ml-2 pt-1">
       <div class="item-title">
-        <A :href="`about/${data.id}`"> {{ data.title }} </A>
+        <A :href="`about/${data.id}`"> {{ data.title || data.content }} </A>
       </div>
       <div class="item-desc mt-1 flex items-center">
-        {{ data.type }} <i class="mx-2"></i> {{ data.time }}
+        {{ data?.user.name }} <i class="mx-2"></i>
+        {{ data?.updateAt?.split('T')[0] }}
       </div>
     </div>
   </a-timeline-item>
@@ -13,12 +14,12 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import type { ILatelyType } from '~/api'
+import type { ILatelyMomentType } from '~/api'
 
 export default defineComponent({
   props: {
     data: {
-      type: Object as PropType<ILatelyType>,
+      type: Object as PropType<ILatelyMomentType>,
       default: () => []
     }
   }

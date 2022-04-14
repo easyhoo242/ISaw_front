@@ -1,27 +1,29 @@
 <template>
   <Module title="最近发表" corner logo>
     <div class="mt-4 px-3 pr-5">
-      <LatelyItem v-for="item in data" :key="item.id" :data="item" />
+      <LatelyItem v-for="item in list" :key="item.id" :data="item" />
     </div>
   </Module>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { getLatelyData } from '~/api'
-import type { ILatelyType } from '~/api'
+import { requestLatelyMomentList } from '~/api'
+import type { ILatelyMomentType } from '~/api'
 
 export default defineComponent({
   setup() {
-    const data = ref<ILatelyType[]>([])
+    const list = ref<ILatelyMomentType[]>([])
 
     const getData = async () => {
-      const res = (await getLatelyData()) as ILatelyType[]
-      data.value = res
+      const res = await requestLatelyMomentList()
+
+      list.value = res.data as ILatelyMomentType[]
     }
     getData()
+
     return {
-      data
+      list
     }
   }
 })

@@ -21,16 +21,17 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { requestLatelyCommentList, ILatelyType } from '~/api'
+import { requestLatelyCommentList } from '~/api'
+import type { ILatelyCommentType } from '~/api'
 
 export default defineComponent({
   setup() {
-    const list = ref<ILatelyType[]>([])
+    const list = ref<ILatelyCommentType[]>([])
 
     const getData = async () => {
       const res = await requestLatelyCommentList()
 
-      list.value = res.data as ILatelyType[]
+      list.value = res.data as ILatelyCommentType[]
     }
 
     getData()

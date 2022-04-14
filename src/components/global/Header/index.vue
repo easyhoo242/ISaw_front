@@ -3,7 +3,7 @@
     <div
       class="flex items-center justify-center w-full h-56px border-gray-100 dark:bg-gray-900 dark:border-b-0 border-b-1"
     >
-      <div class="w-1400px flex items-center justify-between">
+      <div class="w-1400px flex items-center justify-between relative">
         <!-- 左边 -->
         <div class="flex items-center">
           <div class="flex-0 flex mr-10">
@@ -63,6 +63,17 @@
           </a-switch>
 
           <LoginRegist />
+        </div>
+
+        <div class="absolute -right-10 t-2">
+          <A href="/createBlog">
+            <div
+              class="h-8 w-8 rounded-full bortder-gray-700 border-2px text-center"
+              style="line-height: 30px"
+            >
+              IS
+            </div>
+          </A>
         </div>
       </div>
     </div>

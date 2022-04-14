@@ -1,5 +1,5 @@
 import hyRequest from '~/service'
-import { IBlogResultType } from '.'
+import { IResponsType } from '.'
 export interface ILatelyCommentType {
   id: number
   content: string
@@ -30,13 +30,13 @@ enum sideBarApi {
 }
 
 export const requestLatelyCommentList = () => {
-  return hyRequest.get<IBlogResultType<ILatelyCommentType[]>>({
+  return hyRequest.get<IResponsType<ILatelyCommentType[]>>({
     url: sideBarApi.latelyCommentList
   })
 }
 
 export const requestLatelyMomentList = () => {
-  return hyRequest.get<IBlogResultType<ILatelyMomentType[]>>({
+  return hyRequest.get<IResponsType<ILatelyMomentType[]>>({
     url: sideBarApi.latelyMomentList
   })
 }

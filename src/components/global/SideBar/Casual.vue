@@ -6,53 +6,40 @@
         :key="item.id"
         class="content-item flex-0 overflow-hidden border-b-1px"
       >
-        <div class="logo w-full h-27 rounded-xl overflow-hidden">
-          <img :src="item.url" alt="" class="w-full h-full max-h-full" />
-        </div>
-        <div class="desc py-6px">没有内容的网站怎么去没有内容的网站怎么去</div>
+        <A :href="`/blog/${item.id}`">
+          <div class="logo w-full h-27 rounded-xl overflow-hidden">
+            <img
+              :src="item.logo || BASE_LOGO"
+              alt=""
+              class="w-full h-full max-h-full"
+            />
+          </div>
+          <div class="desc py-6px">{{ item.title || item.content }}</div>
+        </A>
       </div>
     </div>
   </Module>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
+import { requestCauseList, ICauseListType } from '~/api'
+import { BASE_LOGO } from '~/api'
 
 export default defineComponent({
   setup() {
+    const list = ref<ICauseListType[]>([])
+
+    const getData = async () => {
+      const res = await requestCauseList(3)
+
+      list.value = res.data as ICauseListType[]
+    }
+
+    getData()
     return {
-      list: [
-        {
-          id: 1,
-          title: '没有内容的网站怎么去做优化没有内容的网站怎么去做优',
-          url: 'https://www.talklee.com/zb_users/upload/2018/05/201805081525763112332009.jpg'
-        },
-        {
-          id: 2,
-          title: '没有内容的网站怎么去做优化没有内容的网站怎么去做优',
-          url: 'https://www.talklee.com/zb_users/upload/2020/04/202004261587892427688574.png'
-        },
-        {
-          id: 3,
-          title: '没有内容的网站怎么去做优化没有内容的网站怎么去做优',
-          url: 'https://www.talklee.com/zb_users/upload/2018/05/201805021525240084598680.jpg'
-        },
-        {
-          id: 4,
-          title: '没有内容的网站怎么去做优化没有内容的网站怎么去做优',
-          url: 'https://www.talklee.com/zb_users/upload/2021/01/202101121610421833338472.png'
-        },
-        {
-          id: 5,
-          title: '没有内容的网站怎么去做优化没有内容的网站怎么去做优',
-          url: 'https://www.talklee.com/zb_users/upload/2018/05/201805191526703205270388.jpg'
-        },
-        {
-          id: 6,
-          title: '没有内容的网站怎么去做优化没有内容的网站怎么去做优',
-          url: 'https://res.talklee.com/upload/2020/07/202007035026_9675.png'
-        }
-      ]
+      list,
+      BASE_LOGO: BASE_LOGO
     }
   }
 })
@@ -60,8 +47,12 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .logo {
-  // background-color: hotpink;
-  // background: url(https://www.talklee.com/zb_users/upload/2018/05/201805081525763112332009.jpg) 100% no-repeat;
+  img {
+    &:hover {
+      height: 200%;
+      height: 200%;
+    }
+  }
 }
 
 .content-item {

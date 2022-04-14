@@ -1,11 +1,6 @@
 import hyRequest from '~/service'
 
-export interface IResponsType<T> {
-  code: number
-  msg: string
-  data?: T
-  flag: boolean
-}
+import { IResponsType } from './index'
 
 export interface IUserInfoType {
   id: number

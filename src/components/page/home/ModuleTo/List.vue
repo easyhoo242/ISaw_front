@@ -21,7 +21,9 @@
             {{ item.title }}
           </a>
         </div>
-        <div class="content-item-time text-gray-500">{{ item.time }}</div>
+        <div class="content-item-time text-gray-500">
+          {{ item?.createAt.split('T')[0].substring(5) }}
+        </div>
       </div>
     </div>
   </Module>
@@ -29,6 +31,7 @@
 
 <script lang="ts">
 import { PropType, defineComponent } from 'vue'
+import type { IModuleToList } from '~/api'
 
 export default defineComponent({
   props: {
@@ -37,13 +40,7 @@ export default defineComponent({
       default: ''
     },
     list: {
-      type: Array as PropType<
-        {
-          id: number
-          title: string
-          time: string
-        }[]
-      >,
+      type: Array as PropType<IModuleToList[]>,
       default: () => []
     }
   },

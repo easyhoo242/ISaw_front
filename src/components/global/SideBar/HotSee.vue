@@ -34,8 +34,6 @@ export default defineComponent({
       const res = await requestHotseeList()
 
       list.value = res.data as IListType[]
-
-      console.log(list.value)
     }
 
     getData()

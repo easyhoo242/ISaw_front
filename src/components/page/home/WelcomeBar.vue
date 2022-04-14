@@ -18,8 +18,6 @@ import { useStore } from 'vuex'
 const store = useStore()
 const userInfo = computed(() => store.state.userInfo)
 
-console.log(store.state)
-
 const today = ref<Date>(new Date())
 const sayHi = computed(() => {
   const currentHour = today.value.getHours()

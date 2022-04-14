@@ -26,7 +26,6 @@ export default defineComponent({
       const res = await requestBlogList(currentPage.value, 10)
 
       dataList.value = res.data
-      console.log(dataList.value)
     }
 
     const onChange = (page: number) => {

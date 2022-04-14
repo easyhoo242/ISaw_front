@@ -5,7 +5,7 @@ export interface IListType {
   content: string
   createAt: string
   id: number
-  like: number
+  get_like: number
   title: string
   updateAt: string
   user_id: number

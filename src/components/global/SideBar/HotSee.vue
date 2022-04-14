@@ -15,7 +15,7 @@
             {{ item.title || item.content }}
           </div>
           <div class="item-content__tag text-xs mt-1">
-            {{ item.like }} 点赞 ， {{ item?.createAt.split('T')[0] }}
+            {{ item.get_like }} 点赞 ， {{ item?.createAt.split('T')[0] }}
           </div>
         </div>
       </div>

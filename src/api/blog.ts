@@ -3,12 +3,7 @@ import hyRequest from '~/service'
 
 const userInfo = localCache.getCache('user')
 
-export interface IBlogResultType<T> {
-  code: number
-  data: T
-  flag: boolean
-  msg: string
-}
+import { IResponsType } from '.'
 
 export interface IBlogResultListType {
   commentCount: number
@@ -24,13 +19,17 @@ export interface IBlogResultListType {
     name: string
   }
 }
+export interface IBlogResultType {
+  count: number
+  list: IBlogResultListType
+}
 
 enum BlogApi {
   blogList = '/moment'
 }
 
-export const requestBlogList = (currentPage: number, pageSize: number) => {
-  return hyRequest.get<IBlogResultType<IBlogResultListType[]>>({
+export const requestBlogListById = (currentPage: number, pageSize: number) => {
+  return hyRequest.get<IResponsType<IBlogResultType>>({
     url: BlogApi.blogList,
     params: {
       userId: userInfo.id,

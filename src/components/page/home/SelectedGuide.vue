@@ -1,24 +1,26 @@
 <template>
   <Module title="精选导读" corner class="module">
-    <div class="content mt-4 items-center flex flex-wrap">
+    <div class="content mt-3 items-center grid grid-cols-3 grid-rows-2">
       <div
-        v-for="item in listArr"
+        v-for="item in list"
         :key="item.id"
-        class="item h-1/2 w-1/3 border-b-1 border-r-1 p-15px text-center dark:border-gray-300"
+        class="item border-b-1 border-r-1 p-15px text-center dark:border-gray-300"
       >
         <div
           class="item-title flex items-center justify-between pb-2 dark:color"
         >
-          <div class="title-tag">{{ item.type }}</div>
-          <div class="title-time">{{ `🕞 ${item.time}` }}</div>
+          <div class="title-tag">{{ listType[item.type] }}</div>
+          <div class="title-time">
+            {{ `🕞 ${item?.createAt?.split('T')[0]}` }}
+          </div>
         </div>
 
         <div class="item-content text-left">
           <div class="content-desc">
-            <a>{{ item.title }}</a>
+            <a :href="`/blog/${item.id}`">{{ item.title }}</a>
           </div>
 
-          <div class="content-text mt-1.5">
+          <div class="content-text mt-1.5 min-h-45px text-left">
             {{ item.content }}
           </div>
         </div>
@@ -28,45 +30,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import Icon from 'ant-design-vue'
-
-// interface IListType {
-//   id: number
-//   title: string
-//   time: string
-//   type: string
-//   content: string
-// }
+import { defineComponent, ref } from 'vue'
+import { requestHotseeList, IListType, BASE_LOGO } from '~/api'
 
 export default defineComponent({
-  components: {
-    Icon
-  },
   setup() {
-    const list = [
-      '1\n教程笔记\n2017-10-26\nZ-blogPHP常见问题答疑（最新整理2021/08）\n最新整理了一下zblog程序的思路，把过去遇到的zblogphp问题总结一下，都是一...',
-      '2\n教程笔记\n2019-01-25\nzblog开启主题或插件显示“授权文件非法”的解决办法（支持ZBP1.7+）\n最近好些用户都在反应，说启用主题之后后台显示“授权文件非法”，导致主题无法使用，如图...',
-      '3\n互联网\n2019-09-25\n网站打开之后，主题/插件显示错误的解决办法，适用于各种BUG。\n标题党怪我咯？？？这篇文章的主要目的不是真的能解决所有问题，是为了让问题具体化，按照...',
-      '4\n教程笔记\n2019-07-12\nzblog备份的网站及数据库怎么恢复？\n很多人可能会安装zblog程序，但是未必会恢复数据，很多种情况我们都会需要把网站打包...',
-      '5\n教程笔记\n2020-04-08\nzblog怎么在移动端显示/隐藏侧栏模块\n关于zblog主题模板手机移动端针对不同主题采用了不同的方案，有些是默认显示，有些不...',
-      '6\n教程笔记\n2020-04-05\nzblog忘记后台账号密码怎么办？\n总有些人账号密码太多，多到自己也记不住，然后来回反复的尝试，还是想不起来，总觉得这个...'
-    ]
+    const list = ref<IListType[]>([])
+    const getData = async () => {
+      const res = await requestHotseeList()
 
-    const listArr = list.map((item) => {
-      const [id, type, time, title, content] = item.split('\n')
+      list.value = res.data as IListType[]
+    }
 
-      return {
-        id,
-        title,
-        time,
-        type,
-        content
-      }
-    })
+    getData()
 
     return {
-      listArr
+      list,
+      BASE_LOGO,
+      listType: ['随便看看', '互联网', '教程笔记', '闲言碎语']
     }
   }
 })
@@ -78,7 +59,8 @@ export default defineComponent({
 
   .item {
     &:nth-child(-n + 3) {
-      padding-top: 0 !important;
+      padding-top: 12px !important;
+      margin-top: 0 !important;
     }
 
     &:nth-child(3n) {
@@ -139,7 +121,6 @@ export default defineComponent({
       }
 
       .content-text {
-        font-size: 12px;
         color: #777;
         text-overflow: -o-ellipsis-lastline;
         overflow: hidden;

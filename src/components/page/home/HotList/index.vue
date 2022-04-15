@@ -4,7 +4,7 @@
     <a-pagination
       :current="currentPage"
       :pageSize="10"
-      :total="200"
+      :total="100"
       show-quick-jumper
       hideOnSinglePage
       class="my-3"
@@ -35,7 +35,7 @@ export default defineComponent({
       console.log(dataList.value)
 
       window.scrollTo({
-        top: 0,
+        top: 992,
         behavior: 'smooth'
       })
     }

@@ -10,6 +10,7 @@ export interface IListType {
   updateAt: string
   user_id: number
   logo: string
+  type: number
 }
 
 enum CauseApi {

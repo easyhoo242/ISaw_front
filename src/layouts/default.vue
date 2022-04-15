@@ -26,6 +26,9 @@
         </router-view>
       </article>
     </div>
+
+    <a-back-top class="bottom-50" />
+
     <Footer class="w-full z-50" />
   </main>
 </template>

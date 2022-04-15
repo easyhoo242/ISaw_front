@@ -5,7 +5,7 @@
         {{ title }}
       </div>
       <div class="item-title-more text-xs">
-        <a>更多 <span>➕</span></a>
+        <a href="/about">更多 <span>➕</span></a>
       </div>
     </div>
 
@@ -16,7 +16,7 @@
         class="content-item-wrap flex justify-between items-center px-2"
       >
         <div class="content-item-text w-4/5">
-          <a>
+          <a :href="`/blog/${item.id}`">
             <span>📌</span>
             {{ item.title }}
           </a>

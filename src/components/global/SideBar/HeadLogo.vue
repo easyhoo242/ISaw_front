@@ -21,10 +21,10 @@
         <div class="desc mt-5px text-gray-500 min-h-42px">
           <a-popover trigger="hover" placement="bottom">
             <template #content>
-              {{ data.slogan }}
+              {{ data.slogan || '快来编写你的自我介绍吧~' }}
             </template>
             <div>
-              {{ data.slogan }}
+              {{ data.slogan || '快来编写你的自我介绍吧~' }}
             </div>
           </a-popover>
         </div>

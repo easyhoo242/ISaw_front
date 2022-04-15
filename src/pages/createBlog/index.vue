@@ -7,7 +7,8 @@
           v-model:value="blogTitle"
           class="text-center"
           size="large"
-        ></a-input>
+          placeholder="请输入标题..."
+        />
       </Module>
       <Module>
         <div class="text-left text-lg mx-2.5 pb-2.5 font-bold">正文</div>
@@ -76,12 +77,22 @@
           <p>是否保存草稿</p>
         </a-modal>
       </Module>
+
+      <Module>
+        <a-button type="" @click="isShowEdited = !isShowEdited"
+          >查看上次编辑的内容</a-button
+        >
+      </Module>
+
+      <Module v-show="isShowEdited" class="enter-x">
+        <h1>标题</h1>
+        <p>{{ edited?.title || '' }}</p>
+        <hr />
+        <h2 class="mt-3">内容</h2>
+        <div v-html="edited?.content || ''" />
+      </Module>
     </template>
   </FlexCol>
-
-  <Module>
-    <div ref="testRef"></div>
-  </Module>
 </template>
 
 <script lang="ts">
@@ -152,12 +163,12 @@ export default {
 
     //@ts-ignore
     const fileList = ref<UploadProps['fileList']>([
-      {
-        uid: '-1',
-        name: 'image.png',
-        status: 'done',
-        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-      }
+      // {
+      //   uid: '-1',
+      //   name: 'image.png',
+      //   status: 'done',
+      //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+      // }
     ])
 
     const handleCancel = () => {
@@ -203,6 +214,7 @@ export default {
 
     const nosaveEdit = () => {
       message.success('正在为您跳转到首页...', 2)
+      // cache.deleteCache('editingBlog')
 
       setTimeout(() => {
         router.push('/')
@@ -227,14 +239,17 @@ export default {
     }
 
     onMounted(() => {
-      const result = cache.getCache('editingBlog')
-
-      if (!result) {
-        return
-      }
-      blogTitle.value = result.title
-      blogType.value = result.type
+      // const result = cache.getCache('editingBlog')
+      // if (!result) {
+      //   return
+      // }
+      // blogTitle.value = result.title
+      // blogType.value = result.type
     })
+
+    const edited = cache.getCache('editingBlog')
+
+    const isShowEdited = ref(false)
 
     return {
       blogTitle,
@@ -260,7 +275,9 @@ export default {
       handleQuitEdit,
       saveEdit,
       nosaveEdit,
-      handlePushBlog
+      handlePushBlog,
+      edited,
+      isShowEdited
     }
   }
 }

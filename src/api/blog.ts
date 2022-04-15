@@ -33,6 +33,7 @@ export const requestBlogListById = (currentPage: number, pageSize: number) => {
   return hyRequest.get<IResponsType<IBlogResultType>>({
     url: BlogApi.blogList,
     params: {
+      userId: userInfo.id,
       page: currentPage,
       page_size: pageSize
     }

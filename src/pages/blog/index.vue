@@ -25,6 +25,7 @@ import { message } from 'ant-design-vue'
 export default defineComponent({
   setup() {
     const commentList = ref<ICommentType>()
+
     const getData = async () => {
       const res = await requestCommentList(205)
 

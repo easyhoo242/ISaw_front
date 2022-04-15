@@ -82,7 +82,7 @@ export default defineComponent({
     }
   },
   emits: ['submit'],
-  setup(_, { emit }) {
+  setup(props, { emit }) {
     const comments = ref<Comment[]>([])
     const submitting = ref<boolean>(false)
     const currntComment = ref<string>('')
@@ -90,7 +90,6 @@ export default defineComponent({
     const user = usecache.getCache('user')
 
     const handleSubmit = () => {
-      console.log('submit', currntComment.value)
       emit('submit', currntComment.value)
     }
 

@@ -18,9 +18,18 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { requestCommentList } from '~/api'
 
 export default defineComponent({
   setup() {
+    const getData = async () => {
+      const res = await requestCommentList(205)
+
+      console.log(res)
+    }
+
+    getData()
+
     return {}
   }
 })

@@ -26,7 +26,8 @@ export interface IBlogResultType {
 
 enum BlogApi {
   blogList = '/moment',
-  createBlog = '/moment'
+  createBlog = '/moment',
+  getCommentList = '/comment/'
 }
 
 export const requestBlogListById = (currentPage: number, pageSize: number) => {
@@ -50,5 +51,15 @@ export const createBlog = (data: ICreateBlogType) => {
   return hyRequest.post<IResponsType<any>>({
     url: BlogApi.createBlog,
     data
+  })
+}
+
+// 评论功能
+export const requestCommentList = (momentId: number) => {
+  return hyRequest.get({
+    url: BlogApi.getCommentList,
+    params: {
+      momentId
+    }
   })
 }

@@ -1,5 +1,5 @@
 <template>
-  <div>blog/id</div>
+  <div>blog-id</div>
 </template>
 
 <script lang="ts">

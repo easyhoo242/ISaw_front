@@ -2,7 +2,7 @@
   <Module corner>
     <a-comment>
       <template #avatar>
-        <a-avatar src="https://joeschmoe.io/api/v1/random" alt="龙傲天" />
+        <a-avatar src="https://joeschmoe.io/api/v1/random" alt="用户头像" />
       </template>
       <template #content>
         <a-form-item>

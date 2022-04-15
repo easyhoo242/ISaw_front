@@ -4,7 +4,7 @@
   <FlexCol>
     <template #body>
       <Content />
-      <Comment />
+      <Comment :data="commentList" @submit="handleSubmit" />
     </template>
 
     <template #side>
@@ -17,20 +17,47 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { requestCommentList } from '~/api'
+import { defineComponent, ref } from 'vue'
+import { requestCommentList, postComment } from '~/api'
+import type { ICommentType } from '~/api'
+import { message } from 'ant-design-vue'
 
 export default defineComponent({
   setup() {
+    const commentList = ref<ICommentType>()
     const getData = async () => {
       const res = await requestCommentList(205)
 
-      console.log(res)
+      commentList.value = res.data as ICommentType
+    }
+
+    const handleCreateComment = async (content: string) => {
+      const res = await postComment(205, content)
+
+      if (!res.flag) {
+        message.error('评论发表失败~', 3)
+        return
+      }
+
+      message.success('评论发表成功~', 3)
+    }
+
+    const handleSubmit = (currntComment: string) => {
+      if (!currntComment) {
+        return
+      }
+
+      handleCreateComment(currntComment)
+      // 刷新列表
+      getData()
     }
 
     getData()
 
-    return {}
+    return {
+      commentList,
+      handleSubmit
+    }
   }
 })
 </script>

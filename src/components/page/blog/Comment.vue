@@ -1,12 +1,12 @@
 <template>
-  <Module corner>
+  <Module>
     <a-comment>
       <template #avatar>
-        <a-avatar src="https://joeschmoe.io/api/v1/random" alt="用户头像" />
+        <a-avatar :src="user.logo" alt="用户头像" />
       </template>
       <template #content>
         <a-form-item>
-          <a-textarea v-model:value="value" :rows="4" />
+          <a-textarea v-model:value="currntComment" :rows="4" />
         </a-form-item>
         <a-form-item>
           <a-button
@@ -19,99 +19,91 @@
           </a-button>
         </a-form-item>
       </template>
-
-      <a-list
-        v-if="comments.length"
-        :data-source="comments"
-        :header="`${comments.length} 条评论`"
-        item-layout="horizontal"
-      >
-        <template #renderItem="{ item }">
-          <a-list-item>
-            <a-comment
-              :author="item.author"
-              :avatar="item.avatar"
-              :content="item.content"
-              :datetime="item.datetime"
-            >
-              <template #actions>
-                <span key="comment-nested-reply-to">回 复</span>
-              </template>
-
-              <a-comment
-                :author="item.author"
-                :avatar="item.avatar"
-                :content="item.content"
-                :datetime="item.datetime"
-              >
-              </a-comment>
-            </a-comment>
-          </a-list-item>
-        </template>
-      </a-list>
-
-      <Module v-else title="评论列表" class="empty mt-0 p-0">
-        <a-empty :description="null" class="py-6" />
-      </Module>
     </a-comment>
+  </Module>
+
+  <Module v-if="data?.father?.length || 0">
+    <a-list
+      :data-source="data.father"
+      :header="`${data?.father?.length || 0} 条评论`"
+      item-layout="horizontal"
+    >
+      <template #renderItem="{ item }">
+        <a-list-item>
+          <a-comment
+            :author="item.user?.name"
+            :content="item.content"
+            :datetime="item.createAt.split('T')[0]"
+          >
+            <template #avatar>
+              <a-avatar :src="item.user?.logo" alt="用户头像" />
+            </template>
+
+            <template #actions>
+              <span key="comment-nested-reply-to">回 复</span>
+            </template>
+
+            <div v-for="son in data.son">
+              <a-comment
+                v-if="son.comment_id === item.id"
+                :author="son.user.name"
+                :content="son.content"
+                :datetime="son.createAt.split('T')[0]"
+              >
+                <template #avatar>
+                  <a-avatar :src="son.user?.logo" alt="用户头像" />
+                </template>
+              </a-comment>
+            </div>
+          </a-comment>
+        </a-list-item>
+      </template>
+    </a-list>
+  </Module>
+
+  <Module v-else title="评论列表">
+    <a-empty :description="null" class="py-6" />
   </Module>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import { useDayjs } from '~/hooks'
+import { defineComponent, PropType, ref } from 'vue'
+import type { ICommentType } from '~/api'
+import { BASE_LOGO } from '~/api'
+import Module from '~/components/global/Module.vue'
 
-interface Comment {
-  author: string
-  avatar: string
-  content: string
-  datetime: string
-  children?: Comment[]
-}
+import usecache from '~/utils/cache'
 
 export default defineComponent({
-  setup() {
+  props: {
+    data: {
+      type: Object as PropType<ICommentType>,
+      default: () => []
+    }
+  },
+  emits: ['submit'],
+  setup(_, { emit }) {
     const comments = ref<Comment[]>([])
-
     const submitting = ref<boolean>(false)
-    const value = ref<string>('')
+    const currntComment = ref<string>('')
+
+    const user = usecache.getCache('user')
+
     const handleSubmit = () => {
-      if (!value.value) {
-        return
-      }
-
-      submitting.value = true
-
-      setTimeout(() => {
-        submitting.value = false
-        comments.value = [
-          {
-            author: 'Du Cheng',
-            avatar: 'https://joeschmoe.io/api/v1/random',
-            content: value.value,
-            datetime: useDayjs().fromNow(),
-            children: [
-              {
-                author: 'Du Cheng',
-                avatar: 'https://joeschmoe.io/api/v1/random',
-                content: value.value,
-                datetime: useDayjs().fromNow()
-              }
-            ]
-          },
-          ...comments.value
-        ]
-        value.value = ''
-      }, 1000)
+      console.log('submit', currntComment.value)
+      emit('submit', currntComment.value)
     }
 
     return {
+      user,
+      BASE_LOGO,
       comments,
       submitting,
-      value,
+      currntComment,
       handleSubmit
     }
-  }
+  },
+  components: { Module }
 })
 </script>
 

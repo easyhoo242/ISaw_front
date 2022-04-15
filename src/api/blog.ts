@@ -27,7 +27,8 @@ export interface IBlogResultType {
 enum BlogApi {
   blogList = '/moment',
   createBlog = '/moment',
-  getCommentList = '/comment/'
+  getCommentList = '/comment/',
+  postComment = '/comment'
 }
 
 export const requestBlogListById = (currentPage: number, pageSize: number) => {
@@ -55,11 +56,47 @@ export const createBlog = (data: ICreateBlogType) => {
 }
 
 // 评论功能
+
+interface IUser {
+  id: number
+  logo: string
+  name: string
+}
+export interface ICommentType {
+  father: {
+    content: string
+    id: number
+    createAt: string
+    user: IUser
+  }[]
+
+  son: {
+    comment_id: number
+    content: string
+    createAt: string
+    id: number
+    user: IUser
+  }[]
+}
+
 export const requestCommentList = (momentId: number) => {
-  return hyRequest.get({
+  return hyRequest.get<IResponsType<ICommentType>>({
     url: BlogApi.getCommentList,
     params: {
       momentId
+    }
+  })
+}
+
+// 发表评论
+
+export const postComment = (momentId: number, content: string) => {
+  return hyRequest.post<IResponsType<any>>({
+    url: BlogApi.postComment,
+    data: {
+      userId: userInfo.id,
+      momentId,
+      content
     }
   })
 }

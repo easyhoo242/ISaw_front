@@ -4,7 +4,12 @@
   <FlexCol>
     <template #body>
       <Content />
-      <Comment :data="commentList" @submit="handleSubmit" :total="total" />
+      <Comment
+        :data="commentList"
+        @submit="handleSubmit"
+        @reply="handleReply"
+        :total="total"
+      />
       <a-pagination
         :current="currentPage"
         :pageSize="10"
@@ -19,7 +24,6 @@
     <template #side>
       <Sidebar>
         <Casual />
-        <TagList />
       </Sidebar>
     </template>
   </FlexCol>
@@ -27,7 +31,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, inject } from 'vue'
-import { requestCommentList, postComment } from '~/api'
+import { requestCommentList, postComment, postReplyComment } from '~/api'
 import type { ICommentType } from '~/api'
 import { message } from 'ant-design-vue'
 
@@ -56,8 +60,13 @@ export default defineComponent({
       getData()
     }
 
-    const handleCreateComment = async (content: string) => {
-      const res = await postComment(205, content)
+    // 发表评论
+    const handleSubmit = async (currntComment: string) => {
+      if (!currntComment) {
+        return
+      }
+
+      const res = await postComment(205, currntComment)
 
       if (!res.flag) {
         message.error('评论发表失败~', 3)
@@ -65,15 +74,24 @@ export default defineComponent({
       }
 
       message.success('评论发表成功~', 3)
+      // 刷新列表
+      getData()
+      reload()
     }
 
-    const handleSubmit = (currntComment: string) => {
-      if (!currntComment) {
+    // 回复评论
+    const handleReply = async (commentId: number, reply: string) => {
+      if (!commentId) {
         return
       }
 
-      handleCreateComment(currntComment)
-      // 刷新列表
+      const { flag, msg } = await postReplyComment(205, reply, commentId)
+
+      if (!flag) {
+        message.error(msg, 2)
+      }
+
+      message.success(msg, 3)
       getData()
       reload()
     }
@@ -85,7 +103,8 @@ export default defineComponent({
       handleSubmit,
       currentPage,
       total,
-      handlePageChange
+      handlePageChange,
+      handleReply
     }
   }
 })

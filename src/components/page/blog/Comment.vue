@@ -27,6 +27,7 @@
       :data-source="data.father"
       :header="`${total} 条评论`"
       item-layout="horizontal"
+      class="px-6"
     >
       <template #renderItem="{ item }">
         <a-list-item>
@@ -40,8 +41,15 @@
             </template>
 
             <template #actions>
-              <span key="comment-nested-reply-to">回 复</span>
+              <span key="comment-nested-reply-to" @click="showModal(item.id)">
+                回 复
+              </span>
             </template>
+
+            <!-- handleReply(item.id) -->
+            <a-modal v-model:visible="visible" title="回复消息" @ok="handleOk">
+              <a-input v-model:value="currentReply" />
+            </a-modal>
 
             <div v-for="son in data.son">
               <a-comment
@@ -85,7 +93,7 @@ export default defineComponent({
       default: 23
     }
   },
-  emits: ['submit'],
+  emits: ['submit', 'reply'],
   setup(props, { emit }) {
     const comments = ref<Comment[]>([])
     const submitting = ref<boolean>(false)
@@ -93,8 +101,21 @@ export default defineComponent({
 
     const user = usecache.getCache('user')
 
+    const visible = ref<boolean>(false)
     const handleSubmit = () => {
       emit('submit', currntComment.value)
+    }
+
+    const currentComment = ref(0)
+    const currentReply = ref('')
+    const showModal = (id: number) => {
+      currentComment.value = id
+      visible.value = true
+    }
+
+    const handleOk = () => {
+      visible.value = false
+      emit('reply', currentComment.value, currentReply.value)
     }
 
     return {
@@ -103,7 +124,12 @@ export default defineComponent({
       comments,
       submitting,
       currntComment,
-      handleSubmit
+      handleSubmit,
+      // 回复
+      currentReply,
+      visible,
+      showModal,
+      handleOk
     }
   },
   components: { Module }

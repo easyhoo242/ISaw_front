@@ -28,7 +28,8 @@ enum BlogApi {
   blogList = '/moment',
   createBlog = '/moment',
   getCommentList = '/comment/',
-  postComment = '/comment'
+  postComment = '/comment',
+  replyComment = '/comment/' // comment/{{momentId}}/reply
 }
 
 export const requestBlogListById = (currentPage: number, pageSize: number) => {
@@ -105,6 +106,22 @@ export const postComment = (momentId: number, content: string) => {
       userId: userInfo.id,
       momentId,
       content
+    }
+  })
+}
+
+// 回复评论
+export const postReplyComment = (
+  momentId: number,
+  content: string,
+  commentId: number
+) => {
+  return hyRequest.post<IResponsType<any>>({
+    url: BlogApi.replyComment + commentId + '/reply',
+    data: {
+      userId: userInfo.id,
+      content,
+      momentId
     }
   })
 }

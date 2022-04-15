@@ -26,12 +26,12 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { ILatelyType, BASE_LOGO } from '~/api'
+import { ILatelyCommentType, BASE_LOGO } from '~/api'
 
 export default defineComponent({
   props: {
     data: {
-      type: Object as PropType<ILatelyType>,
+      type: Object as PropType<ILatelyCommentType>,
       default: () => []
     }
   },

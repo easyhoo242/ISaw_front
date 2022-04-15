@@ -2,7 +2,7 @@
   <a-timeline-item color="blue" class="pb-1">
     <div class="item ml-2 pt-1">
       <div class="item-title">
-        <A :href="`about/${data.id}`"> {{ data.title || data.content }} </A>
+        <A :href="`blog/${data.id}`"> {{ data.title || data.content }} </A>
       </div>
       <div class="item-desc mt-1 flex items-center">
         {{ data?.user.name || 'ISawer~' }} <i class="mx-2"></i>

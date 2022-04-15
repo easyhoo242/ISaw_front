@@ -2,13 +2,13 @@
   <Module v-for="item in data" :key="item.id" class="module flex">
     <div class="logo flex-0 w-210px h-158px rounded-md overflow-hidden mr-5">
       <!-- <A :href="`/blog/${item.id}`"> <img :src="item.img" alt="" /></A> -->
-      <A href="/blog"> <img :src="BASE_LOGO" alt="" /></A>
+      <A :href="`/blog/${item.id}`"> <img :src="BASE_LOGO" alt="" /></A>
     </div>
 
     <div class="hotlist-content flex-1 pr-3">
       <div class="title flex items-center text-gray-700">
         <div v-if="item.like > 100" class="hot-tag mr-2">热文</div>
-        <A href="/blog">
+        <A :href="`/blog/${item.id}`">
           <div class="text-lg">
             {{ item.title || '这个人也太懒了吧 居然忘了取标题' }}
           </div>

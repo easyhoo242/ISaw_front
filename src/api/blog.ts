@@ -25,18 +25,29 @@ export interface IBlogResultType {
 }
 
 enum BlogApi {
-  blogList = '/moment'
+  blogList = '/moment',
+  createBlog = '/moment'
 }
-
-
 
 export const requestBlogListById = (currentPage: number, pageSize: number) => {
   return hyRequest.get<IResponsType<IBlogResultType>>({
     url: BlogApi.blogList,
     params: {
-      userId: userInfo.id,
       page: currentPage,
       page_size: pageSize
     }
+  })
+}
+
+export interface ICreateBlogType {
+  title: string
+  content: string
+  type: number
+}
+
+export const createBlog = (data: ICreateBlogType) => {
+  return hyRequest.post<IResponsType<any>>({
+    url: BlogApi.createBlog,
+    data
   })
 }

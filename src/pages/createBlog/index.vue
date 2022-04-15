@@ -2,25 +2,25 @@
   <FlexCol>
     <template #body>
       <Module>
-        <div class="text-center text-lg mx-2.5 pb-2.5 font-bold">博客标题</div>
+        <div class="text-left text-lg mx-2.5 pb-2.5 font-bold">标题</div>
         <a-input v-model:value="blogTitle" class="text-center"></a-input>
       </Module>
       <Module>
-        <div ref="shallowRef">
-          <Toolbar
-            style="border-bottom: 1px solid #ccc"
-            :editor="editorRef"
-            :defaultConfig="toolbarConfig"
-            :mode="mode"
-          />
-          <Editor
-            style="height: 500px; overflow-y: hidden"
-            v-model="valueHtml"
-            :defaultConfig="editorConfig"
-            :mode="mode"
-            @onCreated="handleCreated"
-          />
-        </div>
+        <div class="text-left text-lg mx-2.5 pb-2.5 font-bold">正文</div>
+
+        <Toolbar
+          style="border-bottom: 1px solid #ccc"
+          :editor="editorRef"
+          :defaultConfig="toolbarConfig"
+          :mode="mode"
+        />
+        <Editor
+          style="height: 500px; overflow-y: hidden"
+          v-model="valueHtml"
+          :defaultConfig="editorConfig"
+          :mode="mode"
+          @onCreated="handleCreated"
+        />
       </Module>
 
       <Module title="上传封面">
@@ -74,16 +74,23 @@
       </Module>
     </template>
   </FlexCol>
+
+  <Module>
+    <div ref="testRef"></div>
+  </Module>
 </template>
 
 <script lang="ts">
 import { onBeforeUnmount, ref, shallowRef, onMounted, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import cache from '~/utils/cache'
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
-import cache from '~/utils/cache'
 import TagList from '~/components/page/createBlog/TagList.vue'
 import Module from '~/components/global/Module.vue'
 import { message } from 'ant-design-vue'
+import { createBlog } from '~/api'
+import type { ICreateBlogType } from '~/api'
 
 // 上传封面
 import { PlusOutlined } from '@ant-design/icons-vue'
@@ -102,16 +109,16 @@ function getBase64(file: File) {
 export default {
   components: { Editor, Toolbar, TagList, Module, PlusOutlined },
   setup() {
+    const router = useRouter()
     const blogTitle = ref('')
 
     // 编辑器实例，必须用 shallowRef
     const editorRef = shallowRef()
 
     // 内容 HTML
-    const valueHtml = ref('<p>在这里键入您的内容...</p>')
+    const valueHtml = ref('')
 
     // 模拟 ajax 异步获取内容
-    onMounted(() => {})
 
     const toolbarConfig = {}
     const editorConfig = { placeholder: '请输入内容...' }
@@ -182,13 +189,23 @@ export default {
 
       if (isSave) {
         message.success('保存成功')
+        setTimeout(() => {
+          message.success('正在为您跳转到首页...')
+          router.push('/')
+        }, 1000)
       }
       visible.value = false
     }
 
-    const nosaveEdit = () => {}
+    const nosaveEdit = () => {
+      message.success('正在为您跳转到首页...', 2)
 
-    const handlePushBlog = () => {
+      setTimeout(() => {
+        router.push('/')
+      }, 1000)
+    }
+
+    const handlePushBlog = async () => {
       cache.setCache('result', {
         title: blogTitle.value,
         content: valueHtml.value,
@@ -197,7 +214,12 @@ export default {
 
       const result = cache.getCache('result')
 
-      console.log(result)
+      const res = await createBlog(result as ICreateBlogType)
+
+      if (!res.flag) {
+        message.error('出错啦~ 发表失败')
+      }
+      message.success(res.msg + '~', 2)
     }
 
     watch(
@@ -206,6 +228,21 @@ export default {
         console.log(valueHtml.value)
       }
     )
+
+    const testRef = ref(null)
+
+    onMounted(() => {
+      const result = cache.getCache('editingBlog')
+
+      console.log(testRef)
+
+      if (!result) {
+        return
+      }
+      blogTitle.value = result.title
+      valueHtml.value = '<p>result.content</p>'
+      blogType.value = result.type
+    })
 
     return {
       blogTitle,
@@ -218,9 +255,7 @@ export default {
       // 选择标签
       blogType,
       handleGetBlogType,
-      handleClick() {
-        console.log(valueHtml.value)
-      },
+      handleClick() {},
       // 上传封面部分
       previewVisible,
       previewImage,

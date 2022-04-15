@@ -21,10 +21,10 @@
         <div class="desc mt-5px text-gray-500 min-h-42px">
           <a-popover trigger="hover" placement="bottom">
             <template #content>
-              {{ data.desc }}
+              {{ data.slogan }}
             </template>
             <div>
-              {{ data.desc }}
+              {{ data.slogan }}
             </div>
           </a-popover>
         </div>
@@ -61,7 +61,7 @@ import { IUserInfoType } from '~/api'
 
 export default defineComponent({
   props: {
-    data1: {
+    data: {
       type: Object as PropType<IUserInfoType>,
       default: () => ({})
     }

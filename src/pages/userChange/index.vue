@@ -73,17 +73,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, reactive, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import { changeUserInfo } from '~/api'
+import { handleUserLogin } from '~/hooks/userLogin'
 import type { IChangeUserInfo } from '~/api'
 import cache from '~/utils/cache'
 import { message } from 'ant-design-vue'
 
 export default defineComponent({
+  inject: ['reload'],
   setup() {
     const router = useRouter()
+    const reload = inject('reload', Function, true)
+
     const userInfo = cache.getCache('user')
+    const account = cache.getCache('account')
 
     const layout = {
       labelCol: { span: 4 },
@@ -122,6 +127,12 @@ export default defineComponent({
 
       message.success('个人信息修改成功~', 3)
 
+      await handleUserLogin({
+        username: account.username,
+        password: account.password
+      })
+
+      reload()
       router.push('/user')
     }
     return {

@@ -10,6 +10,8 @@ export const handleUserLogin = async (accountInfo: IUserType) => {
     return
   }
 
+  localCache.setCache('account', accountInfo)
+
   localCache.setCache('token', data.token)
 
   const { data: userInfo } = await getUserDetail(data.id)

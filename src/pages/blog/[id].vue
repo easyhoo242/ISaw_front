@@ -10,7 +10,9 @@
         @reply="handleReply"
         :total="total"
       />
+
       <a-pagination
+        v-if="commentList?.father.length"
         :current="currentPage"
         :pageSize="10"
         :total="total"

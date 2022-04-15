@@ -43,7 +43,7 @@ export default defineComponent({
   }
 }
 .img {
-  background: url('https://www.talklee.com/zb_users/upload/2021/12/202112021638435849289398.jpg');
+  background: url('https://img0.baidu.com/it/u=854216396,1195659348&fm=253&fmt=auto&app=138&f=JPEG?w=1067&h=406');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center center;

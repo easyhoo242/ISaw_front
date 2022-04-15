@@ -32,7 +32,7 @@ export default defineComponent({
       title: '阿里旗下相互宝将于1月28日关停：今起用户不再参与分摊播',
       read: 640,
       discuss: 265,
-      url: 'https://www.talklee.com/zb_users/upload/2021/12/202112021638435849289398.jpg'
+      url: 'https://img0.baidu.com/it/u=854216396,1195659348&fm=253&fmt=auto&app=138&f=JPEG?w=1067&h=406'
     }
 
     const talkList = new Array(9)

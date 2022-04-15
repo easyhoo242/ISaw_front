@@ -7,8 +7,10 @@
         <!-- 左边 -->
         <div class="flex items-center">
           <div class="flex-0 flex mr-10">
-            <logos:webplatform class="text-2xl mr-3" />
-            <span class="text-blue-900 dark:text-white font-bold text-xl">
+            <span
+              class="text-blue-900 dark:text-white font-bold text-xl"
+              style="user-select: none"
+            >
               ISaw
             </span>
           </div>

@@ -25,7 +25,7 @@
   <Module v-if="data?.father?.length || 0">
     <a-list
       :data-source="data.father"
-      :header="`${data?.father?.length || 0} 条评论`"
+      :header="`${total} 条评论`"
       item-layout="horizontal"
     >
       <template #renderItem="{ item }">
@@ -79,6 +79,10 @@ export default defineComponent({
     data: {
       type: Object as PropType<ICommentType>,
       default: () => []
+    },
+    total: {
+      type: Number,
+      default: 23
     }
   },
   emits: ['submit'],

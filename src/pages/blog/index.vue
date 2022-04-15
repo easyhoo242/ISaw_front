@@ -4,7 +4,16 @@
   <FlexCol>
     <template #body>
       <Content />
-      <Comment :data="commentList" @submit="handleSubmit" />
+      <Comment :data="commentList" @submit="handleSubmit" :total="total" />
+      <a-pagination
+        :current="currentPage"
+        :pageSize="10"
+        :total="total"
+        show-quick-jumper
+        hideOnSinglePage
+        class="my-3"
+        @change="handlePageChange"
+      />
     </template>
 
     <template #side>
@@ -29,10 +38,22 @@ export default defineComponent({
 
     const reload = inject('reload', Function, true)
 
+    const currentPage = ref(0)
+
+    const total = ref(5)
+
     const getData = async () => {
-      const res = await requestCommentList(205)
+      const res = await requestCommentList(205, currentPage.value, 5)
 
       commentList.value = res.data as ICommentType
+
+      total.value = res.data?.count as number
+    }
+
+    const handlePageChange = (page: number) => {
+      currentPage.value = page
+
+      getData()
     }
 
     const handleCreateComment = async (content: string) => {
@@ -61,7 +82,10 @@ export default defineComponent({
 
     return {
       commentList,
-      handleSubmit
+      handleSubmit,
+      currentPage,
+      total,
+      handlePageChange
     }
   }
 })

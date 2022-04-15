@@ -24,6 +24,7 @@
       <template #side>
         <SideBar>
           <Casual />
+          <ChangeInfo />
         </SideBar>
       </template>
     </FlexCol>
@@ -36,6 +37,7 @@ import { requestBlogListById } from '~/api'
 import type { IBlogResultListType } from '~/api'
 import { Empty } from 'ant-design-vue'
 import Module from '~/components/global/Module.vue'
+import ChangeInfo from '~/components/page/user/ChangeInfo.vue'
 
 export default defineComponent({
   setup() {
@@ -69,7 +71,7 @@ export default defineComponent({
       simpleImage: Empty.PRESENTED_IMAGE_SIMPLE
     }
   },
-  components: { Module }
+  components: { Module, ChangeInfo }
 })
 </script>
 

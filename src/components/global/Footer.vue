@@ -17,7 +17,7 @@
           </div>
 
           <div class="text-xs">
-            Copyright 2015-2022
+            Copyright 2022-2022
             <a href="/">ISaw.</a>
           </div>
         </div>
@@ -27,12 +27,12 @@
           class="footer-left-desc mt-4 pt-4 border-t-light-900 border-t mr-10"
         >
           <div class="mb-2">
-            <span class="rt-times mr-3">页面加载时长：0.074秒</span>
-            <span class="rt-sql mr-3">数据库查询：29 次</span>
-            <span class="rt-memory mr-3">占用内存：3.47MB</span>
+            <span class="rt-times mr-3">页面加载时长：xxxx秒</span>
+            <span class="rt-sql mr-3">数据库查询：xx 次</span>
+            <span class="rt-memory mr-3">占用内存：x.xxMB</span>
           </div>
           <span>
-            <a> 辽ICP备150xxxxx号 </a>
+            <a> 京ICP备1xxxxxxxx号 </a>
           </span>
         </div>
       </div>
@@ -40,8 +40,7 @@
       <!-- 右侧 -->
       <div class="footer-right flex-0 w-465px">
         <div class="footer-right-text bg-gray-600 px-3 py-2 rounded-md">
-          ISaw.
-          提供个人/企业网站建设_zblogPHP安装_制作zblog博客主题模板以及SEO排名优化的原创独立博客
+          ISaw.ISaw.ISaw.ISaw.ISaw.ISaw.ISaw.ISaw.ISaw.ISaw.ISaw.ISaw.ISaw.
         </div>
       </div>
     </div>

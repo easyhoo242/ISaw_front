@@ -6,7 +6,7 @@ export interface IUserInfoType {
   id: number
   username: string
   name: string
-  desc: string
+  slogan: string
   age: number
   sex: string
   telPhone: string

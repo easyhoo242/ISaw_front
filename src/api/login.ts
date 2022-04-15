@@ -46,7 +46,7 @@ export interface IChangeUserInfo {
   age: number
   email: string
   telPhone: string
-  desc: string
+  slogan: string
   userId: number
 }
 

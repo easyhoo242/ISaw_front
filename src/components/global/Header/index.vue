@@ -27,15 +27,7 @@
               <template #tab>
                 <span class="py-2">
                   <gg:menu-boxed class="mr-2" />
-                  <strong class="align-top">互联网</strong>
-                </span>
-              </template>
-            </a-tab-pane>
-            <a-tab-pane key="/talk">
-              <template #tab>
-                <span class="py-2">
-                  <gg:menu-boxed class="mr-2" />
-                  <strong class="align-top">随便看看</strong>
+                  <strong class="align-top">教程笔记</strong>
                 </span>
               </template>
             </a-tab-pane>
@@ -44,6 +36,14 @@
                 <span class="py-2">
                   <gg:menu-boxed class="mr-2" />
                   <strong class="align-top">专题</strong>
+                </span>
+              </template>
+            </a-tab-pane>
+            <a-tab-pane key="/talk">
+              <template #tab>
+                <span class="py-2">
+                  <gg:menu-boxed class="mr-2" />
+                  <strong class="align-top">随便看看</strong>
                 </span>
               </template>
             </a-tab-pane>

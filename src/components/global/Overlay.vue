@@ -32,7 +32,7 @@ export default defineComponent({
       default: () => ({
         title: '教程笔记',
         count: 231,
-        desc: 'ISaw教程笔记主要分享电脑软件、操作系统及网站建设过程中的各种问题和解决方案，致力于创造一个高质量的教程笔记分享平台',
+        desc: '教程笔记模块主要分享电脑软件、操作系统及网站建设过程中的各种问题和解决方案，致力于创造一个高质量的交流分享平台',
         url: 'https://cn.bing.com/th?id=OHR.SiberianSunset_ZH-CN5711093662_1920x1080.jpg&rf=LaDigue_1920x1080.jpg?https://cn.bing.com/th?id=OHR.SiestaKey_ZH-CN1759696989_1920x1080.jpg'
       })
     }

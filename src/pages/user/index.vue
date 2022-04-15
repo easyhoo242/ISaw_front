@@ -54,7 +54,7 @@ export default defineComponent({
       currentPage.value = page
       getData()
       window.scrollTo({
-        top: 0,
+        top: 400,
         behavior: 'smooth'
       })
     }

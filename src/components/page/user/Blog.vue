@@ -1,21 +1,13 @@
 <template>
-  <Module v-for="item in data" :key="item.id" class="module flex">
+  <Module v-for="item in data" :key="item?.id" class="module flex">
     <div class="logo flex-0 w-210px h-158px rounded-md overflow-hidden mr-5">
-      <!-- <A :href="`/blog/${item.id}`"> <img :src="item.img" alt="" /></A> -->
-      <A :href="`/blog/${item.id}`">
-        <img
-          :src="
-            item.logo ||
-            'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.3xm.com.cn%2Fimages%2Fb%2F204%2F3702022602375856066119.jpg&refer=http%3A%2F%2Fimg.3xm.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1652477933&t=e22aae556d7468713c7c49ce3d2537fd'
-          "
-          alt=""
-      /></A>
+      <A :href="`/blog/${item?.id}`"> <img :src="BASE_LOGO" alt="" /></A>
     </div>
 
     <div class="hotlist-content flex-1 pr-3">
       <div class="title flex items-center text-gray-700">
         <div v-if="item.like > 100" class="hot-tag mr-2">热文</div>
-        <A :href="`/blog/${item.id}`">
+        <A :href="`/blog/${item?.id}`">
           <div class="text-lg">
             {{ item.title || '这个人也太懒了吧 居然忘了取标题' }}
           </div>
@@ -34,7 +26,7 @@
         </div>
         <div class="who flex-0">
           <!-- <a-icon></a-icon> -->
-          <A :href="`/user/${item.user.id}`">🏆 {{ item.user.name }}</A>
+          <A :href="`/user/${item?.user?.id}`">🏆 {{ item?.user?.name }}</A>
         </div>
       </div>
     </div>

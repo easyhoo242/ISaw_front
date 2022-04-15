@@ -3,26 +3,22 @@
     class="blog-header -enter-y text-white rounded-md pt-13 text-center overflow-hidden"
   >
     <div class="blog-header-title font-bold text-3xl pb-6">
-      记录Vue3 + TypeScript传递给子组件引用类型参数的类型赋予
+      {{ data?.title }}
     </div>
 
     <div class="desc-wrap">
       <div
         class="logo rounded-full h-20 w-20 overflow-hidden mt-5 mx-auto relative -top-7"
       >
-        <img
-          src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Finews.gtimg.com%2Fnewsapp_bt%2F0%2F14206928472%2F1000.jpg&refer=http%3A%2F%2Finews.gtimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1651510256&t=17fc44fffa91d0502d13a2869161b960"
-          alt="头像"
-          class="w-full h-full"
-        />
+        <img :src="data?.author?.logo" alt="头像" class="w-full h-full" />
       </div>
       <div class="desc relative -top-6">
         <div class="desc-name py-2 text-xl flex items-center justify-center">
-          <!-- <span class="text-base">🧛‍♀️</span> -->
-          ISaw
+          <A><span class="text-base">🧛‍♀️</span> {{ data?.author?.name }}</A>
         </div>
         <div class="desc-tag">
-          🕗3-17 <span class="mx-1">👁‍🗨1.66k 阅读</span> 💬2 评论
+          {{ data?.createTime?.split('T')[0] }}
+          <span class="mx-1">👁‍🗨1.66k 阅读</span> 💬{{ data.count }} 评论
         </div>
       </div>
     </div>
@@ -30,10 +26,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 
 export default defineComponent({
-  setup() {
+  props: {
+    data: {
+      type: Object as PropType<{
+        content: string
+        title: string
+        createTime: string
+        author: {
+          logo: string
+          name: string
+          userId: number
+        }
+        count: number
+      }>,
+      default: () => ({})
+    }
+  },
+  setup(props) {
+    console.log(1, props.data)
     return {}
   }
 })

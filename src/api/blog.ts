@@ -28,10 +28,12 @@ enum BlogApi {
   blogList = '/moment',
   createBlog = '/moment',
   getCommentList = '/comment/',
+  getMomentDetail = '/moment/',
   postComment = '/comment',
   replyComment = '/comment/' // comment/{{momentId}}/reply
 }
 
+// 动态列表
 export const requestBlogListById = (currentPage: number, pageSize: number) => {
   return hyRequest.get<IResponsType<IBlogResultType>>({
     url: BlogApi.blogList,
@@ -56,8 +58,30 @@ export const createBlog = (data: ICreateBlogType) => {
   })
 }
 
-// 评论功能
+// 动态详情
 
+interface IMomentType {
+  content: string
+  title: string
+  createTime: string
+  author: {
+    logo: string
+    name: string
+    userId: number
+  }
+}
+export interface IBlogDetailType {
+  detail: IMomentType
+  commentCount: number
+}
+
+export const requestBlogDetailById = (momentId: number) => {
+  return hyRequest.get<IResponsType<IBlogDetailType>>({
+    url: BlogApi.getMomentDetail + momentId
+  })
+}
+
+// 评论功能
 interface IUser {
   id: number
   logo: string

@@ -1,6 +1,6 @@
 <template>
   <BranchCrumb route="正文" />
-  <BlogHeader />
+  <BlogHeader :data="headerInfo" />
   <FlexCol>
     <template #body>
       <Content />
@@ -31,7 +31,12 @@
 
 <script lang="ts">
 import { defineComponent, ref, inject } from 'vue'
-import { requestCommentList, postComment, postReplyComment } from '~/api'
+import {
+  requestCommentList,
+  postComment,
+  postReplyComment,
+  requestBlogDetailById
+} from '~/api'
 import type { ICommentType } from '~/api'
 import { message } from 'ant-design-vue'
 
@@ -39,19 +44,29 @@ export default defineComponent({
   inject: ['reload'],
   setup() {
     const commentList = ref<ICommentType>()
-
     const reload = inject('reload', Function, true)
-
     const currentPage = ref(0)
-
     const total = ref(5)
+    const headerInfo = ref({})
+
+    const momentId = parseInt(window.location.pathname.split('/')[2])
 
     const getData = async () => {
-      const res = await requestCommentList(205, currentPage.value, 5)
+      const res = await requestCommentList(momentId, currentPage.value, 5)
 
       commentList.value = res.data as ICommentType
-
       total.value = res.data?.count as number
+
+      const resC = (await requestBlogDetailById(momentId)).data
+
+      console.log(resC)
+      // @ts-ignore
+      headerInfo.value = {
+        ...resC?.detail,
+        count: resC?.commentCount
+      }
+
+      console.log(headerInfo)
     }
 
     const handlePageChange = (page: number) => {
@@ -66,7 +81,7 @@ export default defineComponent({
         return
       }
 
-      const res = await postComment(205, currntComment)
+      const res = await postComment(momentId, currntComment)
 
       if (!res.flag) {
         message.error('评论发表失败~', 3)
@@ -85,7 +100,7 @@ export default defineComponent({
         return
       }
 
-      const { flag, msg } = await postReplyComment(205, reply, commentId)
+      const { flag, msg } = await postReplyComment(momentId, reply, commentId)
 
       if (!flag) {
         message.error(msg, 2)
@@ -104,7 +119,8 @@ export default defineComponent({
       currentPage,
       total,
       handlePageChange,
-      handleReply
+      handleReply,
+      headerInfo
     }
   }
 })

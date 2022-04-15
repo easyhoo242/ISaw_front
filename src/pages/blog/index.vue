@@ -17,14 +17,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, inject } from 'vue'
 import { requestCommentList, postComment } from '~/api'
 import type { ICommentType } from '~/api'
 import { message } from 'ant-design-vue'
 
 export default defineComponent({
+  inject: ['reload'],
   setup() {
     const commentList = ref<ICommentType>()
+
+    const reload = inject('reload', Function, true)
 
     const getData = async () => {
       const res = await requestCommentList(205)
@@ -51,6 +54,7 @@ export default defineComponent({
       handleCreateComment(currntComment)
       // 刷新列表
       getData()
+      reload()
     }
 
     getData()

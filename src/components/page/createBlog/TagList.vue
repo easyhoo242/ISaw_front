@@ -2,7 +2,7 @@
   <Module title="选择文章类型" corner logo>
     <div class="pt-4 pb-1 pl-3">
       您当前选择的类型为：
-      <span class="active">{{ data ? tags[data - 1].title : '默认类型' }}</span>
+      <span>{{ data ? tags[data - 1].title : '默认类型' }}</span>
     </div>
 
     <div class="flex items-center flex-wrap">
@@ -13,6 +13,7 @@
       >
         <a
           class="py-6px px-15px rounded-md"
+          :class="{ active: item.id === data }"
           @click="handleClick(item.id, item.title)"
         >
           {{ item.title }}
@@ -78,7 +79,7 @@ export default defineComponent({
     }
 
     &.active {
-      background-color: #3bc8ff99;
+      background-color: #2193f699;
       color: white;
     }
   }

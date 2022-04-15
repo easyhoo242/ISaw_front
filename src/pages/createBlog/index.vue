@@ -3,7 +3,11 @@
     <template #body>
       <Module>
         <div class="text-left text-lg mx-2.5 pb-2.5 font-bold">标题</div>
-        <a-input v-model:value="blogTitle" class="text-center"></a-input>
+        <a-input
+          v-model:value="blogTitle"
+          class="text-center"
+          size="large"
+        ></a-input>
       </Module>
       <Module>
         <div class="text-left text-lg mx-2.5 pb-2.5 font-bold">正文</div>
@@ -81,7 +85,7 @@
 </template>
 
 <script lang="ts">
-import { onBeforeUnmount, ref, shallowRef, onMounted, watch } from 'vue'
+import { onBeforeUnmount, ref, shallowRef, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import cache from '~/utils/cache'
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
@@ -222,25 +226,13 @@ export default {
       message.success(res.msg + '~', 2)
     }
 
-    watch(
-      () => valueHtml.value,
-      () => {
-        console.log(valueHtml.value)
-      }
-    )
-
-    const testRef = ref(null)
-
     onMounted(() => {
       const result = cache.getCache('editingBlog')
-
-      console.log(testRef)
 
       if (!result) {
         return
       }
       blogTitle.value = result.title
-      valueHtml.value = '<p>result.content</p>'
       blogType.value = result.type
     })
 

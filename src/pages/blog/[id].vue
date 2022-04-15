@@ -3,7 +3,7 @@
   <BlogHeader :data="headerInfo" />
   <FlexCol>
     <template #body>
-      <Content />
+      <Content :data="currentContent" />
       <Comment
         :data="commentList"
         @submit="handleSubmit"
@@ -48,6 +48,7 @@ export default defineComponent({
     const currentPage = ref(0)
     const total = ref(5)
     const headerInfo = ref({})
+    const currentContent = ref('')
 
     const momentId = parseInt(window.location.pathname.split('/')[2])
 
@@ -59,14 +60,12 @@ export default defineComponent({
 
       const resC = (await requestBlogDetailById(momentId)).data
 
-      console.log(resC)
+      currentContent.value = resC?.detail.content as string
       // @ts-ignore
       headerInfo.value = {
         ...resC?.detail,
         count: resC?.commentCount
       }
-
-      console.log(headerInfo)
     }
 
     const handlePageChange = (page: number) => {
@@ -120,7 +119,8 @@ export default defineComponent({
       total,
       handlePageChange,
       handleReply,
-      headerInfo
+      headerInfo,
+      currentContent
     }
   }
 })

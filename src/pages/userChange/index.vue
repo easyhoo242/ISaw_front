@@ -73,7 +73,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, inject } from 'vue'
+import { defineComponent, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { changeUserInfo } from '~/api'
 import { handleUserLogin } from '~/hooks/userLogin'
@@ -85,7 +85,6 @@ export default defineComponent({
   inject: ['reload'],
   setup() {
     const router = useRouter()
-    const reload = inject('reload', Function, true)
 
     const userInfo = cache.getCache('user')
     const account = cache.getCache('account')
@@ -115,7 +114,7 @@ export default defineComponent({
         sex: formState.user.sex || '1',
         age: formState.user.age || 18,
         telPhone: formState.user.telPhone || '1xxxxxxxxxx',
-        desc: formState.user.desc || '这个人还没有备注哦~',
+        slogan: formState.user.desc || '这个人还没有备注哦~',
         userId: userInfo.id
       }
 
@@ -132,7 +131,6 @@ export default defineComponent({
         password: account.password
       })
 
-      reload()
       router.push('/user')
     }
     return {

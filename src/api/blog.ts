@@ -54,7 +54,10 @@ export interface ICreateBlogType {
 export const createBlog = (data: ICreateBlogType) => {
   return hyRequest.post<IResponsType<any>>({
     url: BlogApi.createBlog,
-    data
+    data: {
+      ...data,
+      userId: userInfo.id
+    }
   })
 }
 

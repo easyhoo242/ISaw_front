@@ -6,10 +6,10 @@
     </div>
 
     <div class="hotlist-content flex-1 pr-3">
-      <div class="title flex items-center text-gray-700">
+      <div class="title flex items-center text-gray-700 overflow-hidden">
         <div v-if="item.like > 100" class="hot-tag mr-2">热文</div>
         <A :href="`/blog/${item.id}`">
-          <div class="text-lg">
+          <div class="content-title overflow-hidden">
             {{ item.title || '这个人也太懒了吧 居然忘了取标题' }}
           </div>
         </A>
@@ -89,5 +89,13 @@ export default defineComponent({
   color: #fff;
   font-size: 12px;
   padding: 2px 4px;
+}
+
+.content-title {
+  font-size: 1.125rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-all;
 }
 </style>

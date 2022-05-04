@@ -34,14 +34,17 @@ export default defineComponent({
           children: [
             {
               title: '互联网',
+              type: 2,
               url: ''
             },
             {
               title: '教程笔记',
+              type: 3,
               url: ''
             },
             {
               title: '闲言碎语',
+              type: 4,
               url: ''
             }
           ]

@@ -28,7 +28,7 @@ export default defineConfig({
       less: {
         javascriptEnabled: true,
         modifyVars: {
-          'primary-color': '#7546c9'
+          'primary-color': '#448ef6'
         }
       }
     }
@@ -54,11 +54,11 @@ export default defineConfig({
     // https://github.com/antfu/vite-plugin-icons
     ViteIcons(),
     viteThemePlugin({
-      colorVariables: ['#7546c9']
+      colorVariables: ['#448ef6']
     }),
     antdDarkThemePlugin({
       darkModifyVars: {
-        'primary-color': '#7546c9',
+        'primary-color': '#448ef6',
         ...antdDarkVars
       }
     })

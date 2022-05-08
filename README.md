@@ -32,11 +32,11 @@ Run `Volar: Switch TS Plugin on/off` from VSCode command palette.
 
 `vitesse` 除了包含 `vite` 启动快， 热更新快，修改配置文件不需要重启等优点外，还加入了一系列便于开发的插件，包含自动按需引入，路由自动生成，`layout` 系统布局，还有 多语言 `i18n` 和 `markdown` 的支持。
 
-除了采用 `TypeScript`， 还采用了 vue3 更简洁的  `<script setup>` 语法。
+除了采用 `TypeScript`， 还采用了 vue3 更简洁的 `<script setup>` 语法。
 
-在样式方面，采用了功能类优先（utility-first）的 [windicss](https://windicss.org/),  通过类名来使用内置的 css 样式，可以通过类名解决大部分的样式问题，包含 css 伪类， 暗黑模式变体等， 样式中的计量单位都采用的是经过响应式处理的 `rem` 。
+在样式方面，采用了功能类优先（utility-first）的 [windicss](https://windicss.org/), 通过类名来使用内置的 css 样式，可以通过类名解决大部分的样式问题，包含 css 伪类， 暗黑模式变体等， 样式中的计量单位都采用的是经过响应式处理的 `rem` 。
 
-有了这些深得开发者心的功能，整体的开发体验是比较好的。  
+有了这些深得开发者心的功能，整体的开发体验是比较好的。
 
 开发工具上， chrome 插件市场有新的 beta 版的 `Vue.js devtools`，需要卸载掉原来的重装，新插件同时支持 vue2 和 vue3, vscode 插件由原来的 `Vetur` 切换为 `Volar`。
 
@@ -52,34 +52,31 @@ GitHub 上提供了整体框架的 demo，想要上手来试一试 `vue3` 和 `v
 
 组件的按需引用使用了 [vite-plugin-components](https://github.com/antfu/vite-plugin-components) ，会让指定目录下的文件按需加载，默认的路径是 `src/components`， 在项目中可直接使用组件，省去了在每个 vue 文件中单独的 import 。
 
-``` html
+```html
 <template>
-  <div>
-    <HelloWorld msg="Hello Vue 3.0 + Vite" />
-  </div>
+   
+  <div>   <HelloWorld msg="Hello Vue 3.0 + Vite" />  </div>
 </template>
 ​
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 ```
 
 会自动转化成这样
 
-``` html
+```html
 <template>
-  <div>
-    <HelloWorld msg="Hello Vue 3.0 + Vite" />
-  </div>
+   
+  <div>   <HelloWorld msg="Hello Vue 3.0 + Vite" />  </div>
 </template>
 ​
 <script setup lang="ts">
-import HelloWorld from './src/components/HelloWorld.vue'
+  import HelloWorld from './src/components/HelloWorld.vue'
 </script>
 ```
 
 #### 图标按需引入
-[vite-plugin-icons](https://github.com/antfu/vite-plugin-icons) 插件支持引入 `iconify` 中的所有图标，在 `vite-plugin-components` 中一起使用也可以不用单独 import 就直接使用 `iconify` 提供的图标， 支持的图标可以访问 [icones](https://icones.js.org/) 查找。
 
+[vite-plugin-icons](https://github.com/antfu/vite-plugin-icons) 插件支持引入 `iconify` 中的所有图标，在 `vite-plugin-components` 中一起使用也可以不用单独 import 就直接使用 `iconify` 提供的图标， 支持的图标可以访问 [icones](https://icones.js.org/) 查找。
 
 ![1628652962773_image-20210811111752196.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ff5452c1fc0a479597dbd86b8542dc0c~tplv-k3u1fbpfcp-watermark.image)
 
@@ -89,27 +86,26 @@ import HelloWorld from './src/components/HelloWorld.vue'
 
 以上提到的所有按需引入的功能在 vite 中的配置如下：
 
-``` typescript
-import ViteComponents from "vite-plugin-components";
-import ViteIcons, { ViteIconsResolver } from "vite-plugin-icons";
+```typescript
+import ViteComponents from 'vite-plugin-components'
+import ViteIcons, { ViteIconsResolver } from 'vite-plugin-icons'
 export default defineConfig({
-  plugins: [
-    // https://github.com/antfu/vite-plugin-components
-    ViteComponents({
-      // auto import icons
-      customComponentResolvers: [
-        // https://github.com/antfu/vite-plugin-icons
-        ViteIconsResolver({
-          componentPrefix: "",
-        }),
-        (name: string) => {
-          if (name.startsWith('A'))
-            return { importName: name.slice(1), path: 'ant-design-vue' }
-        },
-      ],
-    }),
-    // https://github.com/antfu/vite-plugin-icons
-    ViteIcons(),
+  plugins: [
+    // https://github.com/antfu/vite-plugin-components
+    ViteComponents({
+      // auto import icons
+      customComponentResolvers: [
+        // https://github.com/antfu/vite-plugin-icons
+        ViteIconsResolver({
+          componentPrefix: ''
+        }),
+        (name: string) => {
+          if (name.startsWith('A'))
+            return { importName: name.slice(1), path: 'ant-design-vue' }
+        }
+      ]
+    }), // https://github.com/antfu/vite-plugin-icons
+    ViteIcons()
   ]
 })
 ```
@@ -120,16 +116,13 @@ export default defineConfig({
 
 `vite-plugin-pages` 可以默认将 `pages` 路径下的 vue 文件自动生成路由，`layouts` 可以通过每个 pages 目录下 vue 文件中的定义来指定使用哪一个 `layout`， 比如下面的定义让当前的路由加载 `src/layouts/empty` 文件。
 
-``` html
-<route lang="yaml">
-  meta:
-    layout: empty
-</route>
+```html
+<route lang="yaml">  meta:    layout: empty </route>
 ```
 
 关于路由的创建，在以前的 `vue-router 3.x` 版本中，我们通过 `mode` 来控制是使用 `history` 还是 `hash` 模式的路由，在 4.x 中是通过 `createWebHistory`， `createWebHashHistory` 来区分
 
-``` javascript
+```javascript
 import { createRouter, createWebHistory } from "vue-router";
 import { setupLayouts } from "layouts-generated";
 import generatedRoutes from "pages-generated";
@@ -146,9 +139,9 @@ app.use(router);
 
 web-dev 中全局使用了 TypeScript, 局部使用的类型定义我们可以在单个 vue 文件中单独定义，也可以单独使用 `d.ts` 文件，一些全局通用的类型定义我们放在了根路径的 types 文件夹下面。
 
-TypeScript的配置文件 tsconfig.json 中支持定义全局类型的路径配置
+TypeScript 的配置文件 tsconfig.json 中支持定义全局类型的路径配置
 
-``` json
+```json
 "typeRoots": ["./node_modules/@types/", "./types"]
 ```
 
@@ -158,7 +151,7 @@ TypeScript的配置文件 tsconfig.json 中支持定义全局类型的路径配�
 
 对于 `vue3` 中 `props` 的类型定义，不能直接使用创建时的类型定义，而需要使用 `vue3` 提供的类型 `PropType` 来指明构造函数。顺便说明一下 `vue3` 中是使用 `defineProps` 来定义 `props`。
 
-``` javascript
+```javascript
 import type { PropType } from 'vue'
 const props = defineProps({
   list: {
@@ -179,7 +172,7 @@ const { list } = toRefs(props)
 
 一个常见的 `hooks` 的结构如下
 
-``` javascript
+```javascript
 import { ref } from 'vue'
 ​
 export const useMyHooks = (params) => {
@@ -203,7 +196,7 @@ export const useMyHooks = (params) => {
 
 根据目前的使用体验来看，就逻辑复用这一点，其实 `hooks` 能实现的功能 `mixin` 应该也能实现。
 
-只是 `hooks` 在使用时用到的每一个方法时用户有意识的去选择的，比如我需要使用 `hooks` 提供的常量A，方法B，那么我需要有意识的手动去引入这些我要复用的内容，这样方法和变量的来源也就更清晰。
+只是 `hooks` 在使用时用到的每一个方法时用户有意识的去选择的，比如我需要使用 `hooks` 提供的常量 A，方法 B，那么我需要有意识的手动去引入这些我要复用的内容，这样方法和变量的来源也就更清晰。
 
 `mixin` 的自由度更大，只要是用了这个 `mixin` 就默认所有方法都隐式的引入了，导致版本迭代和多人开发之后可能不好去维护。
 
@@ -215,19 +208,19 @@ export const useMyHooks = (params) => {
 
 `antd` 的官网只提供了在 `webpack` 中修改主题色 `less` 变量的方法，在 `vite` 中也提供了 `css` 的预处理器，我们可以通过如下配置来实现主题色的修改：
 
-``` javascript
+```javascript
 // vite.config.js
 export default defineConfig({
-    css: {
-    preprocessorOptions: {
-      less: {
-        javascriptEnabled: true,
-        modifyVars: {
-          'primary-color': '#7546c9'
-        },
-      },
-    },
-  },
+  css: {
+    preprocessorOptions: {
+      less: {
+        javascriptEnabled: true,
+        modifyVars: {
+          'primary-color': '#448ef6'
+        }
+      }
+    }
+  }
 })
 ```
 
@@ -237,9 +230,9 @@ export default defineConfig({
 
 大概实现原理是先拿到 `antd` 中的 `dark.less` 变量 -> `antdDarkThemePlugin` 根据这些变量值生成一个暗夜模式的 css 文件 -> 样式文件插入到 html 中。
 
-用户切换暗黑模式，修改body中的 `[data-theme=dark]`， 从而使用暗黑模式的样式。
+用户切换暗黑模式，修改 body 中的 `[data-theme=dark]`， 从而使用暗黑模式的样式。
 
-``` javascript
+```javascript
 import { viteThemePlugin, antdDarkThemePlugin } from 'vite-plugin-theme';
 import { getLessVars } from 'antd-theme-generator';
 const antdDarkVars = getLessVars('./node_modules/ant-design-vue/lib/style/themes/dark.less')
@@ -252,7 +245,7 @@ export default defineConfig({
     antdDarkThemePlugin({
       darkModifyVars: {
         'primary-color': '#7546c9',   // 暗黑模式也是支持紫色的皮肤
-        ...antdDarkVars             
+        ...antdDarkVars            
       }
     })  
   ]  
@@ -263,7 +256,7 @@ export default defineConfig({
 
 切换时还需要重新加载一下 `css` 文件，生产模式下模式切换才能生效。
 
-``` javascript
+```javascript
 import { useDark, useToggle } from '@vueuse/core';
 import { loadDarkThemeCss } from 'vite-plugin-theme/es/client';
 ​
@@ -306,4 +299,3 @@ windicss 的提供插件 `@windicss/animations` 里也有很多定义好的动�
 ![image-20210910191006589.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8460567cd01b46bab3d9c880231eab78~tplv-k3u1fbpfcp-watermark.image)
 
 想要挑选自己想要使用的 emoji, 可以从这个网站中查找： [listemoji](https://listemoji.com/)
-

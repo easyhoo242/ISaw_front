@@ -11,15 +11,50 @@
       />
     </div>
 
-    <div v-for="item in data" class="navigation-item pt-4 flex items-center">
-      <div class="item-title">{{ item.title }}</div>
-      <div
-        v-for="child in item.children"
-        :key="child.title"
-        class="item-children flex items-center"
-      >
-        <div :href="child.url">
-          <div class="item-child">{{ child.title }}</div>
+    <div class="navigation-item pt-4 items-center">
+      <div class="flex mb-4">
+        <div class="item-title">{{ data[0].title }}</div>
+        <div
+          v-for="item in data[0].children"
+          :key="item.title"
+          class="item-children flex items-center"
+        >
+          <a-radio-group
+            v-model:value="currentType"
+            size="small"
+            button-style="solid"
+          >
+            <a-radio-button
+              class="item-child"
+              :value="item.title"
+              @click="handleTypeChange(item.title)"
+            >
+              {{ item.title }}
+            </a-radio-button>
+          </a-radio-group>
+        </div>
+      </div>
+
+      <div class="flex">
+        <div class="item-title">{{ data[1].title }}</div>
+        <div
+          v-for="item in data[1].children"
+          :key="item.title"
+          class="item-children flex items-center"
+        >
+          <a-radio-group
+            v-model:value="currentSort"
+            size="small"
+            button-style="solid"
+          >
+            <a-radio-button
+              class="item-child"
+              :value="item.title"
+              @click="handleSortChange(item.title)"
+            >
+              {{ item.title }}
+            </a-radio-button>
+          </a-radio-group>
         </div>
       </div>
     </div>
@@ -48,14 +83,31 @@ export default defineComponent({
   },
   setup(_) {
     const currentKeyboard = ref('')
-    let preKeyboard = currentKeyboard.value
+    let preKeyboard = ''
+
+    const currentType = ref('')
+
+    const handleTypeChange = (title: string) => {
+      console.log(title)
+    }
+
+    const currentSort = ref('')
+
+    const handleSortChange = (title: string) => {
+      console.log(title)
+    }
 
     const handleSearch = () => {
-      console.log(currentKeyboard.value)
+      preKeyboard = currentKeyboard.value
+      console.log(preKeyboard)
     }
 
     return {
       currentKeyboard,
+      currentType,
+      handleTypeChange,
+      currentSort,
+      handleSortChange,
       handleSearch
     }
   }
@@ -71,7 +123,7 @@ export default defineComponent({
   background-color: #f6f6f6;
   color: #333;
   border-radius: 3px;
-  margin-right: 10px;
+  margin-right: 20px;
 }
 .navigation-item {
   font-size: 14px;
@@ -79,7 +131,6 @@ export default defineComponent({
   .item-children {
     .item-child {
       cursor: pointer;
-      padding: 3px 10px;
       color: #333;
       border-radius: 3px;
       margin-right: 10px;

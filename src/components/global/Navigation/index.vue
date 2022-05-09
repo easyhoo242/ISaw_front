@@ -13,10 +13,10 @@
 
     <div class="navigation-item pt-4 items-center">
       <div class="flex mb-4">
-        <div class="item-title">{{ data[0].title }}</div>
+        <div class="item-title">{{ data[0].label }}</div>
         <div
           v-for="item in data[0].children"
-          :key="item.title"
+          :key="item.label"
           class="item-children flex items-center"
         >
           <a-radio-group
@@ -26,20 +26,20 @@
           >
             <a-radio-button
               class="item-child"
-              :value="item.title"
-              @click="handleTypeChange(item.title)"
+              :value="item.value"
+              @click="handleTypeChange(item.value)"
             >
-              {{ item.title }}
+              {{ item.label }}
             </a-radio-button>
           </a-radio-group>
         </div>
       </div>
 
       <div class="flex">
-        <div class="item-title">{{ data[1].title }}</div>
+        <div class="item-title">{{ data[1].label }}</div>
         <div
           v-for="item in data[1].children"
-          :key="item.title"
+          :key="item.label"
           class="item-children flex items-center"
         >
           <a-radio-group
@@ -49,10 +49,10 @@
           >
             <a-radio-button
               class="item-child"
-              :value="item.title"
-              @click="handleSortChange(item.title)"
+              :value="item.value"
+              @click="handleSortChange(item.value)"
             >
-              {{ item.title }}
+              {{ item.label }}
             </a-radio-button>
           </a-radio-group>
         </div>
@@ -65,12 +65,14 @@
 import { defineComponent, PropType, ref } from 'vue'
 
 export interface IChildType {
-  title: string
+  label: string
+  value: string
   url: string
 }
 
 interface IDataType {
-  title: string
+  label: string
+  value: string
   children: IChildType[]
 }
 

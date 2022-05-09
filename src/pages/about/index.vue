@@ -30,34 +30,41 @@ export default defineComponent({
     return {
       navigationList: [
         {
-          title: '分类',
+          label: '分类',
+          value: 'type',
           children: [
             {
-              title: '互联网',
+              label: '互联网',
+              value: 'net',
               type: 2,
               url: ''
             },
             {
-              title: '教程笔记',
+              label: '教程笔记',
+              value: 'subject',
               type: 3,
               url: ''
             },
             {
-              title: '闲言碎语',
+              label: '闲言碎语',
+              value: 'talk',
               type: 4,
               url: ''
             }
           ]
         },
         {
-          title: '排序',
+          label: '排序',
+          value: 'sort',
           children: [
             {
-              title: '浏览',
+              label: '浏览',
+              value: 'look',
               url: ''
             },
             {
-              title: '评论',
+              label: '评论',
+              value: 'comment',
               url: ''
             }
           ]

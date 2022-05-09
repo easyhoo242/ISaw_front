@@ -23,13 +23,30 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
-import { useStore } from 'vuex'
+import { defineComponent, ref, onMounted } from 'vue'
+import { getUserDetail } from '~/api'
+import type { IUserInfoType } from '~/api'
+import cache from '~/utils/cache'
 
 export default defineComponent({
   setup() {
-    const store = useStore()
-    const userInfo = computed(() => store.state.userInfo)
+    //@ts-ignore
+    const userInfo = ref<IUserInfoType>({})
+
+    // 用户id
+    const currentUser = cache.getCache('user')
+    // 查看者id
+    const userId = parseInt(window.location.pathname.split('/')[2])
+
+    const getUserInfo = async () => {
+      const res = await getUserDetail(userId || currentUser.id)
+      console.log(res.data)
+      userInfo.value = res.data as IUserInfoType
+    }
+
+    onMounted(() => {
+      getUserInfo()
+    })
 
     return {
       userInfo

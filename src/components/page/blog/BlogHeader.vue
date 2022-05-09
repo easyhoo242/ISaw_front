@@ -14,7 +14,10 @@
       </div>
       <div class="desc relative -top-6">
         <div class="desc-name py-2 text-xl flex items-center justify-center">
-          <A><span class="text-base">🧛‍♀️</span> {{ data?.author?.name }}</A>
+          <A :href="`/user/${data?.author?.userId}`">
+            <span class="text-base"> 🧛‍♀️ </span>
+            {{ data?.author?.name }}
+          </A>
         </div>
         <div class="desc-tag">
           {{ data?.createTime?.split('T')[0] }}

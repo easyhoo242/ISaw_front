@@ -55,21 +55,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed } from 'vue'
-import { useStore } from 'vuex'
-import { IUserInfoType } from '~/api'
+import { defineComponent, ref, onMounted } from 'vue'
+import { getUserDetail } from '~/api'
+import type { IUserInfoType } from '~/api'
+import cache from '~/utils/cache'
 
 export default defineComponent({
-  props: {
-    data: {
-      type: Object as PropType<IUserInfoType>,
-      default: () => ({})
-    }
-  },
   setup(_) {
-    const store = useStore()
+    const currentUser = cache.getCache('user')
 
-    const data = computed(() => store.state.userInfo)
+    //@ts-ignore
+    const data = ref<IUserInfoType>({})
+
+    const getUserInfo = async () => {
+      const res = await getUserDetail(currentUser.id)
+      data.value = res.data as IUserInfoType
+    }
+
+    onMounted(() => {
+      getUserInfo()
+    })
     return {
       data
     }

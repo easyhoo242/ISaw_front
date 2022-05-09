@@ -54,7 +54,7 @@ export default defineComponent({
     const isShowChangeInfo = userInfo.id === userId
 
     const getData = async () => {
-      const res = (await requestBlogListById(userId, currentPage.value, 10))
+      const res = (await requestBlogListById(currentPage.value, 10, userId))
         .data
       list.value = res?.list as any
       total.value = res?.count || 100

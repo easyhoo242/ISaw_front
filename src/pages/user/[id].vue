@@ -24,8 +24,8 @@
       <template #side>
         <SideBar>
           <Casual />
-          
-          <ChangeInfo />
+
+          <ChangeInfo v-if="isShowChangeInfo" />
         </SideBar>
       </template>
     </FlexCol>
@@ -36,19 +36,26 @@
 import { defineComponent, ref } from 'vue'
 import { requestBlogListById } from '~/api'
 import type { IBlogResultListType } from '~/api'
+import cache from '~/utils/cache'
 import { Empty } from 'ant-design-vue'
 import Module from '~/components/global/Module.vue'
 import ChangeInfo from '~/components/page/user/ChangeInfo.vue'
 
 export default defineComponent({
   setup() {
+    const userInfo = cache.getCache('user')
+
     const currentPage = ref(1)
     const total = ref(1)
     const list = ref<IBlogResultListType[]>()
 
+    const userId = parseInt(window.location.pathname.split('/')[2])
+
+    const isShowChangeInfo = userInfo.id === userId
+
     const getData = async () => {
-      const res = (await requestBlogListById(currentPage.value, 10)).data
-      console.log(res)
+      const res = (await requestBlogListById(userId, currentPage.value, 10))
+        .data
       list.value = res?.list as any
       total.value = res?.count || 100
     }
@@ -65,6 +72,7 @@ export default defineComponent({
     getData()
 
     return {
+      isShowChangeInfo,
       list,
       currentPage,
       total,

@@ -34,11 +34,15 @@ enum BlogApi {
 }
 
 // 动态列表
-export const requestBlogListById = (currentPage: number, pageSize: number) => {
+export const requestBlogListById = (
+  userId: number,
+  currentPage: number,
+  pageSize: number
+) => {
   return hyRequest.get<IResponsType<IBlogResultType>>({
     url: BlogApi.blogList,
     params: {
-      userId: userInfo.id,
+      userId: userId,
       page: currentPage,
       page_size: pageSize
     }

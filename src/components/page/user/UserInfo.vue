@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue'
-import { getUserDetail } from '~/api'
+// import { getUserDetail } from '~/api'
 import type { IUserInfoType } from '~/api'
 import cache from '~/utils/cache'
 
@@ -39,9 +39,8 @@ export default defineComponent({
     const userId = parseInt(window.location.pathname.split('/')[2])
 
     const getUserInfo = async () => {
-      const res = await getUserDetail(userId || currentUser.id)
-      console.log(res.data)
-      userInfo.value = res.data as IUserInfoType
+      // const res = await getUserDetail(userId || currentUser.id)
+      // userInfo.value = res.data as IUserInfoType
     }
 
     onMounted(() => {

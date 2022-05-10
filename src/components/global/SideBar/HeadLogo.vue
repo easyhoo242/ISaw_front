@@ -4,7 +4,7 @@
       <div
         class="mx-auto w-23 h-23 overflow-hidden rounded-full border-white border-5 z-30 mb-3"
       >
-        <img :src="data.logo" alt="" class="w-full max-h-full" />
+        <img :src="data.avatar" alt="" class="w-full max-h-full" />
       </div>
 
       <div class="slogan bg-white pb-2.5 px-5 text-center pt-2">
@@ -12,8 +12,8 @@
           class="title text-gray-700 font-bold flex items-center justify-center"
         >
           <div class="flex items-center">
-            <a href="/user" style="line-height: 22px">
-              {{ data.name }}
+            <a href="/user" style="min-height: 22px">
+              {{ data.nickname }}
             </a>
           </div>
           <div v-if="!!data.vip" class="v px-1 ml-2">v</div>
@@ -34,21 +34,21 @@
     <div class="tag bg-white flex items-center pb-5">
       <div class="tag-item">
         <div class="tag-item__count mb-3 text-gray-700">
-          {{ data.momentCount }}
+          {{ data.moment_count }}
         </div>
         <div class="tag-item__title text-gray-500">文章数</div>
       </div>
       <div class="tag-item">
         <div class="tag-item__count mb-3 text-gray-700">
-          {{ data.commentCount }}
+          {{ data.comment_count }}
         </div>
         <div class="tag-item__title text-gray-500">评论数</div>
       </div>
       <div class="tag-item">
         <div class="tag-item__count mb-3 text-gray-700">
-          {{ data.look }}
+          {{ data.agree }}
         </div>
-        <div class="tag-item__title text-gray-500">浏览数</div>
+        <div class="tag-item__title text-gray-500">点赞数</div>
       </div>
     </div>
   </div>
@@ -70,13 +70,15 @@ export default defineComponent({
     const getUserInfo = async () => {
       const res = await getUserDetail(currentUser.id)
 
-      console.log(res)
       data.value = res.data as IUserInfoType
+
+      console.log(data.value)
     }
 
     onMounted(() => {
       getUserInfo()
     })
+
     return {
       data
     }

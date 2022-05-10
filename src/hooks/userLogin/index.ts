@@ -1,10 +1,10 @@
 import localCache from '~/utils/cache'
-import { requestUserLogin } from '~/api'
-import type { IUserType } from '~/api'
+import { loginUser } from '~/api'
+import type { IAccount } from '~/api'
 import { message } from 'ant-design-vue'
 
-export const handleUserLogin = async (accountInfo: IUserType) => {
-  const { flag, data, msg } = await requestUserLogin(accountInfo)
+export const handleUserLogin = async (accountInfo: IAccount) => {
+  const { flag, data, msg } = await loginUser(accountInfo)
 
   if (!flag) {
     message.warn(msg, 3)

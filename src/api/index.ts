@@ -1,7 +1,5 @@
 export * from './sideBar'
 export * from './blog'
-export * from './login'
-export * from './register'
 export * from './home'
 export * from './cause'
 export * from './user'

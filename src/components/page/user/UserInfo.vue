@@ -2,21 +2,25 @@
   <div class="user-info h-90 w-full">
     <div class="mx-auto flex flex-col items-center">
       <div class="logo h-30 w-30 rounded-full overflow-hidden mt-5">
-        <img :src="userInfo.logo" :alt="userInfo.name" class="w-full h-full" />
+        <img
+          :src="userInfo.avatar"
+          :alt="userInfo.nickname"
+          class="w-full h-full"
+        />
       </div>
 
       <div class="slogan flex items-center justify-center mt-4 mb-3">
         <div class="slogan-title">
-          {{ userInfo.name }}
+          {{ userInfo.nickname }}
         </div>
         <div v-if="userInfo.vip" class="slogan-tag">V</div>
         <div v-if="userInfo.type === 4" class="slogan-tag">管理员</div>
       </div>
 
       <div class="desc flex items-center justify-center">
-        <div>文章 {{ userInfo.momentCount }} 篇</div>
+        <div>文章 {{ userInfo.moment_count }} 篇</div>
         <i class="mx-2"> | </i>
-        <div>评论 {{ userInfo.commentCount }} 次</div>
+        <div>评论 {{ userInfo.comment_count }} 次</div>
       </div>
     </div>
   </div>
@@ -24,7 +28,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue'
-// import { getUserDetail } from '~/api'
+import { getUserDetail } from '~/api'
 import type { IUserInfoType } from '~/api'
 import cache from '~/utils/cache'
 
@@ -39,8 +43,8 @@ export default defineComponent({
     const userId = parseInt(window.location.pathname.split('/')[2])
 
     const getUserInfo = async () => {
-      // const res = await getUserDetail(userId || currentUser.id)
-      // userInfo.value = res.data as IUserInfoType
+      const res = await getUserDetail(userId || currentUser.id)
+      userInfo.value = res.data as IUserInfoType
     }
 
     onMounted(() => {

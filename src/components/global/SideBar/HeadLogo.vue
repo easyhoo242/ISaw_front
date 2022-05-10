@@ -12,7 +12,7 @@
           class="title text-gray-700 font-bold flex items-center justify-center"
         >
           <div class="flex items-center">
-            <a href="/user" style="min-height: 22px">
+            <a :href="`/user/${data.id}`" style="min-height: 22px">
               {{ data.nickname }}
             </a>
           </div>

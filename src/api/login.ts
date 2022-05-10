@@ -1,22 +1,12 @@
 import hyRequest from '~/service'
 import { IResponsType } from '.'
 
-export interface IAccount {
-  name: string
-  password: string
-}
-
 export interface ILoginResult {
   id: number
   username: string
+  nickname: string
+  avatarUrl: string
   token: string
-}
-
-export interface ILoginType<T = any> {
-  flag: boolean
-  code: number
-  data: ILoginResult
-  msg: string
 }
 
 enum LoginAPI {
@@ -32,7 +22,7 @@ export interface IUserType {
 }
 
 export function requestUserLogin(account: IUserType) {
-  return hyRequest.post<ILoginType>({
+  return hyRequest.post<IResponsType<ILoginResult>>({
     url: LoginAPI.AccountLogin,
     data: account
   })

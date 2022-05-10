@@ -69,6 +69,8 @@ export default defineComponent({
 
     const getUserInfo = async () => {
       const res = await getUserDetail(currentUser.id)
+
+      console.log(res)
       data.value = res.data as IUserInfoType
     }
 

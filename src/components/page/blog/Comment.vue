@@ -1,6 +1,6 @@
 <template>
   <Module>
-    <a-comment>
+    <a-comment class="py-0">
       <template #avatar>
         <a-avatar :src="user.logo" alt="用户头像" />
       </template>

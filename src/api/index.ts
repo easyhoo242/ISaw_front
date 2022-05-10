@@ -4,6 +4,7 @@ export * from './login'
 export * from './register'
 export * from './home'
 export * from './cause'
+export * from './user'
 
 export interface IResponsType<T> {
   code: number

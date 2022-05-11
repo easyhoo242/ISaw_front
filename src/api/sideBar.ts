@@ -12,17 +12,6 @@ export interface ILatelyCommentType {
   }
 }
 
-export interface ILatelyMomentType {
-  id: number
-  title: string
-  content: string
-  updateAt: string
-  user: {
-    id: number
-    name: string
-    logo: string
-  }
-}
 
 enum sideBarApi {
   latelyCommentList = '/latelyComment',
@@ -35,8 +24,4 @@ export const requestLatelyCommentList = () => {
   })
 }
 
-export const requestLatelyMomentList = () => {
-  return hyRequest.get<IResponsType<ILatelyMomentType[]>>({
-    url: sideBarApi.latelyMomentList
-  })
-}
+

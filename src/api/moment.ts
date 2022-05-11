@@ -4,6 +4,7 @@ import { IResponsType } from './index'
 enum momentApi {
   caustList = '/moment/cause/1',
   hotseeList = '/moment/hotsee/1',
+  latelyMomentList = '/moment/lately/1',
   MomentAll = '/moment',
   // moment + label -> 按类型
   // moment + userId -> 按userId
@@ -79,6 +80,12 @@ export const requestMomentAll = (offset: number, limit: number = 10) => {
   })
 }
 
+// 最近发表文章接口
+export const requestLatelyMomentList = () => {
+  return hyRequest.get<IResponsType<IMomentType[]>>({
+    url: momentApi.latelyMomentList
+  })
+}
 export const requestModuleTo = () => {
   return hyRequest.get<IResponsType<IModuleTo>>({
     url: momentApi.ModuleTo

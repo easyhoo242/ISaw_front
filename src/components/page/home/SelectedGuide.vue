@@ -3,21 +3,21 @@
     <div class="content mt-3 items-center grid grid-cols-3 grid-rows-2">
       <div
         v-for="item in list"
-        :key="item.id"
+        :key="item.momentId"
         class="item border-b-1 border-r-1 p-15px text-center dark:border-gray-300"
       >
         <div
           class="item-title flex items-center justify-between pb-2 dark:color"
         >
-          <div class="title-tag">{{ listType[item.type] }}</div>
+          <div class="title-tag">{{ item.label.name }}</div>
           <div class="title-time">
-            {{ `🕞 ${item?.createAt?.split('T')[0]}` }}
+            {{ `🕞 ${item.createTime.split('T')[0]}` }}
           </div>
         </div>
 
         <div class="item-content text-left">
           <div class="content-desc">
-            <a :href="`/blog/${item.id}`">{{ item.title }}</a>
+            <a :href="`/blog/${item.momentId}`">{{ item.title }}</a>
           </div>
 
           <div class="content-text mt-1.5 min-h-45px text-left">
@@ -30,24 +30,28 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import { requestHotseeList, IListType, BASE_LOGO } from '~/api'
+import { defineComponent, ref, onMounted } from 'vue'
+import { requestHotseeList, BASE_LOGO } from '~/api'
+import type { IMomentType } from '~/api'
 
 export default defineComponent({
   setup() {
-    const list = ref<IListType[]>([])
+    const list = ref<IMomentType[]>([])
     const getData = async () => {
       const res = await requestHotseeList()
 
-      list.value = res.data as IListType[]
+      console.log(res)
+
+      list.value = res.data!
     }
 
-    getData()
+    onMounted(() => {
+      getData()
+    })
 
     return {
       list,
-      BASE_LOGO,
-      listType: ['随便看看', '互联网', '教程笔记', '闲言碎语']
+      BASE_LOGO
     }
   }
 })

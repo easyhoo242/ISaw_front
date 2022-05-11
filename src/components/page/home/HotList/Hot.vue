@@ -10,7 +10,7 @@
 
     <div class="hotlist-content flex-1 pr-3">
       <div class="title flex items-center text-gray-700 overflow-hidden">
-        <div v-if="item.isAgree > 100" class="hot-tag mr-2">热文</div>
+        <div v-if="item.agree > 100" class="hot-tag mr-2">热文</div>
 
         <A :href="`/blog/${item.momentId}`">
           <div class="content-title overflow-hidden">

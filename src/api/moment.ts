@@ -86,6 +86,7 @@ export const requestLatelyMomentList = () => {
     url: momentApi.latelyMomentList
   })
 }
+
 export const requestModuleTo = () => {
   return hyRequest.get<IResponsType<IModuleTo>>({
     url: momentApi.ModuleTo

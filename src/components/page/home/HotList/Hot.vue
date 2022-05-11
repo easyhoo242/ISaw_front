@@ -25,13 +25,15 @@
 
       <div class="footer pt-2 flex items-center justify-between text-gray-400">
         <div class="tag flex-1 flex items-center">
-          <div>🕒 {{ item.createTime }}</div>
-          <div>{{ item.agree }} 点赞</div>
-          <div>💬 {{ item.commentCount }} 评论</div>
+          <div>🕒 {{ item.createTime.split('T')[0] }}</div>
+          <div>{{ item.agree || 0 }} 点赞</div>
+          <div>💬 {{ item.commentCount || 0 }} 评论</div>
         </div>
         <div class="who flex-0">
           <!-- <a-icon></a-icon> -->
-          <A :href="`/user/${item.author.id}`">🏆 {{ item.author.nickname }}</A>
+          <A :href="`/user/${item.author?.id}`">
+            🏆 {{ item.author?.nickname }}
+          </A>
         </div>
       </div>
     </div>

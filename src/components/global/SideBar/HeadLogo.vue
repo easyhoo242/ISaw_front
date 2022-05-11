@@ -4,7 +4,7 @@
       <div
         class="mx-auto w-23 h-23 overflow-hidden rounded-full border-white border-5 z-30 mb-3"
       >
-        <img :src="data.avatar" alt="" class="w-full max-h-full" />
+        <img :src="data.avatar || BASE_LOGO" alt="" class="w-full max-h-full" />
       </div>
 
       <div class="slogan bg-white pb-2.5 px-5 text-center pt-2">
@@ -46,9 +46,9 @@
       </div>
       <div class="tag-item">
         <div class="tag-item__count mb-3 text-gray-700">
-          {{ data.agree }}
+          {{ data.agree_count }}
         </div>
-        <div class="tag-item__title text-gray-500">点赞数</div>
+        <div class="tag-item__title text-gray-500">获赞数</div>
       </div>
     </div>
   </div>
@@ -56,7 +56,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue'
-import { getUserDetail } from '~/api'
+import { getUserDetail, BASE_LOGO } from '~/api'
 import type { IUserInfoType } from '~/api'
 import cache from '~/utils/cache'
 
@@ -80,7 +80,8 @@ export default defineComponent({
     })
 
     return {
-      data
+      data,
+      BASE_LOGO
     }
   }
 })

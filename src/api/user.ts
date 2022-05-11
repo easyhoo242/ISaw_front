@@ -17,6 +17,12 @@ export interface IUserInfoType {
   id: number
   username: string
   nickname: string
+  avatar: string
+  moment_count: number
+  comment_count: number
+  agree_count: number
+
+  // 暂时没有的字段
   slogan: string
   age: number
   sex: string
@@ -24,10 +30,6 @@ export interface IUserInfoType {
   email: string
   type: number
   vip: number
-  agree: number
-  avatar: string
-  moment_count: number
-  comment_count: number
 }
 
 export interface IChangeUserInfo {

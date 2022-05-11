@@ -3,13 +3,21 @@
     <div class="content mt-4 grid grid-cols-2 gap-3 px-2">
       <div
         v-for="item in list"
-        :key="item.id"
+        :key="item.momentId"
         class="content-item flex-0 overflow-hidden border-b-1px"
       >
-        <A :href="`/blog/${item.id}`">
+        <A :href="`/blog/${item.momentId}`">
           <div class="logo w-full h-27 rounded-xl overflow-hidden">
             <img
-              :src="item.logo || BASE_LOGO"
+              v-if="item.images"
+              :src="item.images[0]"
+              alt=""
+              class="w-full h-full max-h-full"
+            />
+
+            <img
+              v-else
+              :src="BASE_LOGO"
               alt=""
               class="w-full h-full max-h-full"
             />
@@ -22,21 +30,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import { requestCauseList, IListType } from '~/api'
+import { defineComponent, ref, onMounted } from 'vue'
+import { requestCauseList } from '~/api'
+import type { ICauseType } from '~/api'
 import { BASE_LOGO } from '~/api'
 
 export default defineComponent({
   setup() {
-    const list = ref<IListType[]>([])
+    const list = ref<ICauseType[]>([])
 
     const getData = async () => {
-      const res = await requestCauseList(3)
+      try {
+        const res = await requestCauseList()
 
-      list.value = res.data as IListType[]
+        list.value = res.data as ICauseType[]
+      } catch (error) {}
     }
 
-    getData()
+    onMounted(() => {
+      getData()
+    })
+
     return {
       list,
       BASE_LOGO: BASE_LOGO

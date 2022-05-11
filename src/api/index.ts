@@ -1,7 +1,7 @@
 export * from './sideBar'
 export * from './blog'
 export * from './home'
-export * from './cause'
+export * from './moment'
 export * from './user'
 
 export interface IResponsType<T> {

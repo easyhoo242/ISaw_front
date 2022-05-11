@@ -36,7 +36,7 @@ export default defineComponent({
     const getData = async () => {
       const res = await requestHotseeList()
 
-      list.value = res.data!
+      list.value = res.data?.slice(0, 3)!
     }
 
     onMounted(() => {

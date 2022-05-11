@@ -3,11 +3,13 @@
     <div class="hot mt-3 px-1">
       <div
         v-for="item in list"
-        :key="item.id"
+        :key="item.momentId"
         class="hot-item mb-2.5 h-162px rounded-xl bg-cover"
-        :style="`background: url(${item.logo || BASE_LOGO});`"
+        :style="`background: url(${BASE_LOGO});`"
       >
-        <A :href="`/blog/${item.id}`" class="item-bg__wrap rounded-xl">
+        <!-- :style="`background: url(${item.images[0] || BASE_LOGO});`" -->
+
+        <A :href="`/blog/${item.momentId}`" class="item-bg__wrap rounded-xl">
           <span></span
         ></A>
         <div class="item-content text-white w-full p-2">
@@ -15,7 +17,7 @@
             {{ item.title || item.content }}
           </div>
           <div class="item-content__tag text-xs mt-1">
-            {{ item.get_like }} 点赞 ， {{ item?.createAt.split('T')[0] }}
+            {{ item.agree }} 点赞 ， {{ item.createTime }}
           </div>
         </div>
       </div>
@@ -24,19 +26,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import { requestHotseeList, IListType, BASE_LOGO } from '~/api'
+import { defineComponent, ref, onMounted } from 'vue'
+import { requestHotseeList, BASE_LOGO } from '~/api'
+import type { IMomentType } from '~/api'
 
 export default defineComponent({
   setup() {
-    const list = ref<IListType[]>([])
+    const list = ref<IMomentType[]>([])
     const getData = async () => {
       const res = await requestHotseeList()
 
-      list.value = res.data?.slice(0, 3) as IListType[]
+      list.value = res.data!
     }
 
-    getData()
+    onMounted(() => {
+      getData()
+    })
     return {
       list,
       BASE_LOGO

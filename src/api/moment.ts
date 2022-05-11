@@ -17,7 +17,6 @@ export interface IMomentType {
   momentId: number
 
   agree: number
-  isAgree: number
   commentCount: number
 
   createTime: string
@@ -31,8 +30,8 @@ export interface IMomentType {
   }
 
   author: {
-    avatarUrl: string
     id: number
+    avatarUrl: string
     nickname: string
   }
 }

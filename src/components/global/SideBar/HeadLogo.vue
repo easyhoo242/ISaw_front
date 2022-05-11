@@ -4,7 +4,11 @@
       <div
         class="mx-auto w-23 h-23 overflow-hidden rounded-full border-white border-5 z-30 mb-3"
       >
-        <img :src="data.avatar || BASE_LOGO" alt="" class="w-full max-h-full" />
+        <img
+          :src="data.avatar || BASE_HEAD_LOGO"
+          alt=""
+          class="w-auto h-auto max-w-full max-h-full"
+        />
       </div>
 
       <div class="slogan bg-white pb-2.5 px-5 text-center pt-2">
@@ -56,7 +60,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue'
-import { getUserDetail, BASE_LOGO } from '~/api'
+import { getUserDetail, BASE_HEAD_LOGO } from '~/api'
 import type { IUserInfoType } from '~/api'
 import cache from '~/utils/cache'
 
@@ -81,7 +85,7 @@ export default defineComponent({
 
     return {
       data,
-      BASE_LOGO
+      BASE_HEAD_LOGO
     }
   }
 })

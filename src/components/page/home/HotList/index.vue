@@ -4,11 +4,11 @@
     <a-pagination
       :current="currentPage"
       :pageSize="10"
-      :total="total"
+      :total="total || 200"
       show-quick-jumper
       hideOnSinglePage
       class="my-3"
-      @change="onChange"
+      @change="handlePageChange"
     />
   </div>
 </template>
@@ -33,7 +33,7 @@ export default defineComponent({
       total.value = res.data?.momentCount!
     }
 
-    const onChange = (page: number) => {
+    const handlePageChange = (page: number) => {
       currentPage.value = page
       getData()
 
@@ -51,7 +51,7 @@ export default defineComponent({
       hotList,
       total,
       currentPage,
-      onChange
+      handlePageChange
     }
   }
 })

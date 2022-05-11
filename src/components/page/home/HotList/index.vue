@@ -1,10 +1,10 @@
 <template>
   <div class="hotlist flex flex-col">
-    <Hot :data="dataList" />
+    <Hot :data="hotList" />
     <a-pagination
       :current="currentPage"
       :pageSize="10"
-      :total="100"
+      :total="total"
       show-quick-jumper
       hideOnSinglePage
       class="my-3"
@@ -21,21 +21,21 @@ import type { IMomentType } from '~/api'
 export default defineComponent({
   setup() {
     const currentPage = ref(1)
-    const dataList = ref<IMomentType[]>([])
+    const total = ref(0)
+    const hotList = ref<IMomentType[]>([])
 
     const getData = async () => {
       const res = await requestMomentAll(currentPage.value)
 
       console.log('momentList', res)
 
-      dataList.value = res.data?.list as IMomentType[]
+      hotList.value = res.data?.list!
+      total.value = res.data?.momentCount!
     }
 
     const onChange = (page: number) => {
       currentPage.value = page
       getData()
-
-      console.log(dataList.value)
 
       window.scrollTo({
         top: 992,
@@ -48,7 +48,8 @@ export default defineComponent({
     })
 
     return {
-      dataList,
+      hotList,
+      total,
       currentPage,
       onChange
     }

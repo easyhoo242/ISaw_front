@@ -1,6 +1,5 @@
 export * from './sideBar'
 export * from './blog'
-export * from './home'
 export * from './moment'
 export * from './user'
 

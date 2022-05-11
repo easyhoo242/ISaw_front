@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, inject } from 'vue'
+import { defineComponent, ref, onMounted, inject } from 'vue'
 import {
   requestCommentList,
   postComment,
@@ -112,7 +112,9 @@ export default defineComponent({
       reload()
     }
 
-    getData()
+    onMounted(() => {
+      getData()
+    })
 
     return {
       commentList,

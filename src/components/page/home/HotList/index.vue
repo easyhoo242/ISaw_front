@@ -14,18 +14,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import { requestMomentAll, IBlogResultListType } from '~/api'
+import { defineComponent, ref, onMounted } from 'vue'
+import { requestMomentAll } from '~/api'
+import type { IMomentType } from '~/api'
 
 export default defineComponent({
   setup() {
     const currentPage = ref(1)
-    const dataList = ref<IBlogResultListType[]>([])
+    const dataList = ref<IMomentType[]>([])
 
     const getData = async () => {
-      const res = await requestMomentAll(currentPage.value, 10)
+      const res = await requestMomentAll(currentPage.value)
 
-      dataList.value = res.data as IBlogResultListType[]
+      console.log('momentList', res)
+
+      dataList.value = res.data?.list as IMomentType[]
     }
 
     const onChange = (page: number) => {
@@ -40,7 +43,9 @@ export default defineComponent({
       })
     }
 
-    getData()
+    onMounted(() => {
+      getData()
+    })
 
     return {
       dataList,

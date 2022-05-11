@@ -1,14 +1,18 @@
 <template>
-  <Module v-for="item in data" :key="item.id" class="module flex">
+  <Module v-for="item in data" :key="item.momentId" class="module flex">
     <div class="logo flex-0 w-210px h-158px rounded-md overflow-hidden mr-5">
       <!-- <A :href="`/blog/${item.id}`"> <img :src="item.img" alt="" /></A> -->
-      <A :href="`/blog/${item.id}`"> <img :src="BASE_LOGO" alt="" /></A>
+      <A :href="`/blog/${item.momentId}`">
+        <img v-if="item.images" :src="item.images[0]" alt="" />
+        <img v-else :src="BASE_LOGO" alt="" />
+      </A>
     </div>
 
     <div class="hotlist-content flex-1 pr-3">
       <div class="title flex items-center text-gray-700 overflow-hidden">
-        <div v-if="item.like > 100" class="hot-tag mr-2">热文</div>
-        <A :href="`/blog/${item.id}`">
+        <div v-if="item.isAgree > 100" class="hot-tag mr-2">热文</div>
+
+        <A :href="`/blog/${item.momentId}`">
           <div class="content-title overflow-hidden">
             {{ item.title || '这个人也太懒了吧 居然忘了取标题' }}
           </div>
@@ -21,13 +25,13 @@
 
       <div class="footer pt-2 flex items-center justify-between text-gray-400">
         <div class="tag flex-1 flex items-center">
-          <div>🕒 {{ item?.createTime?.split('T')[0] }}</div>
-          <div>{{ item.like }} 点赞</div>
+          <div>🕒 {{ item.createTime }}</div>
+          <div>{{ item.agree }} 点赞</div>
           <div>💬 {{ item.commentCount }} 评论</div>
         </div>
         <div class="who flex-0">
           <!-- <a-icon></a-icon> -->
-          <A :href="`/user/${item?.user?.id}`">🏆 {{ item?.user?.name }}</A>
+          <A :href="`/user/${item.author.id}`">🏆 {{ item.author.nickname }}</A>
         </div>
       </div>
     </div>
@@ -36,13 +40,13 @@
 
 <script lang="ts">
 import { PropType, defineComponent } from 'vue'
-import { IBlogResultListType } from '~/api'
+import type { IMomentType } from '~/api'
 import { BASE_LOGO } from '~/api'
 
 export default defineComponent({
   props: {
     data: {
-      type: Array as PropType<IBlogResultListType[]>,
+      type: Array as PropType<IMomentType[]>,
       default: () => []
     }
   },

@@ -32,18 +32,18 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue'
 import { requestCauseList } from '~/api'
-import type { ICauseType } from '~/api'
+import type { IMomentType } from '~/api'
 import { BASE_LOGO } from '~/api'
 
 export default defineComponent({
   setup() {
-    const list = ref<ICauseType[]>([])
+    const list = ref<IMomentType[]>([])
 
     const getData = async () => {
       try {
         const res = await requestCauseList()
 
-        list.value = res.data as ICauseType[]
+        list.value = res.data as IMomentType[]
       } catch (error) {}
     }
 

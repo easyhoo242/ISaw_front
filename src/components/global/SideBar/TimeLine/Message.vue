@@ -8,7 +8,7 @@
           alt=""
           class="h-full w-full"
         />
-        <img v-else :src="BASE_LOGO" alt="" class="h-full w-full" />
+        <img v-else :src="BASE_HEAD_LOGO" alt="" class="h-full w-full" />
       </A>
     </div>
 
@@ -30,19 +30,19 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { BASE_LOGO } from '~/api'
-import type { ILatelyCommentType } from '~/api'
+import { BASE_HEAD_LOGO } from '~/api'
+import type { ICommentType } from '~/api'
 
 export default defineComponent({
   props: {
     data: {
-      type: Object as PropType<ILatelyCommentType>,
+      type: Object as PropType<ICommentType>,
       default: () => []
     }
   },
   setup() {
     return {
-      BASE_LOGO
+      BASE_HEAD_LOGO
     }
   }
 })

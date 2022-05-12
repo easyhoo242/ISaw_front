@@ -9,7 +9,7 @@ enum momentApi {
   // moment + label -> 按类型
   // moment + userId -> 按userId
   // moment -> 全部
-  ModuleTo = '/momentByType'
+  ModuleTo = '/moment' //moment + label
 }
 
 export interface IMomentType {
@@ -37,19 +37,18 @@ export interface IMomentType {
   }
 }
 
-export interface IModuleTo {
-  list: {
-    createAt: string
-    id: number
-    title: string
-    type: string
-  }[]
-  name: string
-}
-
 export interface IMomentListType {
   list: IMomentType[]
   momentCount: number
+}
+
+export interface IMomentListByLabelType {
+  list: IMomentType[]
+  momentCount: number
+  labelInfo: {
+    name: string
+    id: number
+  }
 }
 
 // 随便看看接口
@@ -87,8 +86,18 @@ export const requestLatelyMomentList = () => {
   })
 }
 
-export const requestModuleTo = () => {
-  return hyRequest.get<IResponsType<IModuleTo>>({
-    url: momentApi.ModuleTo
+// ModuleTo
+export const requestModuleTo = (
+  label: number,
+  offset: number,
+  limit: number = 10
+) => {
+  return hyRequest.get<IMomentListByLabelType>({
+    url: momentApi.ModuleTo,
+    params: {
+      label,
+      limit,
+      offset
+    }
   })
 }

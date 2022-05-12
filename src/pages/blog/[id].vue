@@ -51,6 +51,8 @@ export interface headerInfo {
 
   title: string
   createTime: string
+
+  momentId: number
 }
 
 export default defineComponent({
@@ -81,7 +83,8 @@ export default defineComponent({
         title: momentDetail.title,
         createTime: momentDetail.createTime,
         count: momentDetail.commentCount,
-        agree: momentDetail.agree
+        agree: momentDetail.agree,
+        momentId: momentDetail.momentId
       }
 
       // 评论列表

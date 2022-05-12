@@ -20,7 +20,9 @@
         </div>
         <div class="desc-tag">
           {{ data?.createTime?.split('T')[0] }}
-          <span class="mx-1 btn"> 👍 {{ data.agree }} 点赞 </span>
+          <span class="mx-1 btn" @click="handleAgree(data.momentId)">
+            👍 {{ data.agree }} 点赞
+          </span>
           <span class="mx-1"> 💬 {{ data.count }} 评论 </span>
         </div>
       </div>
@@ -30,6 +32,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
+import { requestMomentAgree } from '~/api'
 import { headerInfo } from '~/pages/blog/[id].vue'
 
 export default defineComponent({
@@ -41,7 +44,20 @@ export default defineComponent({
   },
   setup(props) {
     console.log(1, props.data)
-    return {}
+
+    const handleAgree = async (momentId: number) => {
+      try {
+        const res = await requestMomentAgree(momentId)
+
+        console.log(res)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    return {
+      handleAgree
+    }
   }
 })
 </script>

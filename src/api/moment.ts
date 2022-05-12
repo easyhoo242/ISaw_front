@@ -10,7 +10,8 @@ enum momentApi {
   // moment + userId -> 按userId
   // moment -> 全部
   ModuleTo = '/moment', //moment + label
-  momentDetail = '/moment/' // /moment/momentId
+  momentDetail = '/moment/',
+  momentLike = '/moment/' // /moment/momentId/like
 }
 
 export interface IMomentType {
@@ -104,9 +105,16 @@ export const requestModuleTo = (
 }
 
 // 文章详情
-
 export const requestMomentDetail = (momentId: number) => {
   return hyRequest.get<IMomentType>({
     url: momentApi.momentDetail + momentId
+  })
+}
+
+// 文章点赞接口
+export const requestMomentAgree = (momentId: number) => {
+  return hyRequest.get<IResponsType<any>>({
+    url: momentApi.momentLike + momentId + '/like'
+    // url: 'moment/1/like'
   })
 }

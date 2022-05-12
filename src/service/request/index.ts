@@ -43,10 +43,17 @@ class HYRequest {
         // 将loading移除
 
         const data = res.data
-        if (data.returnCode === '-1001') {
-          console.log('请求失败~, 错误信息')
-        } else {
-          return data
+
+        console.log(res)
+
+        try {
+          if (data.returnCode === '-1001') {
+            console.log('请求失败~, 错误信息')
+          } else {
+            return data
+          }
+        } catch (error) {
+          console.log(error)
         }
       },
       (err) => {

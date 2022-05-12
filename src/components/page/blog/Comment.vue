@@ -44,14 +44,26 @@
             </template>
 
             <template #actions>
-              <span key="comment-nested-reply-to" @click="showModal(item.id)">
+              <span
+                key="comment-nested-reply-to"
+                @click="showModalReply(item.id)"
+              >
                 回 复
               </span>
-            </template>
 
-            <a-modal v-model:visible="visible" title="回复消息" @ok="handleOk">
-              <a-input v-model:value="currentReply" />
-            </a-modal>
+              <!-- <span
+                key="comment-nested-delete-to"
+                @click="showModalDelete(item.id)"
+              >
+                删 除
+              </span> -->
+              <span
+                key="comment-nested-delete-to"
+                @click="showDeleteConfirm(item.id)"
+              >
+                删 除
+              </span>
+            </template>
 
             <div v-for="child in data.son">
               <a-comment
@@ -66,6 +78,16 @@
                     alt=" "
                   />
                 </template>
+
+                <template #actions>
+                  <span
+                    v-if="child.user.id === user.id"
+                    key="comment-nested-delete-to"
+                    @click="showDeleteConfirm(item.id)"
+                  >
+                    删 除
+                  </span>
+                </template>
               </a-comment>
             </div>
           </a-comment>
@@ -77,12 +99,17 @@
   <Module v-else title="评论列表" class="pb-0">
     <a-empty :description="null" class="py-1" />
   </Module>
+
+  <a-modal v-model:visible="visibleReply" title="回复消息" @ok="handleOkReply">
+    <a-input v-model:value="currentReply" />
+  </a-modal>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from 'vue'
 import type { ICommentType } from '~/api'
 import { BASE_HEAD_LOGO } from '~/api'
+import { Modal } from 'ant-design-vue'
 import Module from '~/components/global/Module.vue'
 
 import usecache from '~/utils/cache'
@@ -101,7 +128,7 @@ export default defineComponent({
       default: 23
     }
   },
-  emits: ['submit', 'reply'],
+  emits: ['submit', 'reply', 'delete'],
   setup(props, { emit }) {
     const comments = ref<Comment[]>([])
     const submitting = ref<boolean>(false)
@@ -109,24 +136,38 @@ export default defineComponent({
 
     const user = usecache.getCache('user')
 
-    const visible = ref<boolean>(false)
+    const visibleReply = ref<boolean>(false)
     const handleSubmit = () => {
       emit('submit', currntComment.value)
     }
 
+    // 回复弹框
     const currentComment = ref(0)
     const currentReply = ref('')
-    const showModal = (id: number) => {
+    const showModalReply = (id: number) => {
       currentComment.value = id
-      visible.value = true
+      visibleReply.value = true
     }
 
-    const handleOk = () => {
-      visible.value = false
+    const handleOkReply = () => {
+      visibleReply.value = false
       emit('reply', currentComment.value, currentReply.value)
     }
 
-    console.log('DATA', props.data)
+    // 删除弹框
+    const showDeleteConfirm = (id: number) => {
+      console.log(id)
+      Modal.confirm({
+        title: '确认删除这条评论？',
+        okText: '确定',
+        okType: 'danger',
+        cancelText: '取消',
+        onOk() {
+          console.log('OK')
+        },
+        onCancel() {}
+      })
+    }
 
     return {
       user,
@@ -135,11 +176,13 @@ export default defineComponent({
       submitting,
       currntComment,
       handleSubmit,
-      // 回复
+      // 回复评论
       currentReply,
-      visible,
-      showModal,
-      handleOk
+      visibleReply,
+      showModalReply,
+      handleOkReply,
+      // 删除评论
+      showDeleteConfirm
     }
   },
   components: { Module }

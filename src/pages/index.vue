@@ -14,10 +14,10 @@
       <template #side>
         <SideBar>
           <HeadLogo />
-          <!-- 随便看看 -->
-          <Casual />
           <!-- 热门文章 -->
           <HotSee />
+          <!-- 随便看看 -->
+          <Casual />
           <!-- 时间线热门评论 -->
           <TimeLine />
         </SideBar>

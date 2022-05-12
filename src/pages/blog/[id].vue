@@ -42,12 +42,15 @@ import {
 import type { ICommentType } from '~/api'
 import { message } from 'ant-design-vue'
 
-interface headerInfo {
+export interface headerInfo {
   id: number
   nickname: string
   avatarUrl: string
   agree: number
   count: number
+
+  title: string
+  createTime: string
 }
 
 export default defineComponent({
@@ -75,6 +78,8 @@ export default defineComponent({
       // 表头
       headerInfo.value = {
         ...momentDetail?.author,
+        title: momentDetail.title,
+        createTime: momentDetail.createTime,
         count: momentDetail.commentCount,
         agree: momentDetail.agree
       }

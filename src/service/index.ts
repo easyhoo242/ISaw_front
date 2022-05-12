@@ -10,7 +10,7 @@ const hyRequest = new HYRequest({
   interceptors: {
     requestInterceptor: (config) => {
       // 携带token的拦截
-      const token = localCache.getCache('token')
+      const { token } = localCache.getCache('user')
       if (!token) {
         return config
       }

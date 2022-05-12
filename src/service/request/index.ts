@@ -44,8 +44,6 @@ class HYRequest {
 
         const data = res.data
 
-        console.log(res)
-
         try {
           if (data.returnCode === '-1001') {
             console.log('请求失败~, 错误信息')

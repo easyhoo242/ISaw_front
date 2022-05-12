@@ -23,7 +23,7 @@ import './styles/main.less'
 
   router.beforeEach((to) => {
     if (to.path !== '/login' && to.path != '/register') {
-      const token = localCache.getCache('token')
+      const { token } = localCache.getCache('user')
       if (!token) {
         message.error('未登录，正在跳转到登录页...', 2)
         return '/login'

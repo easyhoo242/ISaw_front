@@ -65,7 +65,7 @@ export default defineComponent({
     })
     const reload = inject('reload', Function, true)
     const currentPage = ref(1)
-    const total = ref(5)
+    const total = ref(0)
 
     //@ts-ignore
     const headerInfo = ref<headerInfo>({})
@@ -96,8 +96,6 @@ export default defineComponent({
       // 二级评论列表
       const resC = await requestCommentListSon()
 
-      console.log(resC, 'resc')
-
       total.value = res.data?.commentCountNotNull!
 
       comment.father = res.data?.list!
@@ -116,17 +114,16 @@ export default defineComponent({
         return
       }
 
-      const res = await requestPostComment(momentId, currntComment)
+      const { flag, msg } = await requestPostComment(momentId, currntComment)
 
-      if (!res.flag) {
+      if (!flag) {
         message.error('评论发表失败~', 3)
         return
       }
 
-      message.success('评论发表成功~', 3)
+      message.success(msg, 3)
       // 刷新列表
       getData()
-      reload()
     }
 
     // 回复评论

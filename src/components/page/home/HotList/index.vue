@@ -27,8 +27,6 @@ export default defineComponent({
     const getData = async () => {
       const res = await requestMomentAll(currentPage.value)
 
-      console.log('momentList', res)
-
       hotList.value = res.data?.list!
       total.value = res.data?.momentCount!
     }

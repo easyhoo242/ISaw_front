@@ -1,6 +1,6 @@
 <template>
-  <Module>
-    <a-comment class="py-0">
+  <Module class="pb-0">
+    <a-comment class="py-0 pb-0">
       <template #avatar>
         <a-avatar :src="user.logo" alt="用户头像" />
       </template>
@@ -69,8 +69,8 @@
     </a-list>
   </Module>
 
-  <Module v-else title="评论列表">
-    <a-empty :description="null" class="py-6" />
+  <Module v-else title="评论列表" class="pb-0">
+    <a-empty :description="null" class="py-1" />
   </Module>
 </template>
 
@@ -139,5 +139,9 @@ export default defineComponent({
 <style lang="less" scoped>
 .empty {
   box-shadow: none !important;
+}
+
+:deep(.ant-comment-inner) {
+  padding-bottom: 0;
 }
 </style>

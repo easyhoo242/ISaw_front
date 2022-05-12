@@ -22,7 +22,7 @@
     </a-comment>
   </Module>
 
-  <Module v-if="data?.father?.length || 0">
+  <Module v-if="data.father.length">
     <a-list
       :data-source="data.father"
       :header="`${total} 条评论`"
@@ -32,12 +32,15 @@
       <template #renderItem="{ item }">
         <a-list-item>
           <a-comment
-            :author="item.user?.name"
+            :author="item.user.nickname"
             :content="item.content"
-            :datetime="item.createAt.split('T')[0]"
+            :datetime="item?.createTIme?.split('T')[0]"
           >
             <template #avatar>
-              <a-avatar :src="item.user?.logo" alt="用户头像" />
+              <a-avatar
+                :src="item?.user?.avatarUrl || BASE_HEAD_LOGO"
+                alt=" "
+              />
             </template>
 
             <template #actions>
@@ -46,20 +49,22 @@
               </span>
             </template>
 
-            <!-- handleReply(item.id) -->
             <a-modal v-model:visible="visible" title="回复消息" @ok="handleOk">
               <a-input v-model:value="currentReply" />
             </a-modal>
 
-            <div v-for="son in data.son">
+            <div v-for="child in data.son">
               <a-comment
-                v-if="son.comment_id === item.id"
-                :author="son.user.name"
-                :content="son.content"
-                :datetime="son.createAt.split('T')[0]"
+                v-if="child.commentId === item.id"
+                :author="child.user.nickname"
+                :content="child.content"
+                :datetime="child?.createTime?.split('T')[0]"
               >
                 <template #avatar>
-                  <a-avatar :src="son.user?.logo" alt="用户头像" />
+                  <a-avatar
+                    :src="child?.user?.avatarUrl || BASE_HEAD_LOGO"
+                    alt=" "
+                  />
                 </template>
               </a-comment>
             </div>
@@ -77,7 +82,7 @@
 <script lang="ts">
 import { defineComponent, PropType, ref } from 'vue'
 import type { ICommentType } from '~/api'
-import { BASE_LOGO } from '~/api'
+import { BASE_HEAD_LOGO } from '~/api'
 import Module from '~/components/global/Module.vue'
 
 import usecache from '~/utils/cache'
@@ -85,7 +90,10 @@ import usecache from '~/utils/cache'
 export default defineComponent({
   props: {
     data: {
-      type: Object as PropType<ICommentType>,
+      type: Object as PropType<{
+        father: ICommentType[]
+        son: ICommentType[]
+      }>,
       default: () => []
     },
     total: {
@@ -118,9 +126,11 @@ export default defineComponent({
       emit('reply', currentComment.value, currentReply.value)
     }
 
+    console.log('DATA', props.data)
+
     return {
       user,
-      BASE_LOGO,
+      BASE_HEAD_LOGO,
       comments,
       submitting,
       currntComment,

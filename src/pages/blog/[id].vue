@@ -5,14 +5,14 @@
     <template #body>
       <Content :data="currentContent" />
       <Comment
-        :data="commentList"
+        :data="comment"
         @submit="handleSubmit"
         @reply="handleReply"
         :total="total"
       />
 
       <a-pagination
-        v-if="commentList?.father.length"
+        v-if="comment.father.length"
         :current="currentPage"
         :pageSize="10"
         :total="total"
@@ -32,9 +32,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, inject } from 'vue'
+import { defineComponent, ref, reactive, onMounted, inject } from 'vue'
 import {
   requestCommentList,
+  requestCommentListSon,
   postComment,
   postReplyComment,
   requestMomentDetail
@@ -58,9 +59,12 @@ export interface headerInfo {
 export default defineComponent({
   inject: ['reload'],
   setup() {
-    const commentList = ref<ICommentType>()
+    const comment = reactive<{ father: ICommentType[]; son: ICommentType[] }>({
+      father: [],
+      son: []
+    })
     const reload = inject('reload', Function, true)
-    const currentPage = ref(0)
+    const currentPage = ref(1)
     const total = ref(5)
 
     //@ts-ignore
@@ -73,7 +77,6 @@ export default defineComponent({
       // 文章详情
       const momentDetail = (await requestMomentDetail(momentId))!
 
-      console.log('detail', momentDetail)
       // 正文
       currentContent.value = momentDetail.content
 
@@ -87,11 +90,18 @@ export default defineComponent({
         momentId: momentDetail.momentId
       }
 
-      // 评论列表
-      const res = await requestCommentList(momentId, currentPage.value, 5)
+      // 一级评论列表
+      const res = await requestCommentList(currentPage.value, 5, 1, momentId)
 
-      commentList.value = res.data as ICommentType
-      total.value = res.data?.count as number
+      // 二级评论列表
+      const resC = await requestCommentListSon()
+
+      console.log(resC, 'resc')
+
+      total.value = res.data?.commentCountNotNull!
+
+      comment.father = res.data?.list!
+      comment.son = resC.data!
     }
 
     const handlePageChange = (page: number) => {
@@ -141,7 +151,7 @@ export default defineComponent({
     })
 
     return {
-      commentList,
+      comment,
       handleSubmit,
       currentPage,
       total,

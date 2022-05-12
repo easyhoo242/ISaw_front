@@ -113,23 +113,7 @@ export interface ICommentType {
   count: number
 }
 
-export const requestCommentList = (
-  momentId: number,
-  page: number,
-  pagesize: number
-) => {
-  return hyRequest.get<IResponsType<ICommentType>>({
-    url: BlogApi.getCommentList,
-    params: {
-      momentId,
-      page: page,
-      pageSize: pagesize
-    }
-  })
-}
-
 // 发表评论
-
 export const postComment = (momentId: number, content: string) => {
   return hyRequest.post<IResponsType<any>>({
     url: BlogApi.postComment,

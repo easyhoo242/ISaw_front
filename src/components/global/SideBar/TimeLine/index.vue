@@ -5,7 +5,7 @@
         <a-timeline-item color="green">
           <Message :data="list[0]" />
         </a-timeline-item>
-        <a-timeline-item color="green">
+        <a-timeline-item color="blue">
           <Message :data="list[1]" />
         </a-timeline-item>
         <a-timeline-item color="red">
@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, onMounted } from 'vue'
 import { requestLatelyCommentList } from '~/api'
 import type { ILatelyCommentType } from '~/api'
 
@@ -31,10 +31,13 @@ export default defineComponent({
     const getData = async () => {
       const res = await requestLatelyCommentList()
 
-      list.value = res.data as ILatelyCommentType[]
+      list.value = res.data!
     }
 
-    getData()
+    onMounted(() => {
+      getData()
+    })
+
     return {
       list
     }

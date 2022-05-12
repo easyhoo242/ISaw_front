@@ -3,22 +3,26 @@
     <div class="logo flex-0 h-10 w-10 mr-4 rounded-full overflow-hidden">
       <A :href="`user/${data.user?.id}`">
         <img
-          :src="data.user?.logo || BASE_LOGO"
-          :alt="data.user?.name"
+          v-if="data?.user?.avatarUrl"
+          :src="data?.user?.avatarUrl"
+          alt=""
           class="h-full w-full"
         />
+        <img v-else :src="BASE_LOGO" alt="" class="h-full w-full" />
       </A>
     </div>
 
     <div class="content flex-1">
-      <A :href="`/blog/${data?.moment_id}`">
+      <A :href="`/blog/${data.momentId}`">
         <div class="content-text w-55 font-normal text-sm mb-2px">
           {{ data.content }}
         </div>
       </A>
       <div class="text-xs flex items-center">
-        <span class="pr-2 font-bold"> {{ data.user?.name || 'CTWOOD~' }}</span>
-        {{ data?.updateAt?.split('T')[0] }}
+        <span class="pr-2 font-bold">
+          {{ data.user?.nickname || 'CTWOOD~' }}</span
+        >
+        {{ data?.createTime?.split('T')[0] || '' }}
       </div>
     </div>
   </div>
@@ -26,7 +30,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { ILatelyCommentType, BASE_LOGO } from '~/api'
+import { BASE_LOGO } from '~/api'
+import type { ILatelyCommentType } from '~/api'
 
 export default defineComponent({
   props: {

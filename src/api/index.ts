@@ -1,4 +1,4 @@
-export * from './sideBar'
+export * from './comment'
 export * from './blog'
 export * from './moment'
 export * from './user'

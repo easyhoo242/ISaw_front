@@ -1,21 +1,24 @@
 import hyRequest from '~/service'
-import { IResponsType } from '.'
+import { IResponsType } from './index'
+
 export interface ILatelyCommentType {
   id: number
   content: string
-  updateAt: string
-  moment_id: number
+  createTime: string
+  agree: number
+  child_count: number
+  momentId: number
+  commentId: number
+
   user: {
+    avatarUrl: string
     id: number
-    name: string
-    logo: string
+    nickname: string
   }
 }
 
-
 enum sideBarApi {
-  latelyCommentList = '/latelyComment',
-  latelyMomentList = '/latelyMoment'
+  latelyCommentList = '/comment/lately/1'
 }
 
 export const requestLatelyCommentList = () => {
@@ -23,5 +26,3 @@ export const requestLatelyCommentList = () => {
     url: sideBarApi.latelyCommentList
   })
 }
-
-

@@ -8,6 +8,7 @@
         :data="comment"
         @submit="handleSubmit"
         @reply="handleReply"
+        @delete="handleDelete"
         :total="total"
         :totalAll="totalAll"
       />
@@ -38,7 +39,8 @@ import {
   requestCommentListSon,
   requestPostComment,
   requestReplyComment,
-  requestMomentDetail
+  requestMomentDetail,
+  requestCommentDelete
 } from '~/api'
 import type { ICommentType } from '~/api'
 import { message } from 'ant-design-vue'
@@ -150,6 +152,20 @@ export default defineComponent({
       // reload()
     }
 
+    // 删除评论
+    const handleDelete = async (id: number) => {
+      const { flag, msg } = await requestCommentDelete(id)
+
+      if (!flag) {
+        message.error('删除失败', 2)
+        return
+      }
+
+      message.success(msg, 3)
+
+      getData()
+    }
+
     onMounted(() => {
       getData()
     })
@@ -164,7 +180,9 @@ export default defineComponent({
       handlePageChange,
       handleReply,
       headerInfo,
-      currentContent
+      currentContent,
+      // 删除评论
+      handleDelete
     }
   }
 })

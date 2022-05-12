@@ -1,4 +1,5 @@
 <template>
+  <!-- 发表评论框 -->
   <Module class="pb-0">
     <a-comment class="py-0 pb-0">
       <template #avatar>
@@ -22,6 +23,7 @@
     </a-comment>
   </Module>
 
+  <!-- 评论列表 -->
   <Module v-if="data.father.length">
     <a-list
       :data-source="data.father"
@@ -60,7 +62,7 @@
               <span
                 v-if="item.user.id === user.id"
                 key="comment-nested-delete-to"
-                @click="showDeleteConfirm(item.user.id)"
+                @click="showDeleteConfirm(item.id)"
               >
                 删 除
               </span>
@@ -83,7 +85,7 @@
                 <template #actions v-if="child.user.id === user.id">
                   <span
                     key="comment-nested-delete-to"
-                    @click="showDeleteConfirm(child.user.id)"
+                    @click="showDeleteConfirm(child.id)"
                   >
                     删 除
                   </span>
@@ -96,6 +98,7 @@
     </a-list>
   </Module>
 
+  <!-- 评论列表空状态 -->
   <Module v-else title="暂时还没有评论哦~" class="pb-0">
     <a-empty :description="null" class="py-1" />
   </Module>
@@ -108,7 +111,7 @@
 <script lang="ts">
 import { defineComponent, PropType, ref } from 'vue'
 import usecache from '~/utils/cache'
-import { BASE_HEAD_LOGO, requestCommentDelete } from '~/api'
+import { BASE_HEAD_LOGO } from '~/api'
 import type { ICommentType } from '~/api'
 import { Modal } from 'ant-design-vue'
 import Module from '~/components/global/Module.vue'
@@ -166,10 +169,9 @@ export default defineComponent({
         okText: '确定',
         okType: 'danger',
         cancelText: '取消',
-        async onOk() {
-          const res = await requestCommentDelete(id)
 
-          console.log('delete', res)
+        onOk() {
+          emit('delete', id)
         },
         onCancel() {}
       })

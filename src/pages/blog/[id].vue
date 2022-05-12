@@ -36,7 +36,7 @@ import { defineComponent, ref, reactive, onMounted, inject } from 'vue'
 import {
   requestCommentList,
   requestCommentListSon,
-  postComment,
+  requestPostComment,
   postReplyComment,
   requestMomentDetail
 } from '~/api'
@@ -116,7 +116,7 @@ export default defineComponent({
         return
       }
 
-      const res = await postComment(momentId, currntComment)
+      const res = await requestPostComment(momentId, currntComment)
 
       if (!res.flag) {
         message.error('评论发表失败~', 3)

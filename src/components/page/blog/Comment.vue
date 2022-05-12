@@ -96,7 +96,7 @@
     </a-list>
   </Module>
 
-  <Module v-else title="评论列表" class="pb-0">
+  <Module v-else title="暂时还没有评论哦~" class="pb-0">
     <a-empty :description="null" class="py-1" />
   </Module>
 

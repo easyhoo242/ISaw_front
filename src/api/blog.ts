@@ -114,16 +114,7 @@ export interface ICommentType {
 }
 
 // 发表评论
-export const postComment = (momentId: number, content: string) => {
-  return hyRequest.post<IResponsType<any>>({
-    url: BlogApi.postComment,
-    data: {
-      userId: userInfo.id,
-      momentId,
-      content
-    }
-  })
-}
+
 
 // 回复评论
 export const postReplyComment = (

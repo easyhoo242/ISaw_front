@@ -25,7 +25,7 @@
   <Module v-if="data.father.length">
     <a-list
       :data-source="data.father"
-      :header="`${total} 条评论`"
+      :header="`${total}  |（共 ${totalAll}） 条评论`"
       item-layout="horizontal"
       class="px-6"
     >
@@ -34,7 +34,7 @@
           <a-comment
             :author="item.user.nickname"
             :content="item.content"
-            :datetime="item?.createTIme?.split('T')[0]"
+            :datetime="item?.createTime?.split('T')[0]"
           >
             <template #avatar>
               <a-avatar
@@ -123,6 +123,10 @@ export default defineComponent({
       default: () => []
     },
     total: {
+      type: Number,
+      default: 0
+    },
+    totalAll: {
       type: Number,
       default: 0
     }

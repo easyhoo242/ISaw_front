@@ -9,6 +9,7 @@
         @submit="handleSubmit"
         @reply="handleReply"
         :total="total"
+        :totalAll="totalAll"
       />
 
       <a-pagination
@@ -64,6 +65,7 @@ export default defineComponent({
     // const reload = inject('reload', Function, true)
     const currentPage = ref(1)
     const total = ref(0)
+    const totalAll = ref(0)
 
     //@ts-ignore
     const headerInfo = ref<headerInfo>({})
@@ -95,6 +97,7 @@ export default defineComponent({
       const resC = await requestCommentListSon()
 
       total.value = res.data?.commentCountNotNull!
+      totalAll.value = res.data?.commentCount!
 
       comment.father = res.data?.list!
       comment.son = resC.data!
@@ -157,6 +160,7 @@ export default defineComponent({
       handleSubmit,
       currentPage,
       total,
+      totalAll,
       handlePageChange,
       handleReply,
       headerInfo,

@@ -19,6 +19,14 @@
         </a-form-item>
 
         <a-form-item
+          label="昵称"
+          name="nickname"
+          :rules="[{ required: true, message: '昵称不能为空~' }]"
+        >
+          <a-input v-model:value="formState.nickname" />
+        </a-form-item>
+
+        <a-form-item
           label="密码"
           name="password"
           :rules="[{ required: true, message: '请输入密码' }]"
@@ -56,13 +64,19 @@ import { defineComponent, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { message } from 'ant-design-vue'
 import { handleUserLogin } from '~/hooks'
-import { registUser, IRegistUserType } from '~/api'
+import { registUser } from '~/api'
+import type { IAccount } from '~/api'
 
 interface FormState {
   username: string
   password: string
+  nickname: string
   rePassword: string
   remember: boolean
+}
+
+interface account extends IAccount {
+  nickname: string
 }
 
 export default defineComponent({
@@ -70,6 +84,7 @@ export default defineComponent({
     const router = useRouter()
 
     const formState = reactive<FormState>({
+      nickname: 'ISawer~',
       username: '',
       password: '',
       rePassword: '',
@@ -77,7 +92,8 @@ export default defineComponent({
     })
 
     const getData = async () => {
-      const data: IRegistUserType = {
+      const data: account = {
+        nickname: formState.nickname,
         username: formState.username,
         password: formState.password
       }
@@ -85,9 +101,11 @@ export default defineComponent({
       const { flag, msg } = await registUser(data)
 
       if (!flag) {
-        message.error(msg)
+        message.error(msg, 2)
         return
       }
+
+      message.success(msg, 3)
 
       if (await handleUserLogin(data)) {
         router.push('/')

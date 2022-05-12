@@ -9,7 +9,7 @@
         <a-form-item>
           <a-textarea v-model:value="currntComment" :rows="4" />
         </a-form-item>
-        <a-form-item>
+        <a-form-item class="text-right pr-4">
           <a-button
             html-type="submit"
             :loading="submitting"

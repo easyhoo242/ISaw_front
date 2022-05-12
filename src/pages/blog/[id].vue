@@ -37,10 +37,18 @@ import {
   requestCommentList,
   postComment,
   postReplyComment,
-  requestBlogDetailById
+  requestMomentDetail
 } from '~/api'
 import type { ICommentType } from '~/api'
 import { message } from 'ant-design-vue'
+
+interface headerInfo {
+  id: number
+  nickname: string
+  avatarUrl: string
+  agree: number
+  count: number
+}
 
 export default defineComponent({
   inject: ['reload'],
@@ -49,25 +57,33 @@ export default defineComponent({
     const reload = inject('reload', Function, true)
     const currentPage = ref(0)
     const total = ref(5)
-    const headerInfo = ref({})
+
+    //@ts-ignore
+    const headerInfo = ref<headerInfo>({})
     const currentContent = ref('')
 
     const momentId = parseInt(window.location.pathname.split('/')[2])
 
     const getData = async () => {
+      // 文章详情
+      const momentDetail = (await requestMomentDetail(momentId))!
+
+      console.log('detail', momentDetail)
+      // 正文
+      currentContent.value = momentDetail.content
+
+      // 表头
+      headerInfo.value = {
+        ...momentDetail?.author,
+        count: momentDetail.commentCount,
+        agree: momentDetail.agree
+      }
+
+      // 评论列表
       const res = await requestCommentList(momentId, currentPage.value, 5)
 
       commentList.value = res.data as ICommentType
       total.value = res.data?.count as number
-
-      const resC = (await requestBlogDetailById(momentId)).data
-
-      currentContent.value = resC?.detail.content as string
-      // @ts-ignore
-      headerInfo.value = {
-        ...resC?.detail,
-        count: resC?.commentCount
-      }
     }
 
     const handlePageChange = (page: number) => {

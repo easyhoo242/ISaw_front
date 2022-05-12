@@ -9,7 +9,8 @@ enum momentApi {
   // moment + label -> 按类型
   // moment + userId -> 按userId
   // moment -> 全部
-  ModuleTo = '/moment' //moment + label
+  ModuleTo = '/moment', //moment + label
+  momentDetail = '/moment/' // /moment/momentId
 }
 
 export interface IMomentType {
@@ -99,5 +100,13 @@ export const requestModuleTo = (
       limit,
       offset
     }
+  })
+}
+
+// 文章详情
+
+export const requestMomentDetail = (momentId: number) => {
+  return hyRequest.get<IMomentType>({
+    url: momentApi.momentDetail + momentId
   })
 }

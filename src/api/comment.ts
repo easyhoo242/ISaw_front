@@ -27,7 +27,8 @@ enum commentApi {
   latelyCommentList = '/comment/lately/1',
   getCommentList = '/comment/',
   deleteComment = '/comment/', // /comment/commentId
-  postComment = '/comment'
+  postComment = '/comment',
+  replyComment = '/comment/' // comment/momentId
 }
 
 // 最新评论列表
@@ -82,6 +83,21 @@ export const requestPostComment = (momentId: number, content: string) => {
     data: {
       momentId,
       content
+    }
+  })
+}
+
+// 回复评论
+export const requestReplyComment = (
+  momentId: number,
+  content: string,
+  commentId: number
+) => {
+  return hyRequest.post<IResponsType<any>>({
+    url: commentApi.replyComment + commentId,
+    data: {
+      content,
+      momentId
     }
   })
 }

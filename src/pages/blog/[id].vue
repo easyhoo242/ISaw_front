@@ -32,12 +32,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, onMounted, inject } from 'vue'
+import { defineComponent, ref, reactive, onMounted } from 'vue'
 import {
   requestCommentList,
   requestCommentListSon,
   requestPostComment,
-  postReplyComment,
+  requestReplyComment,
   requestMomentDetail
 } from '~/api'
 import type { ICommentType } from '~/api'
@@ -57,13 +57,12 @@ export interface headerInfo {
 }
 
 export default defineComponent({
-  inject: ['reload'],
   setup() {
     const comment = reactive<{ father: ICommentType[]; son: ICommentType[] }>({
       father: [],
       son: []
     })
-    const reload = inject('reload', Function, true)
+    // const reload = inject('reload', Function, true)
     const currentPage = ref(1)
     const total = ref(0)
 
@@ -132,15 +131,21 @@ export default defineComponent({
         return
       }
 
-      const { flag, msg } = await postReplyComment(momentId, reply, commentId)
+      const { flag, msg } = await requestReplyComment(
+        momentId,
+        reply,
+        commentId
+      )
+
+      console.log(flag, msg)
 
       if (!flag) {
-        message.error(msg, 2)
+        message.error('评论回复失败', 2)
       }
 
       message.success(msg, 3)
       getData()
-      reload()
+      // reload()
     }
 
     onMounted(() => {

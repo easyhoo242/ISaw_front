@@ -58,8 +58,9 @@
                 删 除
               </span> -->
               <span
+                v-if="item.user.id === user.id"
                 key="comment-nested-delete-to"
-                @click="showDeleteConfirm(item.id)"
+                @click="showDeleteConfirm(item.user.id)"
               >
                 删 除
               </span>
@@ -79,11 +80,10 @@
                   />
                 </template>
 
-                <template #actions>
+                <template #actions v-if="child.user.id === user.id">
                   <span
-                    v-if="child.user.id === user.id"
                     key="comment-nested-delete-to"
-                    @click="showDeleteConfirm(item.id)"
+                    @click="showDeleteConfirm(child.user.id)"
                   >
                     删 除
                   </span>
@@ -107,12 +107,11 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from 'vue'
+import usecache from '~/utils/cache'
+import { BASE_HEAD_LOGO, requestCommentDelete } from '~/api'
 import type { ICommentType } from '~/api'
-import { BASE_HEAD_LOGO } from '~/api'
 import { Modal } from 'ant-design-vue'
 import Module from '~/components/global/Module.vue'
-
-import usecache from '~/utils/cache'
 
 export default defineComponent({
   props: {
@@ -125,10 +124,12 @@ export default defineComponent({
     },
     total: {
       type: Number,
-      default: 23
+      default: 0
     }
   },
+
   emits: ['submit', 'reply', 'delete'],
+
   setup(props, { emit }) {
     const comments = ref<Comment[]>([])
     const submitting = ref<boolean>(false)
@@ -156,14 +157,15 @@ export default defineComponent({
 
     // 删除弹框
     const showDeleteConfirm = (id: number) => {
-      console.log(id)
       Modal.confirm({
         title: '确认删除这条评论？',
         okText: '确定',
         okType: 'danger',
         cancelText: '取消',
-        onOk() {
-          console.log('OK')
+        async onOk() {
+          const res = await requestCommentDelete(id)
+
+          console.log('delete', res)
         },
         onCancel() {}
       })

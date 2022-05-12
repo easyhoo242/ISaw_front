@@ -25,7 +25,8 @@ export interface ICommentListType {
 
 enum commentApi {
   latelyCommentList = '/comment/lately/1',
-  getCommentList = '/comment/'
+  getCommentList = '/comment/',
+  deleteComment = '/comment/' // /comment/commentId
 }
 
 // 最新评论列表
@@ -63,5 +64,12 @@ export const requestCommentListSon = () => {
       limit: 5,
       commentId: 1
     }
+  })
+}
+
+// 删除评论
+export const requestCommentDelete = (commentId: number) => {
+  return hyRequest.delete<IResponsType<any>>({
+    url: commentApi.deleteComment + commentId
   })
 }

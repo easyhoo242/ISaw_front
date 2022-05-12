@@ -25,7 +25,7 @@ export interface ICommentListType {
 
 enum commentApi {
   latelyCommentList = '/comment/lately/1',
-  getCommentList = '/comment/',
+  getCommentList = '/comment',
   deleteComment = '/comment/', // /comment/commentId
   postComment = '/comment',
   replyComment = '/comment/' // comment/momentId
@@ -46,10 +46,14 @@ export const requestCommentList = (
   commentId: number,
   momentId?: number
 ) => {
+  const offset = page > 1 ? (page - 1) * 5 : 0
+
+  console.log(offset)
+
   return hyRequest.get<IResponsType<ICommentListType>>({
     url: commentApi.getCommentList,
     params: {
-      offset: page,
+      offset,
       limit: pagesize,
       commentId,
       momentId

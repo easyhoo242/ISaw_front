@@ -13,10 +13,9 @@
 
       <a-pagination
         v-if="comment.father.length"
+        v-model:pageSize="pagesize"
         :current="currentPage"
-        :pageSize="10"
         :total="total"
-        show-quick-jumper
         hideOnSinglePage
         class="my-3"
         @change="handlePageChange"
@@ -153,6 +152,7 @@ export default defineComponent({
     })
 
     return {
+      pagesize: 5,
       comment,
       handleSubmit,
       currentPage,

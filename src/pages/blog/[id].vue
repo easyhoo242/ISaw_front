@@ -111,6 +111,7 @@ export default defineComponent({
         momentId: momentDetail.momentId
       }
 
+      // 是否显示权限操作按钮
       isShowPermission.value = user.id === momentDetail.author.id
 
       // 一级评论列表
@@ -148,9 +149,11 @@ export default defineComponent({
             return
           }
 
-          message.success(res.msg, 3)
+          message.success('删除成功~ 2秒后跳转到首页~', 3)
 
-          router.go(-1)
+          setTimeout(() => {
+            router.push('/')
+          }, 1500)
         },
         onCancel() {}
       })

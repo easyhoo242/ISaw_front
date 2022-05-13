@@ -9,27 +9,32 @@
       <div
         class="bg-gray-900 bg-opacity-30 h-full flex items-center justify-center"
       >
-        <div class="left-content mx-6 text-white">将有意思的案例放在这里以供学习和分享</div>
+        <div class="left-content mx-6 text-white">
+          将有意思的案例放在这里以供学习和分享
+        </div>
       </div>
     </div>
+
+    <!-- :style="`background:url(${item?.images[0] ? item?.images : BASE_LOGO})`" -->
+
     <div
       class="module-show-right col-span-3 grid grid-cols-3 grid-rows-2 gap-3"
     >
       <div
         v-for="item in list"
-        :key="item.id"
+        :key="item.momentId"
+        :style="`background:url(${BASE_LOGO})`"
         class="right-item rounded-md overflow-hidden bg-cover"
-        :style="`background:url(${item.url})`"
       >
         <a
-          class="item-desc text-white px-3 pb-5 z-10 bg-gradient-to-b from-light-100 to-gray-500"
+          class="item-desc w-full text-white px-3 pb-5 z-10 bg-gradient-to-b from-light-100 to-gray-500"
         >
-          <div class="right-item-title text-base font-bold mt-2">
-            {{ item.title }}
+          <div class="right-item-title text-base font-bold mt-2 min-h-12">
+            {{ item.content }}
           </div>
           <div class="right-item-trg mt-3">
-            {{ item.author }}
-            {{ item.time }}
+            {{ item.author.nickname }}
+            {{ item?.createTime?.split('T')[0] }}
           </div>
         </a>
       </div>
@@ -38,55 +43,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, onMounted } from 'vue'
+import { requestMomentShow, BASE_LOGO } from '~/api'
+import type { IMomentType } from '~/api'
 
 export default defineComponent({
   setup() {
+    const list = ref<IMomentType[]>([])
+
+    const getData = async () => {
+      const res = await requestMomentShow(1, 6, 4)
+
+      list.value = res?.list as IMomentType[]
+    }
+
+    onMounted(() => {
+      getData()
+    })
     return {
-      list: [
-        {
-          id: 1,
-          title: '[HTML+CSS]【撸完即巅峰】倔强青铜和最强王者之间就差这个Demo',
-          time: '21-12-07',
-          author: 'ISaw',
-          url: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg1.doubanio.com%2Fview%2Fnote%2Fl%2Fpublic%2Fp82460877.jpg&refer=http%3A%2F%2Fimg1.doubanio.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1652653184&t=a59635edb652c7ee143bb09a52221652'
-        },
-        {
-          id: 2,
-          title: '[HTML+CSS]【撸完即巅峰】倔强青铜和最强王者之间就差这个Demo',
-          time: '21-12-07',
-          author: 'ISaw',
-          url: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F2018-12-26%2F5c23275600250.jpg&refer=http%3A%2F%2Fpic1.win4000.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1652653451&t=e6fcc82226e805c667bd9defc17a2b91'
-        },
-        {
-          id: 3,
-          title: '[HTML+CSS]【撸完即巅峰】倔强青铜和最强王者之间就差这个Demo',
-          time: '21-12-07',
-          author: 'ISaw',
-          url: 'https://img1.baidu.com/it/u=4097408996,1673831050&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500'
-        },
-        {
-          id: 4,
-          title: '[HTML+CSS]【撸完即巅峰】倔强青铜和最强王者之间就差这个Demo',
-          time: '21-12-07',
-          author: 'ISaw',
-          url: 'https://img0.baidu.com/it/u=1577615142,907299332&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500'
-        },
-        {
-          id: 5,
-          title: '[HTML+CSS]【撸完即巅峰】倔强青铜和最强王者之间就差这个Demo',
-          time: '21-12-07',
-          author: 'ISaw',
-          url: 'https://img0.baidu.com/it/u=1577615142,907299332&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500'
-        },
-        {
-          id: 6,
-          title: '[HTML+CSS]【撸完即巅峰】倔强青铜和最强王者之间就差这个Demo',
-          time: '21-12-07',
-          author: 'ISaw',
-          url: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F2018-12-26%2F5c23275600250.jpg&refer=http%3A%2F%2Fpic1.win4000.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1652653451&t=e6fcc82226e805c667bd9defc17a2b91'
-        }
-      ]
+      list,
+      BASE_LOGO
     }
   }
 })

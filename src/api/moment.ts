@@ -118,3 +118,19 @@ export const requestMomentAgree = (momentId: number) => {
     // url: 'moment/1/like'
   })
 }
+
+// 作品展示接口
+export const requestMomentShow = (
+  offset: number,
+  limit: number,
+  label: number
+) => {
+  return hyRequest.get<IMomentListType>({
+    url: momentApi.MomentAll,
+    params: {
+      limit,
+      offset,
+      label
+    }
+  })
+}

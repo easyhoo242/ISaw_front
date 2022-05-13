@@ -84,14 +84,16 @@ export const requestMomentAll = (offset: number, limit: number = 10) => {
 // 根据用户id获取文章列表
 export const requestMomentById = (
   offset: number,
-  limit: number = 10,
+  limit: number,
   userId: number
 ) => {
+  const offsetC = offset === 1 ? 0 : (offset - 1) * limit
+
   return hyRequest.get<IMomentListType>({
     url: momentApi.MomentAll,
     params: {
       limit,
-      offset,
+      offset: offsetC,
       userId
     }
   })

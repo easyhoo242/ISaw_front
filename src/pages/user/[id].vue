@@ -1,5 +1,5 @@
 <template>
-  <Module title="作者发布的文章" class="user-center">
+  <Module :title="`作者发布的文章 | 共 ${total}篇`" class="user-center">
     <FlexCol>
       <template #body>
         <div class="hotlist flex flex-col">
@@ -10,9 +10,9 @@
           </Module>
 
           <a-pagination
-            v-if="list?.length || 0"
+            v-if="list?.length"
             :current="currentPage"
-            :pageSize="10"
+            v-model:pageSize="pageSize"
             :total="total"
             show-quick-jumper
             class="my-3"
@@ -47,6 +47,7 @@ export default defineComponent({
 
     const currentPage = ref(1)
     const total = ref(1)
+    const pageSize = ref(7)
     const list = ref<IMomentType[]>()
 
     const userId = parseInt(window.location.pathname.split('/')[2])
@@ -54,7 +55,11 @@ export default defineComponent({
     const isShowChangeInfo = user.id === userId
 
     const getData = async () => {
-      const res = await requestMomentById(currentPage.value, 10, userId)
+      const res = await requestMomentById(
+        currentPage.value,
+        pageSize.value,
+        userId
+      )
 
       list.value = res.list!
       total.value = res.momentCount!
@@ -76,6 +81,7 @@ export default defineComponent({
       list,
       currentPage,
       total,
+      pageSize,
       onChange,
       simpleImage: Empty.PRESENTED_IMAGE_SIMPLE
     }

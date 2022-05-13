@@ -26,7 +26,8 @@
         :style="`background:url(${BASE_LOGO})`"
         class="right-item rounded-md overflow-hidden bg-cover"
       >
-        <a
+        <A
+          :href="`/IShow/${item.momentId}`"
           class="item-desc w-full text-white px-3 pb-5 z-10 bg-gradient-to-b from-light-100 to-gray-500"
         >
           <div class="right-item-title text-base font-bold mt-2 min-h-12">
@@ -36,7 +37,7 @@
             {{ item.author.nickname }}
             {{ item?.createTime?.split('T')[0] }}
           </div>
-        </a>
+        </A>
       </div>
     </div>
   </Module>

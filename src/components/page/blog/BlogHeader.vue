@@ -10,7 +10,8 @@
       <div
         class="logo rounded-full h-20 w-20 overflow-hidden mt-5 mx-auto relative -top-7"
       >
-        <img :src="data.avatarUrl" alt=" " class="w-full h-full" />
+        <!-- <img :src="data.avatarUrl" alt=" " class="w-full h-full" /> -->
+        <img :src="BASE_HEAD_LOGO" alt=" " class="w-full h-full" />
       </div>
       <div class="desc relative -top-6">
         <div class="desc-name py-2 text-xl flex items-center justify-center">
@@ -32,7 +33,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { requestMomentAgree } from '~/api'
+import { requestMomentAgree, BASE_HEAD_LOGO } from '~/api'
 import { headerInfo } from '~/pages/blog/[id].vue'
 
 export default defineComponent({
@@ -56,7 +57,8 @@ export default defineComponent({
     }
 
     return {
-      handleAgree
+      handleAgree,
+      BASE_HEAD_LOGO
     }
   }
 })

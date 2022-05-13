@@ -34,8 +34,8 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { requestBlogListById } from '~/api'
-import type { IBlogResultListType } from '~/api'
+import { requestMomentById } from '~/api'
+import type { IMomentType } from '~/api'
 import cache from '~/utils/cache'
 import { Empty } from 'ant-design-vue'
 import Module from '~/components/global/Module.vue'
@@ -43,21 +43,21 @@ import ChangeInfo from '~/components/page/user/ChangeInfo.vue'
 
 export default defineComponent({
   setup() {
-    const userInfo = cache.getCache('user')
+    const user = cache.getCache('user')
 
     const currentPage = ref(1)
     const total = ref(1)
-    const list = ref<IBlogResultListType[]>()
+    const list = ref<IMomentType[]>()
 
     const userId = parseInt(window.location.pathname.split('/')[2])
 
-    const isShowChangeInfo = userInfo.id === userId
+    const isShowChangeInfo = user.id === userId
 
     const getData = async () => {
-      const res = (await requestBlogListById(currentPage.value, 10, userId))
-        .data
-      list.value = res?.list as any
-      total.value = res?.count || 100
+      const res = await requestMomentById(currentPage.value, 10, userId)
+
+      list.value = res.list!
+      total.value = res.momentCount!
     }
 
     const onChange = (page: number) => {

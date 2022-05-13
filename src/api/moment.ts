@@ -81,6 +81,22 @@ export const requestMomentAll = (offset: number, limit: number = 10) => {
   })
 }
 
+// 根据用户id获取文章列表
+export const requestMomentById = (
+  offset: number,
+  limit: number = 10,
+  userId: number
+) => {
+  return hyRequest.get<IMomentListType>({
+    url: momentApi.MomentAll,
+    params: {
+      limit,
+      offset,
+      userId
+    }
+  })
+}
+
 // 最近发表文章接口
 export const requestLatelyMomentList = () => {
   return hyRequest.get<IResponsType<IMomentType[]>>({

@@ -27,6 +27,17 @@
     <template #side>
       <Sidebar>
         <Casual />
+
+        <!-- 文章操作模块 -->
+        <Module v-if="isShowPermission" title="文章权限操作">
+          <div class="mt-3 px-3 grid grid-cols-2" @click="handleDeleteComment">
+            <div
+              class="changeInfo px-3 py-2 rounded-md bg-gray-200 text-center font-bold text-base text-gray-700 hover:text-stroke-blue-300 cursor-pointer"
+            >
+              删除文章
+            </div>
+          </div>
+        </Module>
       </Sidebar>
     </template>
   </FlexCol>
@@ -34,16 +45,19 @@
 
 <script lang="ts">
 import { defineComponent, ref, reactive, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import localCache from '~/utils/cache'
 import {
   requestCommentList,
   requestCommentListSon,
   requestPostComment,
   requestReplyComment,
   requestMomentDetail,
-  requestCommentDelete
+  requestCommentDelete,
+  requestMomentDelete
 } from '~/api'
 import type { ICommentType } from '~/api'
-import { message } from 'ant-design-vue'
+import { message, Modal } from 'ant-design-vue'
 
 export interface headerInfo {
   id: number
@@ -60,6 +74,11 @@ export interface headerInfo {
 
 export default defineComponent({
   setup() {
+    const router = useRouter()
+    const user = localCache.getCache('user')
+
+    const isShowPermission = ref(false)
+
     const comment = reactive<{ father: ICommentType[]; son: ICommentType[] }>({
       father: [],
       son: []
@@ -92,6 +111,8 @@ export default defineComponent({
         momentId: momentDetail.momentId
       }
 
+      isShowPermission.value = user.id === momentDetail.author.id
+
       // 一级评论列表
       const res = await requestCommentList(currentPage.value, 5, 1, momentId)
 
@@ -109,6 +130,30 @@ export default defineComponent({
       currentPage.value = page
 
       getData()
+    }
+
+    // 删除文章
+    const handleDeleteComment = () => {
+      Modal.confirm({
+        title: '确认删除文章？',
+        okText: '确定',
+        okType: 'danger',
+        cancelText: '取消',
+
+        async onOk() {
+          const res = await requestMomentDelete(momentId)
+
+          if (!res.flag) {
+            message.error('删除失败~', 3)
+            return
+          }
+
+          message.success(res.msg, 3)
+
+          router.go(-1)
+        },
+        onCancel() {}
+      })
     }
 
     // 发表评论
@@ -182,7 +227,10 @@ export default defineComponent({
       headerInfo,
       currentContent,
       // 删除评论
-      handleDelete
+      handleDelete,
+      // 删除文章
+      handleDeleteComment,
+      isShowPermission
     }
   }
 })

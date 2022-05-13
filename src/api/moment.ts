@@ -11,7 +11,8 @@ enum momentApi {
   // moment -> 全部
   ModuleTo = '/moment', //moment + label
   momentDetail = '/moment/',
-  momentLike = '/moment/' // /moment/momentId/like
+  momentLike = '/moment/', // /moment/momentId/like
+  momentDelete = '/moment/' // /moment/ momentId
 }
 
 export interface IMomentType {
@@ -134,6 +135,13 @@ export const requestMomentAgree = (momentId: number) => {
   return hyRequest.get<IResponsType<any>>({
     url: momentApi.momentLike + momentId + '/like'
     // url: 'moment/1/like'
+  })
+}
+
+// 文章删除接口
+export const requestMomentDelete = (momentId: number) => {
+  return hyRequest.delete<IResponsType<string>>({
+    url: momentApi.momentDelete + momentId
   })
 }
 

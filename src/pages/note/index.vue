@@ -6,7 +6,19 @@
     <FlexCol>
       <template #body>
         <Overlay class="mb-0" />
-        <HotList />
+        <div>
+          <Moment v-for="item in hotList" :key="item.momentId" :data="item" />
+
+          <a-pagination
+            :current="currentPage"
+            :pageSize="10"
+            :total="total"
+            show-quick-jumper
+            hideOnSinglePage
+            class="my-3"
+            @change="handlePageChange"
+          />
+        </div>
       </template>
       <template #side>
         <SideBar>
@@ -22,11 +34,38 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, onMounted } from 'vue'
+import { requestMomentAll } from '~/api'
+import type { IMomentType } from '~/api'
 
 export default defineComponent({
   name: '关于',
   setup() {
+    const currentPage = ref(1)
+    const total = ref(0)
+    const hotList = ref<IMomentType[]>([])
+
+    const getData = async () => {
+      const res = await requestMomentAll(currentPage.value)
+
+      hotList.value = res.list!
+      total.value = res.momentCount!
+    }
+
+    const handlePageChange = (page: number) => {
+      currentPage.value = page
+      getData()
+
+      window.scrollTo({
+        top: 529,
+        behavior: 'smooth'
+      })
+    }
+
+    onMounted(() => {
+      getData()
+    })
+
     return {
       navigationList: [
         {
@@ -69,7 +108,11 @@ export default defineComponent({
             }
           ]
         }
-      ]
+      ],
+      handlePageChange,
+      hotList,
+      currentPage,
+      total
     }
   }
 })

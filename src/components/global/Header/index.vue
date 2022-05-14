@@ -23,7 +23,7 @@
                 </div>
               </template>
             </a-tab-pane>
-            <a-tab-pane key="/about">
+            <a-tab-pane key="/note">
               <template #tab>
                 <span class="py-2">
                   <gg:menu-boxed class="mr-2" />

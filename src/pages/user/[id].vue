@@ -3,56 +3,13 @@
     <FlexCol>
       <template #body>
         <div class="hotlist flex flex-col">
-          <div v-if="list?.length">
-            <Module
-              v-for="item in list"
-              :key="item.momentId"
-              class="module flex"
-            >
-              <div
-                class="logo flex-0 w-210px h-158px rounded-md overflow-hidden mr-5"
-              >
-                <A :href="`/blog/${item.momentId}`">
-                  <!-- <img :src="item.images ? item.images[0] : BASE_LOGO" alt="" /> -->
-                  <img :src="BASE_LOGO" alt="" />
-                </A>
-              </div>
-
-              <div class="hotlist-content flex-1 pr-3">
-                <div class="title flex items-center text-gray-700">
-                  <div v-if="item.agree > 20" class="hot-tag mr-2">热文</div>
-                  <A :href="`/blog/${item.momentId}`">
-                    <div class="text-lg">
-                      {{ item.title || '这个人也太懒了吧 居然忘了取标题' }}
-                    </div>
-                  </A>
-                </div>
-
-                <div class="content text-sm my-3 text-gray-500 min-h-77px">
-                  {{ item.content || '这是内容' }}
-                </div>
-
-                <div
-                  class="footer pt-2 flex items-center justify-between text-gray-400"
-                >
-                  <div class="tag flex-1 flex items-center">
-                    <div>🕒 {{ item?.createTime?.split('T')[0] }}</div>
-                    <div>{{ item.agree }} 点赞</div>
-                    <div>💬 {{ item.commentCount }} 评论</div>
-                  </div>
-                  <div class="who flex-0">
-                    <!-- <a-icon></a-icon> -->
-                    <A :href="`/user/${item?.author?.id}`">
-                      🏆 {{ item?.author?.nickname }}
-                    </A>
-                  </div>
-                </div>
-              </div>
-            </Module>
-          </div>
-          <Module v-else>
+          <Module v-if="!list?.length">
             <a-empty :image="simpleImage" />
           </Module>
+
+          <div v-else>
+            <Moment v-for="item in list" :key="item.momentId" :data="item" />
+          </div>
 
           <a-pagination
             v-if="list?.length"

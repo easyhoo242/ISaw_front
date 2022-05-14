@@ -20,7 +20,6 @@ export default defineComponent({
   setup() {
     const contentRef = ref<InstanceType<typeof Typography>>()
 
-    console.log(contentRef)
     return {
       contentRef
     }

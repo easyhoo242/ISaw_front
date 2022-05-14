@@ -189,8 +189,6 @@ export default defineComponent({
         commentId
       )
 
-      console.log(flag, msg)
-
       if (!flag) {
         message.error('评论回复失败', 2)
       }

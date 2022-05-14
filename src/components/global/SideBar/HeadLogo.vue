@@ -75,8 +75,6 @@ export default defineComponent({
       const res = await getUserDetail(currentUser.id)
 
       data.value = res.data as IUserInfoType
-
-      console.log(data.value)
     }
 
     onMounted(() => {

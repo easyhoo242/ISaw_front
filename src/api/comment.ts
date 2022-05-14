@@ -48,8 +48,6 @@ export const requestCommentList = (
 ) => {
   const offset = page > 1 ? (page - 1) * 5 : 0
 
-  console.log(offset)
-
   return hyRequest.get<IResponsType<ICommentListType>>({
     url: commentApi.getCommentList,
     params: {

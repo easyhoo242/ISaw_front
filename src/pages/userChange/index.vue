@@ -106,8 +106,6 @@ export default defineComponent({
     })
 
     const onFinish = async () => {
-      console.log(formState.user.name)
-
       const data: IChangeUserInfo = {
         name: formState.user.name || 'ISaw~',
         email: formState.user.email || 'xxx@xxx.com',

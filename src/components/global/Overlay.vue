@@ -1,26 +1,25 @@
 <template>
   <div class="bg-gray-200 mb-4 rounded-md overflow-hidden relative mt-3">
-    <div class="bg-img h-300px" :style="`background-image: url(${data.url});`">
+    <div class="bg-img h-300px" :style="`background-image: url(${Show.url});`">
       <div></div>
     </div>
     <div class="content absolute bottom-0 p-15px w-full">
       <div class="content-title">
-        {{ data.title }}
-        <sup class="content-title__tag mx-1"> {{ data.count }} </sup>
+        {{ Show.title }}
+        <sup class="content-title__tag mx-1"> {{ total }} </sup>
       </div>
       <div class="content-desc mt-5px">
-        {{ data.desc }}
+        {{ Show.desc }}
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, computed } from 'vue'
 
 interface IDataType {
   title: string
-  count: number
   desc: string
   url: string
 }
@@ -28,13 +27,39 @@ interface IDataType {
 export default defineComponent({
   props: {
     data: {
-      type: Object as PropType<IDataType>,
-      default: () => ({
-        title: '教程笔记',
-        count: 231,
+      type: Number,
+      default: 2
+    },
+    total: {
+      type: Number,
+      default: 10
+    }
+  },
+  setup(props) {
+    const list: IDataType[] = [
+      {
+        title: '互联网',
         desc: '教程笔记模块主要分享电脑软件、操作系统及网站建设过程中的各种问题和解决方案，致力于创造一个高质量的交流分享平台',
         url: 'https://cn.bing.com/th?id=OHR.SiberianSunset_ZH-CN5711093662_1920x1080.jpg&rf=LaDigue_1920x1080.jpg?https://cn.bing.com/th?id=OHR.SiestaKey_ZH-CN1759696989_1920x1080.jpg'
-      })
+      },
+      {
+        title: '教程笔记',
+        desc: '教程笔记模块主要分享电脑软件、操作系统及网站建设过程中的各种问题和解决方案，致力于创造一个高质量的交流分享平台',
+        url: 'https://cn.bing.com/th?id=OHR.SiberianSunset_ZH-CN5711093662_1920x1080.jpg&rf=LaDigue_1920x1080.jpg?https://cn.bing.com/th?id=OHR.SiestaKey_ZH-CN1759696989_1920x1080.jpg'
+      },
+      {
+        title: '闲言碎语',
+        desc: '教程笔记模块主要分享电脑软件、操作系统及网站建设过程中的各种问题和解决方案，致力于创造一个高质量的交流分享平台',
+        url: 'https://cn.bing.com/th?id=OHR.SiberianSunset_ZH-CN5711093662_1920x1080.jpg&rf=LaDigue_1920x1080.jpg?https://cn.bing.com/th?id=OHR.SiestaKey_ZH-CN1759696989_1920x1080.jpg'
+      }
+    ]
+
+    const Show = computed(() => list[props.data - 1])
+
+    console.log(props.total)
+
+    return {
+      Show
     }
   }
 })

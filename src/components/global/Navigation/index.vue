@@ -88,7 +88,7 @@ export default defineComponent({
     const currentKeyboard = ref('')
     let preKeyboard = ''
 
-    const currentType = ref(1)
+    const currentType = ref(2)
     const currentSort = ref(0)
 
     const getCurrentInfo = (

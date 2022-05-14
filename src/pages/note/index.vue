@@ -5,7 +5,7 @@
 
     <FlexCol>
       <template #body>
-        <Overlay class="mb-0" />
+        <Overlay class="mb-0" :data="currentInfo.label" :total="total" />
         <div>
           <Moment v-for="item in hotList" :key="item.momentId" :data="item" />
 
@@ -56,7 +56,7 @@ export default defineComponent({
 
     const currentInfo = reactive<ICurrentInfo>({
       keyBoard: '',
-      label: 1,
+      label: 2,
       sort: 0,
       offset: currentPage.value,
       limit: pageSize.value
@@ -91,6 +91,8 @@ export default defineComponent({
       currentInfo.sort = data.sort
       currentInfo.offset = currentPage.value
       currentInfo.limit = pageSize.value
+
+      console.log(currentInfo.label)
 
       getData()
     }
@@ -140,6 +142,7 @@ export default defineComponent({
       ],
       handlePageChange,
       handleGetInfo,
+      currentInfo,
       hotList,
       total,
       pageSize,

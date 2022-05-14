@@ -27,7 +27,7 @@
             <a-radio-button
               class="item-child"
               :value="item.label"
-              @click="handleTypeChange(item.label)"
+              @click.native.prevent="handleTypeChange(item.label)"
             >
               {{ item.name }}
             </a-radio-button>
@@ -50,7 +50,7 @@
             <a-radio-button
               class="item-child"
               :value="item.label"
-              @click="handleSortChange(item.label)"
+              @click.native.prevent="handleSortChange(item.label)"
             >
               {{ item.name }}
             </a-radio-button>

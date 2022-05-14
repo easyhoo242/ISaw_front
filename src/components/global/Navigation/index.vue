@@ -13,7 +13,7 @@
 
     <div class="navigation-item pt-4 items-center">
       <div class="flex mb-4">
-        <div class="item-title">{{ data[0].label }}</div>
+        <div class="item-title">{{ data[0].name }}</div>
         <div
           v-for="item in data[0].children"
           :key="item.label"
@@ -26,17 +26,17 @@
           >
             <a-radio-button
               class="item-child"
-              :value="item.value"
-              @click="handleTypeChange(item.value)"
+              :value="item.label"
+              @click="handleTypeChange(item.label)"
             >
-              {{ item.label }}
+              {{ item.name }}
             </a-radio-button>
           </a-radio-group>
         </div>
       </div>
 
       <div class="flex">
-        <div class="item-title">{{ data[1].label }}</div>
+        <div class="item-title">{{ data[1].name }}</div>
         <div
           v-for="item in data[1].children"
           :key="item.label"
@@ -49,10 +49,10 @@
           >
             <a-radio-button
               class="item-child"
-              :value="item.value"
-              @click="handleSortChange(item.value)"
+              :value="item.label"
+              @click="handleSortChange(item.label)"
             >
-              {{ item.label }}
+              {{ item.name }}
             </a-radio-button>
           </a-radio-group>
         </div>
@@ -65,13 +65,13 @@
 import { defineComponent, PropType, ref } from 'vue'
 
 export interface IChildType {
-  label: string
-  value: string
+  name: string
+  label: number
   url: string
 }
 
 interface IDataType {
-  label: string
+  name: string
   value: string
   children: IChildType[]
 }
@@ -83,25 +83,51 @@ export default defineComponent({
       default: () => []
     }
   },
-  setup(_) {
+  emit: ['change'],
+  setup(_, { emit }) {
     const currentKeyboard = ref('')
     let preKeyboard = ''
 
-    const currentType = ref('')
+    const currentType = ref(0)
+    const currentSort = ref(0)
 
-    const handleTypeChange = (title: string) => {
-      console.log(title)
+    const getCurrentInfo = (
+      preKeyboard: string,
+      keyboard: string = currentKeyboard.value,
+      type: number = currentType.value,
+      sort: number = currentSort.value
+    ) => {
+      const data = {
+        keyboard,
+        preKeyboard,
+        type,
+        sort
+      }
+
+      return data
     }
 
-    const currentSort = ref('')
+    const handleTypeChange = (label: number) => {
+      currentType.value = label
 
-    const handleSortChange = (title: string) => {
-      console.log(title)
+      const data = getCurrentInfo(preKeyboard)
+
+      emit('change', data)
+    }
+
+    const handleSortChange = (label: number) => {
+      currentSort.value = label
+
+      const data = getCurrentInfo(preKeyboard)
+
+      emit('change', data)
     }
 
     const handleSearch = () => {
       preKeyboard = currentKeyboard.value
-      console.log(preKeyboard)
+      const data = getCurrentInfo(preKeyboard)
+
+      emit('change', data)
     }
 
     return {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <BranchCrumb route="互联网" />
-    <Navigation :data="navigationList" />
+    <Navigation :data="navigationList" @change="handleGetInfo" />
 
     <FlexCol>
       <template #body>
@@ -11,7 +11,7 @@
 
           <a-pagination
             :current="currentPage"
-            :pageSize="10"
+            v-model:pageSize="pageSize"
             :total="total"
             show-quick-jumper
             hideOnSinglePage
@@ -35,18 +35,28 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue'
-import { requestMomentAll } from '~/api'
+import { requestMomentSearch } from '~/api'
 import type { IMomentType } from '~/api'
+
+interface ICurrentInfo {
+  currentPage: number
+  pageSize: number
+  keyboard: string
+  preKeyboard: string
+  type: number
+  sort: number
+}
 
 export default defineComponent({
   name: '关于',
   setup() {
     const currentPage = ref(1)
     const total = ref(0)
+    const pageSize = ref(7)
     const hotList = ref<IMomentType[]>([])
 
     const getData = async () => {
-      const res = await requestMomentAll(currentPage.value)
+      const res = await requestMomentSearch(currentPage.value, pageSize.value)
 
       hotList.value = res.list!
       total.value = res.momentCount!
@@ -62,6 +72,22 @@ export default defineComponent({
       })
     }
 
+    // 拿到数据
+    const handleGetInfo = (data: {
+      keyboard: string
+      preKeyboard: string
+      type: number
+      sort: number
+    }) => {
+      const dataC: ICurrentInfo = {
+        ...data,
+        currentPage: currentPage.value,
+        pageSize: pageSize.value
+      }
+
+      console.log(dataC)
+    }
+
     onMounted(() => {
       getData()
     })
@@ -69,50 +95,52 @@ export default defineComponent({
     return {
       navigationList: [
         {
-          label: '分类',
+          name: '分类',
           value: 'type',
           children: [
             {
-              label: '互联网',
-              value: 'net',
-              type: 2,
-              url: ''
+              name: '全部',
+              label: 0
             },
             {
-              label: '教程笔记',
-              value: 'subject',
-              type: 3,
-              url: ''
+              name: '互联网',
+              label: 1
             },
             {
-              label: '闲言碎语',
-              value: 'talk',
-              type: 4,
-              url: ''
+              name: '教程笔记',
+              label: 2
+            },
+            {
+              name: '闲言碎语',
+              label: 3
             }
           ]
         },
         {
-          label: '排序',
+          name: '排序',
           value: 'sort',
           children: [
             {
-              label: '浏览',
-              value: 'look',
-              url: ''
+              name: '最新',
+              label: 0
             },
             {
-              label: '评论',
-              value: 'comment',
-              url: ''
+              name: '浏览',
+              label: 1
+            },
+            {
+              name: '评论',
+              label: 2
             }
           ]
         }
       ],
       handlePageChange,
+      handleGetInfo,
       hotList,
-      currentPage,
-      total
+      total,
+      pageSize,
+      currentPage
     }
   }
 })

@@ -13,7 +13,8 @@ enum momentApi {
   momentDetail = '/moment/',
   momentLike = '/moment/', // /moment/momentId/like
   momentDelete = '/moment/', // /moment/ momentId
-  createMoment = '/moment/'
+  createMoment = '/moment/',
+  momentSearch = '/moment'
 }
 
 export interface IMomentType {
@@ -175,5 +176,23 @@ export const requestCreateMoment = (data: ICreateMoment) => {
   return hyRequest.post<IResponsType<number>>({
     url: momentApi.createMoment,
     data: data
+  })
+}
+
+// 教程笔记 文章搜索接口
+export const requestMomentSearch = (
+  offset: number,
+  limit: number,
+  label?: number
+) => {
+  const offsetC = offset === 1 ? '0' : (offset - 1) * limit
+
+  return hyRequest.get<IMomentListByLabelType>({
+    url: momentApi.momentSearch,
+    params: {
+      label,
+      limit,
+      offset: offsetC
+    }
   })
 }

@@ -12,7 +12,8 @@ enum momentApi {
   ModuleTo = '/moment', //moment + label
   momentDetail = '/moment/',
   momentLike = '/moment/', // /moment/momentId/like
-  momentDelete = '/moment/' // /moment/ momentId
+  momentDelete = '/moment/', // /moment/ momentId
+  createMoment = '/moment/'
 }
 
 export interface IMomentType {
@@ -52,6 +53,12 @@ export interface IMomentListByLabelType {
     name: string
     id: number
   }
+}
+
+export interface ICreateMoment {
+  title: string
+  content: string
+  label: number
 }
 
 // 随便看看接口
@@ -158,5 +165,13 @@ export const requestMomentShow = (
       offset,
       label
     }
+  })
+}
+
+// 发表文章
+export const requestCreateMoment = (data: ICreateMoment) => {
+  return hyRequest.post<IResponsType<number>>({
+    url: momentApi.createMoment,
+    data: data
   })
 }

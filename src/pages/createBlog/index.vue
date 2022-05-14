@@ -99,13 +99,13 @@
 import { onBeforeUnmount, ref, shallowRef, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import cache from '~/utils/cache'
+import { requestCreateMoment } from '~/api'
+import type { ICreateMoment } from '~/api'
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import TagList from '~/components/page/createBlog/TagList.vue'
 import Module from '~/components/global/Module.vue'
 import { message } from 'ant-design-vue'
-import { createBlog } from '~/api'
-import type { ICreateBlogType } from '~/api'
 
 // 上传封面
 import { PlusOutlined } from '@ant-design/icons-vue'
@@ -214,28 +214,49 @@ export default {
 
     const nosaveEdit = () => {
       message.success('正在为您跳转到首页...', 2)
-      // cache.deleteCache('editingBlog')
 
       setTimeout(() => {
         router.push('/')
       }, 1000)
     }
 
+    // 发表文章
     const handlePushBlog = async () => {
-      cache.setCache('result', {
+      if (!blogTitle.value) {
+        message.warn('标题不能为空')
+        return
+      }
+
+      if (!valueHtml.value) {
+        message.warn('正文不能为空')
+        return
+      }
+
+      if (!blogType.value) {
+        message.warn('请选择文章类型')
+        return
+      }
+
+      const data: ICreateMoment = {
         title: blogTitle.value,
         content: valueHtml.value,
-        type: blogType.value
-      })
+        label: blogType.value
+      }
 
-      const result = cache.getCache('result')
+      cache.setCache('EditingMoment', data)
 
-      const res = await createBlog(result as ICreateBlogType)
+      const res = await requestCreateMoment(data)
 
       if (!res.flag) {
-        message.error('出错啦~ 发表失败')
+        message.error(res.msg, 2)
+        return
       }
-      message.success(res.msg + '~', 2)
+
+      message.success(res.msg, 2)
+
+      setTimeout(() => {
+        router.push('/')
+      }, 1500)
     }
 
     onMounted(() => {

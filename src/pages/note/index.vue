@@ -125,7 +125,7 @@ export default defineComponent({
               label: 0
             },
             {
-              name: '浏览',
+              name: '点赞',
               label: 1
             },
             {

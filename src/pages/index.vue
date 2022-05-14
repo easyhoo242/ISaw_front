@@ -7,7 +7,9 @@
     <FlexCol>
       <template #body>
         <SwiperBar />
+
         <SelectedGuide />
+
         <HotList />
       </template>
 
@@ -34,7 +36,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { requestMomentAll } from '~/api'
-import HotList from '~/components/page/home/HotList/index.vue'
+import HotList from '~/components/page/home/HotList.vue'
 
 export default defineComponent({
   name: '首页',

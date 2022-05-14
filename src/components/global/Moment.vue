@@ -1,38 +1,38 @@
 <template>
-  <Module v-for="item in data" :key="item.momentId" class="module flex">
+  <Module class="moment flex">
     <div class="logo flex-0 w-210px h-158px rounded-md overflow-hidden mr-5">
       <!-- <A :href="`/blog/${item.id}`"> <img :src="item.img" alt="" /></A> -->
-      <A :href="`/blog/${item.momentId}`">
-        <img v-if="item.images" :src="item.images[0]" alt="" />
-        <img v-else :src="BASE_LOGO" alt="" />
+      <A :href="`/blog/${data.momentId}`">
+        <!-- <img v-if="data.images" :src="data.images[0]" alt="" /> -->
+        <img :src="BASE_LOGO" alt="" />
       </A>
     </div>
 
     <div class="hotlist-content flex-1 pr-3">
       <div class="title flex items-center text-gray-700 overflow-hidden">
-        <div v-if="item.agree > 100" class="hot-tag mr-2">热文</div>
+        <div v-if="data.agree > 100" class="hot-tag mr-2">热文</div>
 
-        <A :href="`/blog/${item.momentId}`">
+        <A :href="`/blog/${data.momentId}`">
           <div class="content-title overflow-hidden">
-            {{ item.title || '这个人也太懒了吧 居然忘了取标题' }}
+            {{ data.title || '这个人也太懒了吧 居然忘了取标题' }}
           </div>
         </A>
       </div>
 
       <div class="content text-sm my-3 text-gray-500 min-h-77px">
-        {{ item.content || '这是内容' }}
+        {{ data.content || '这是内容' }}
       </div>
 
       <div class="footer pt-2 flex items-center justify-between text-gray-400">
         <div class="tag flex-1 flex items-center">
-          <div>🕒 {{ item.createTime.split('T')[0] }}</div>
-          <div>{{ item.agree || 0 }} 点赞</div>
-          <div>💬 {{ item.commentCount || 0 }} 评论</div>
+          <div>🕒 {{ data.createTime.split('T')[0] }}</div>
+          <div>{{ data.agree || 0 }} 点赞</div>
+          <div>💬 {{ data.commentCount || 0 }} 评论</div>
         </div>
         <div class="who flex-0">
           <!-- <a-icon></a-icon> -->
-          <A :href="`/user/${item.author?.id}`">
-            🏆 {{ item.author?.nickname }}
+          <A :href="`/user/${data.author?.id}`">
+            🏆 {{ data.author?.nickname }}
           </A>
         </div>
       </div>
@@ -48,8 +48,8 @@ import { BASE_LOGO } from '~/api'
 export default defineComponent({
   props: {
     data: {
-      type: Array as PropType<IMomentType[]>,
-      default: () => []
+      type: Object as PropType<IMomentType>,
+      default: () => {}
     }
   },
   setup() {
@@ -61,7 +61,7 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-.module {
+.moment {
   .logo {
     img {
       max-width: 100%;

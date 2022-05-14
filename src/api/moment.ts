@@ -80,11 +80,13 @@ export const requestHotseeList = () => {
 // moment + userId -> 按userId
 // moment -> 全部
 export const requestMomentAll = (offset: number, limit: number = 10) => {
-  return hyRequest.get<IResponsType<IMomentListType>>({
+  const offsetC = offset === 1 ? 0 : (offset - 1) * limit
+
+  return hyRequest.get<IMomentListType>({
     url: momentApi.MomentAll,
     params: {
       limit,
-      offset
+      offset: offsetC
     }
   })
 }

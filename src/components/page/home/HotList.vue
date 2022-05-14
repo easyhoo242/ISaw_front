@@ -1,6 +1,7 @@
 <template>
   <div class="hotlist flex flex-col">
-    <Hot :data="hotList || list" />
+    <Moment v-for="item in hotList" :key="item.momentId" :data="item" />
+
     <a-pagination
       :current="currentPage"
       :pageSize="10"
@@ -17,6 +18,7 @@
 import { defineComponent, ref, onMounted } from 'vue'
 import { requestMomentAll } from '~/api'
 import type { IMomentType } from '~/api'
+import Moment from '~/components/global/Moment.vue'
 
 export default defineComponent({
   setup() {
@@ -27,8 +29,8 @@ export default defineComponent({
     const getData = async () => {
       const res = await requestMomentAll(currentPage.value)
 
-      hotList.value = res.data?.list!
-      total.value = res.data?.momentCount!
+      hotList.value = res.list!
+      total.value = res.momentCount!
     }
 
     const handlePageChange = (page: number) => {
@@ -173,7 +175,6 @@ export default defineComponent({
         }
       }
     ]
-
     return {
       hotList,
       list,
@@ -181,6 +182,7 @@ export default defineComponent({
       currentPage,
       handlePageChange
     }
-  }
+  },
+  components: { Moment }
 })
 </script>

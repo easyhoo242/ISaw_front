@@ -92,8 +92,6 @@ export default defineComponent({
       currentInfo.offset = currentPage.value
       currentInfo.limit = pageSize.value
 
-      console.log(currentInfo.label)
-
       getData()
     }
 

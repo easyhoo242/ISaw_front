@@ -56,8 +56,6 @@ export default defineComponent({
 
     const Show = computed(() => list[props.data - 1])
 
-    console.log(props.total)
-
     return {
       Show
     }

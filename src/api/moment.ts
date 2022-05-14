@@ -14,7 +14,8 @@ enum momentApi {
   momentLike = '/moment/', // /moment/momentId/like
   momentDelete = '/moment/', // /moment/ momentId
   createMoment = '/moment/',
-  momentSearch = '/moment'
+  // 文章列表搜索接口
+  momentSearch = '/moment/search/1'
 }
 
 export interface IMomentType {
@@ -180,18 +181,19 @@ export const requestCreateMoment = (data: ICreateMoment) => {
 }
 
 // 教程笔记 文章搜索接口
-export const requestMomentSearch = (
-  offset: number,
-  limit: number,
-  label?: number
-) => {
-  const offsetC = offset === 1 ? '0' : (offset - 1) * limit
+export const requestMomentSearch = (data: {
+  keyBoard: string
+  label: number
+  sort: number
+  offset: number
+  limit: number
+}) => {
+  const offsetC = data.offset === 1 ? '0' : (data.offset - 1) * data.limit
 
-  return hyRequest.get<IMomentListByLabelType>({
+  return hyRequest.get<IResponsType<IMomentListByLabelType>>({
     url: momentApi.momentSearch,
     params: {
-      label,
-      limit,
+      ...data,
       offset: offsetC
     }
   })

@@ -34,32 +34,39 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from 'vue'
+import { defineComponent, ref, onMounted, reactive } from 'vue'
 import { requestMomentSearch } from '~/api'
 import type { IMomentType } from '~/api'
 
 interface ICurrentInfo {
-  currentPage: number
-  pageSize: number
-  keyboard: string
-  preKeyboard: string
-  type: number
+  keyBoard: string
+  label: number
   sort: number
+  offset: number
+  limit: number
 }
 
 export default defineComponent({
   name: '关于',
   setup() {
     const currentPage = ref(1)
-    const total = ref(0)
+    const total = ref(20)
     const pageSize = ref(7)
     const hotList = ref<IMomentType[]>([])
 
-    const getData = async () => {
-      const res = await requestMomentSearch(currentPage.value, pageSize.value)
+    const currentInfo = reactive<ICurrentInfo>({
+      keyBoard: '',
+      label: 1,
+      sort: 0,
+      offset: currentPage.value,
+      limit: pageSize.value
+    })
 
-      hotList.value = res.list!
-      total.value = res.momentCount!
+    const getData = async () => {
+      const res = await requestMomentSearch(currentInfo)
+
+      hotList.value = res.data?.list!
+      total.value = res.data?.momentCount!
     }
 
     const handlePageChange = (page: number) => {
@@ -79,13 +86,13 @@ export default defineComponent({
       type: number
       sort: number
     }) => {
-      const dataC: ICurrentInfo = {
-        ...data,
-        currentPage: currentPage.value,
-        pageSize: pageSize.value
-      }
+      currentInfo.keyBoard = data.preKeyboard
+      currentInfo.label = data.type
+      currentInfo.sort = data.sort
+      currentInfo.offset = currentPage.value
+      currentInfo.limit = pageSize.value
 
-      console.log(dataC)
+      getData()
     }
 
     onMounted(() => {
@@ -98,10 +105,6 @@ export default defineComponent({
           name: '分类',
           value: 'type',
           children: [
-            {
-              name: '全部',
-              label: 0
-            },
             {
               name: '互联网',
               label: 1

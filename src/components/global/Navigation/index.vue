@@ -112,29 +112,27 @@ export default defineComponent({
       return data
     }
 
+    // 类型
     const handleTypeChange = (label: number) => {
       label === 3 && router.push('/talk')
 
       currentType.value = label
 
-      const data = getCurrentInfo(preKeyboard)
-
-      emit('change', data)
+      emit('change', getCurrentInfo(preKeyboard))
     }
 
+    // 排序
     const handleSortChange = (label: number) => {
       currentSort.value = label
 
-      const data = getCurrentInfo(preKeyboard)
-
-      emit('change', data)
+      emit('change', getCurrentInfo(preKeyboard))
     }
 
+    // 搜索框
     const handleSearch = () => {
       preKeyboard = currentKeyboard.value
-      const data = getCurrentInfo(preKeyboard)
 
-      emit('change', data)
+      emit('change', getCurrentInfo(preKeyboard))
     }
 
     return {

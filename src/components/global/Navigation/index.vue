@@ -84,16 +84,20 @@ export default defineComponent({
     data: {
       type: Array as PropType<IDataType[]>,
       default: () => []
+    },
+    label: {
+      type: Number,
+      default: 2
     }
   },
   emit: ['change'],
-  setup(_, { emit }) {
+  setup(props, { emit }) {
     const router = useRouter()
 
     const currentKeyboard = ref('')
     let preKeyboard = ''
 
-    const currentType = ref(2)
+    const currentType = ref(props.label)
     const currentSort = ref(0)
 
     const getCurrentInfo = (

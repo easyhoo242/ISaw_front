@@ -1,19 +1,25 @@
 <template>
-  <div class="wrap pb-4 bg-white rounded-md overflow-hidden">
-    <a>
-      <div class="img h-54"></div>
-    </a>
+  <div class="module-list grid grid-cols-4 gap-4 mt-6 enter-y">
+    <div v-for="item in data" :key="item.momentId">
+      <div class="wrap pb-4 bg-white rounded-md overflow-hidden">
+        <a>
+          <div class="img h-54"></div>
+        </a>
 
-    <div class="content px-4">
-      <div class="content-time my-3 ml-3 pl-3">{{ data.time }}</div>
-      <div class="content-desc h-50px">
-        <a> {{ data.title }} </a>
-      </div>
-      <div
-        class="content-tag flex items-center justify-between mt-3 text-gray-400"
-      >
-        <section>{{ data.read }} 阅读</section>
-        <section>{{ data.discuss }} 评论</section>
+        <div class="content px-4">
+          <div class="content-time my-3 ml-3 pl-3">
+            {{ item.createTime.split('T')[0] }}
+          </div>
+          <div class="content-desc h-50px">
+            <a> {{ item.title }} </a>
+          </div>
+          <div
+            class="content-tag flex items-center justify-between mt-3 text-gray-400"
+          >
+            <section>{{ item.agree }} 点赞</section>
+            <section>{{ item.commentCount }} 评论</section>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -21,14 +27,18 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { IDataType } from './index.vue'
+import { IMomentType } from '~/api'
 
 export default defineComponent({
   props: {
     data: {
-      type: Object as PropType<IDataType>,
+      type: Array as PropType<IMomentType[]>,
       default: () => []
     }
+  },
+  setup(props) {
+    console.log(props.data)
+    return {}
   }
 })
 </script>

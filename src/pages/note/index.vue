@@ -1,7 +1,7 @@
 <template>
   <div>
     <BranchCrumb route="互联网" />
-    <Navigation :data="navigationList" @change="handleGetInfo" />
+    <Navigation :data="NAVIGATION_LIST" @change="handleGetInfo" />
 
     <FlexCol>
       <template #body>
@@ -35,7 +35,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted, reactive } from 'vue'
-import { requestMomentSearch } from '~/api'
+import { requestMomentSearch, NAVIGATION_LIST } from '~/api'
 import type { IMomentType } from '~/api'
 
 interface ICurrentInfo {
@@ -100,44 +100,7 @@ export default defineComponent({
     })
 
     return {
-      navigationList: [
-        {
-          name: '分类',
-          value: 'type',
-          children: [
-            {
-              name: '互联网',
-              label: 1
-            },
-            {
-              name: '教程笔记',
-              label: 2
-            },
-            {
-              name: '闲言碎语',
-              label: 3
-            }
-          ]
-        },
-        {
-          name: '排序',
-          value: 'sort',
-          children: [
-            {
-              name: '最新',
-              label: 0
-            },
-            {
-              name: '点赞',
-              label: 1
-            },
-            {
-              name: '评论',
-              label: 2
-            }
-          ]
-        }
-      ],
+      NAVIGATION_LIST,
       handlePageChange,
       handleGetInfo,
       currentInfo,

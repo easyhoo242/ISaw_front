@@ -11,6 +11,7 @@
       />
     </div>
 
+    <!-- 分类 -->
     <div class="navigation-item pt-4 items-center">
       <div class="flex mb-4">
         <div class="item-title">{{ data[0].name }}</div>
@@ -35,6 +36,7 @@
         </div>
       </div>
 
+      <!-- 排序 -->
       <div class="flex">
         <div class="item-title">{{ data[1].name }}</div>
         <div
@@ -63,6 +65,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 export interface IChildType {
   name: string
@@ -85,6 +88,8 @@ export default defineComponent({
   },
   emit: ['change'],
   setup(_, { emit }) {
+    const router = useRouter()
+
     const currentKeyboard = ref('')
     let preKeyboard = ''
 
@@ -108,6 +113,8 @@ export default defineComponent({
     }
 
     const handleTypeChange = (label: number) => {
+      label === 3 && router.push('/talk')
+
       currentType.value = label
 
       const data = getCurrentInfo(preKeyboard)

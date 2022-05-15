@@ -64,8 +64,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { defineComponent, PropType, ref, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
 export interface IChildType {
   name: string
@@ -93,6 +93,7 @@ export default defineComponent({
   emit: ['change'],
   setup(props, { emit }) {
     const router = useRouter()
+    const route = useRoute()
 
     const currentKeyboard = ref('')
     let preKeyboard = ''
@@ -118,11 +119,26 @@ export default defineComponent({
 
     // 类型
     const handleTypeChange = (label: number) => {
-      label === 3 && router.push('/talk')
+      if (route.name === 'note') {
+        label === 3 && router.push('/talk')
 
-      currentType.value = label
+        currentType.value = label
 
-      emit('change', getCurrentInfo(preKeyboard))
+        emit('change', getCurrentInfo(preKeyboard))
+      } else if (route.name === 'talk') {
+        if (label === 3) {
+          currentType.value = label
+
+          emit('change', getCurrentInfo(preKeyboard))
+        } else {
+          router.push({
+            path: '/note',
+            query: {
+              label
+            }
+          })
+        }
+      }
     }
 
     // 排序
@@ -138,6 +154,16 @@ export default defineComponent({
 
       emit('change', getCurrentInfo(preKeyboard))
     }
+
+    onMounted(() => {
+      const res = route.query.label as string
+
+      if (!res) {
+        return
+      }
+
+      currentType.value = parseInt(res)
+    })
 
     return {
       currentKeyboard,

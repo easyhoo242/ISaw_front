@@ -2,16 +2,16 @@
   <div class="module-list grid grid-cols-4 gap-4 mt-6 enter-y">
     <div v-for="item in data" :key="item.momentId">
       <div class="wrap pb-4 bg-white rounded-md overflow-hidden">
-        <a>
+        <A :href="`/blog/${item.momentId}`">
           <div class="img h-54"></div>
-        </a>
+        </A>
 
         <div class="content px-4">
           <div class="content-time my-3 ml-3 pl-3">
             {{ item.createTime.split('T')[0] }}
           </div>
           <div class="content-desc h-50px">
-            <a> {{ item.title }} </a>
+            <A :href="`/blog/${item.momentId}`"> {{ item.title }} </A>
           </div>
           <div
             class="content-tag flex items-center justify-between mt-3 text-gray-400"

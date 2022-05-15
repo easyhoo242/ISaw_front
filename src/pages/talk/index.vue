@@ -58,8 +58,6 @@ export default defineComponent({
 
       talkList.value = res.data?.list!
       total.value = res.data?.momentCount!
-
-      console.log(res)
     }
 
     // 拿到数据

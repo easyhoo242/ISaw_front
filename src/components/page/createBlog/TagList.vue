@@ -46,13 +46,11 @@ export default defineComponent({
       '#B37333'
     ]
 
-    const tags = ['随便看看', '互联网', '教程笔记', '闲言碎语'].map(
-      (res, index) => ({
-        id: index + 1,
-        title: res,
-        color: colors[Math.floor(Math.random() * (colors.length - 1))]
-      })
-    )
+    const tags = ['互联网', '教程笔记', '闲言碎语'].map((res, index) => ({
+      id: index + 1,
+      title: res,
+      color: colors[Math.floor(Math.random() * (colors.length - 1))]
+    }))
 
     return {
       tags,

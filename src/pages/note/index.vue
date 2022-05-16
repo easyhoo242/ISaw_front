@@ -71,6 +71,7 @@ export default defineComponent({
 
     const handlePageChange = (page: number) => {
       currentPage.value = page
+      currentInfo.offset = page
       getData()
 
       window.scrollTo({

@@ -109,7 +109,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, onMounted } from 'vue'
+import { defineComponent, PropType, ref } from 'vue'
 import usecache from '~/utils/cache'
 import { BASE_HEAD_LOGO } from '~/api'
 import type { ICommentType } from '~/api'
@@ -195,9 +195,11 @@ export default defineComponent({
         textarea.focus()
         textarea.selectionStart = startPos + insertTxt.length
         textarea.selectionEnd = startPos + insertTxt.length
+
+        return result
       }
 
-      insertTxtAndSetcursor(emoji)
+      currntComment.value = insertTxtAndSetcursor(emoji)!
     }
 
     return {

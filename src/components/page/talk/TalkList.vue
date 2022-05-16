@@ -1,6 +1,6 @@
 <template>
   <div class="module-list grid grid-cols-4 gap-4 mt-6 enter-y">
-    <div v-for="item in data" :key="item.momentId">
+    <div v-for="item in data" :key="item.momentId" class="shadow-md rounded-lg">
       <div class="wrap pb-4 bg-white rounded-md overflow-hidden">
         <A :href="`/blog/${item.momentId}`">
           <div class="img h-54"></div>

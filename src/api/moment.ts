@@ -65,9 +65,14 @@ export interface ICreateMoment {
 }
 
 // 随便看看接口
-export const requestCauseList = () => {
+export const requestCauseList = (page: number = 1) => {
+  const offset = page === 1 ? 0 : (page - 1) * 6
+
   return hyRequest.get<IResponsType<IMomentType[]>>({
-    url: momentApi.caustList
+    url: momentApi.caustList,
+    params: {
+      offset
+    }
   })
 }
 

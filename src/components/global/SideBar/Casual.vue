@@ -1,6 +1,16 @@
 <template>
-  <Module title="随便看看" corner logo>
-    <div class="content mt-4 grid grid-cols-2 gap-3 px-2">
+  <Module title="随便看看" corner class="relative">
+    <a-button
+      size="small"
+      shape="round"
+      :loading="isShowLoading"
+      class="absolute top-18px right-6"
+      @click="handleAnother"
+    >
+      换一批
+    </a-button>
+
+    <div v-if="list.length" class="content mt-4 grid grid-cols-2 gap-3 px-2">
       <div
         v-for="item in list"
         :key="item.momentId"
@@ -26,6 +36,10 @@
         </A>
       </div>
     </div>
+
+    <div v-else>
+      <a-empty :description="null" class="py-1" />
+    </div>
   </Module>
 </template>
 
@@ -34,17 +48,40 @@ import { defineComponent, ref, onMounted } from 'vue'
 import { requestCauseList } from '~/api'
 import type { IMomentType } from '~/api'
 import { BASE_LOGO } from '~/api'
+import { message } from 'ant-design-vue'
 
 export default defineComponent({
   setup() {
     const list = ref<IMomentType[]>([])
+    const currentPage = ref(1)
+    const isShowLoading = ref(false)
 
     const getData = async () => {
       try {
-        const res = await requestCauseList()
+        const res = await requestCauseList(currentPage.value)
 
-        list.value = res.data as IMomentType[]
-      } catch (error) {}
+        list.value = res.data!
+
+        return res
+      } catch (error) {
+        message.error('随便看看列表请求出错， 请刷新页面')
+      }
+    }
+
+    const handleAnother = () => {
+      if (!list.value.length) {
+        // 这设置为0  下面还会+1  如果为1 则第一页在下次循环中会消失
+        currentPage.value = 0
+      }
+
+      isShowLoading.value = true
+      ++currentPage.value
+
+      setTimeout(() => {
+        getData()
+
+        isShowLoading.value = false
+      }, 500)
     }
 
     onMounted(() => {
@@ -53,7 +90,9 @@ export default defineComponent({
 
     return {
       list,
-      BASE_LOGO: BASE_LOGO
+      BASE_LOGO: BASE_LOGO,
+      handleAnother,
+      isShowLoading
     }
   }
 })

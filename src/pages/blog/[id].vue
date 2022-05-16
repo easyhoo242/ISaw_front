@@ -30,12 +30,11 @@
 
         <!-- 文章操作模块 -->
         <Module v-if="isShowPermission" title="文章权限操作">
-          <div class="mt-3 px-3 grid grid-cols-2" @click="handleDeleteComment">
-            <div
-              class="changeInfo px-3 py-2 rounded-md bg-gray-200 text-center font-bold text-base text-gray-700 hover:text-stroke-blue-300 cursor-pointer"
-            >
-              删除文章
-            </div>
+          <div class="grid grid-cols-2 grid-rows-1 gap-5 mt-3">
+            <A href="javascript:void(0);" class="btn" @click="handleEditMoment">
+              编辑文章
+            </A>
+            <A href="javascript:void(0);" class="btn">删除文章</A>
           </div>
         </Module>
       </Sidebar>
@@ -216,6 +215,15 @@ export default defineComponent({
       getData()
     })
 
+    const handleEditMoment = () => {
+      router.push({
+        path: '/editBlog',
+        query: {
+          id: headerInfo.value.momentId
+        }
+      })
+    }
+
     return {
       pagesize: 5,
       comment,
@@ -231,10 +239,22 @@ export default defineComponent({
       handleDelete,
       // 删除文章
       handleDeleteComment,
-      isShowPermission
+      isShowPermission,
+      // 跳转到编辑页面
+      handleEditMoment
     }
   }
 })
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.btn {
+  cursor: pointer;
+  padding: 4px 0;
+  border-radius: 10px;
+  background-color: rgb(236, 236, 236);
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+</style>

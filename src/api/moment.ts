@@ -15,7 +15,8 @@ enum momentApi {
   momentDelete = '/moment/', // /moment/ momentId
   createMoment = '/moment/',
   // 文章列表搜索接口
-  momentSearch = '/moment/search/1'
+  momentSearch = '/moment/search/1',
+  momentEdit = '/moment/' //moment/id
 }
 
 export interface IMomentType {
@@ -71,9 +72,12 @@ export const requestCauseList = () => {
 }
 
 // 热门动态接口
-export const requestHotseeList = () => {
+export const requestHotseeList = (type: number = 0) => {
   return hyRequest.get<IResponsType<IMomentType[]>>({
-    url: momentApi.hotseeList
+    url: momentApi.hotseeList,
+    params: {
+      type
+    }
   })
 }
 
@@ -146,6 +150,13 @@ export const requestMomentAgree = (momentId: number) => {
   return hyRequest.get<IResponsType<any>>({
     url: momentApi.momentLike + momentId + '/like'
     // url: 'moment/1/like'
+  })
+}
+
+export const requestMomentEdit = (id: number, data: ICreateMoment) => {
+  return hyRequest.post<IResponsType<any>>({
+    url: momentApi.momentEdit + id,
+    data
   })
 }
 

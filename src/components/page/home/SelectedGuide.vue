@@ -21,7 +21,7 @@
           </div>
 
           <div class="content-text mt-1.5 min-h-45px text-left">
-            {{ item.content }}
+            {{ filterHtml(item.content) }}
           </div>
         </div>
       </div>
@@ -33,6 +33,7 @@
 import { defineComponent, ref, onMounted } from 'vue'
 import { requestHotseeList, BASE_LOGO } from '~/api'
 import type { IMomentType } from '~/api'
+import { filterHtml } from '~/utils/filterHtml'
 
 export default defineComponent({
   setup() {
@@ -49,7 +50,8 @@ export default defineComponent({
 
     return {
       list,
-      BASE_LOGO
+      BASE_LOGO,
+      filterHtml
     }
   }
 })

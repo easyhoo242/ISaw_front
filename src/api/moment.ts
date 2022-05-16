@@ -147,9 +147,9 @@ export const requestMomentDetail = (momentId: number) => {
 
 // 文章点赞接口
 export const requestMomentAgree = (momentId: number) => {
-  return hyRequest.get<IResponsType<any>>({
-    url: momentApi.momentLike + momentId + '/like'
+  return hyRequest.post<IResponsType<any>>({
     // url: 'moment/1/like'
+    url: momentApi.momentLike + momentId + '/like'
   })
 }
 

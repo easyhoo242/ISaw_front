@@ -43,16 +43,15 @@ export default defineComponent({
       default: () => {}
     }
   },
-  setup(props) {
-    console.log(1, props.data)
-
+  emits: ['response'],
+  setup(_, { emit }) {
     const handleAgree = async (momentId: number) => {
       try {
         const res = await requestMomentAgree(momentId)
 
-        console.log(res)
+        emit('response', res)
       } catch (error) {
-        console.log(error)
+        console.log('点赞失败', error)
       }
     }
 

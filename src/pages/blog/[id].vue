@@ -1,6 +1,6 @@
 <template>
   <BranchCrumb route="正文" />
-  <BlogHeader :data="headerInfo" />
+  <BlogHeader :data="headerInfo" @response="handleAgreeResponse" />
   <FlexCol>
     <template #body>
       <Content :data="currentContent" />
@@ -55,7 +55,7 @@ import {
   requestCommentDelete,
   requestMomentDelete
 } from '~/api'
-import type { ICommentType } from '~/api'
+import type { ICommentType, IResponsType } from '~/api'
 import { message, Modal } from 'ant-design-vue'
 
 export interface headerInfo {
@@ -215,6 +215,7 @@ export default defineComponent({
       getData()
     })
 
+    //修改文章
     const handleEditMoment = () => {
       router.push({
         path: '/editBlog',
@@ -222,6 +223,21 @@ export default defineComponent({
           id: headerInfo.value.momentId
         }
       })
+    }
+
+    // 点赞响应
+    const handleAgreeResponse = (res: IResponsType<string>) => {
+      console.log(res)
+
+      const { msg, flag } = res
+
+      if (!flag) {
+        message.error(msg, 3)
+        return
+      }
+
+      message.success(msg, 2)
+      getData()
     }
 
     return {
@@ -241,7 +257,8 @@ export default defineComponent({
       handleDeleteComment,
       isShowPermission,
       // 跳转到编辑页面
-      handleEditMoment
+      handleEditMoment,
+      handleAgreeResponse
     }
   }
 })

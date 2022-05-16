@@ -1,23 +1,29 @@
 <template>
   <!-- 发表评论框 -->
-  <Module class="pb-0">
+  <Module class="py-0">
     <a-comment class="py-0 pb-0">
-      <template #avatar>
-        <a-avatar :src="user.logo" alt="用户头像" />
-      </template>
       <template #content>
         <a-form-item>
-          <a-textarea v-model:value="currntComment" :rows="4" />
+          <a-textarea
+            ref="textareaRef"
+            id="textareaRef"
+            v-model:value="currntComment"
+            :rows="4"
+          />
         </a-form-item>
-        <a-form-item class="text-right pr-4">
-          <a-button
-            html-type="submit"
-            :loading="submitting"
-            type="primary"
-            @click="handleSubmit"
-          >
-            提交
-          </a-button>
+        <a-form-item class="pr-4">
+          <div class="flex items-center justify-end">
+            <Emoji ref="getEmojiRef" @change="handleGetEmoji" />
+
+            <a-button
+              html-type="submit"
+              :loading="submitting"
+              type="primary"
+              @click="handleSubmit"
+            >
+              提交
+            </a-button>
+          </div>
         </a-form-item>
       </template>
     </a-comment>
@@ -53,12 +59,6 @@
                 回 复
               </span>
 
-              <!-- <span
-                key="comment-nested-delete-to"
-                @click="showModalDelete(item.id)"
-              >
-                删 除
-              </span> -->
               <span
                 v-if="item.user.id === user.id"
                 key="comment-nested-delete-to"
@@ -109,12 +109,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from 'vue'
+import { defineComponent, PropType, ref, onMounted } from 'vue'
 import usecache from '~/utils/cache'
 import { BASE_HEAD_LOGO } from '~/api'
 import type { ICommentType } from '~/api'
 import { Modal } from 'ant-design-vue'
-import Module from '~/components/global/Module.vue'
+import Emoji from '~/components/global/Emoji/index.vue'
 
 export default defineComponent({
   props: {
@@ -134,9 +134,8 @@ export default defineComponent({
       default: 0
     }
   },
-
+  components: { Emoji },
   emits: ['submit', 'reply', 'delete'],
-
   setup(props, { emit }) {
     const comments = ref<Comment[]>([])
     const submitting = ref<boolean>(false)
@@ -177,6 +176,30 @@ export default defineComponent({
       })
     }
 
+    // 插入表情
+    const handleGetEmoji = (emoji: string) => {
+      const textarea = document.getElementById(
+        'textareaRef'
+      ) as HTMLTextAreaElement
+
+      function insertTxtAndSetcursor(insertTxt: string) {
+        // 获取到指定标签
+        let startPos = textarea.selectionEnd
+        let endPos = textarea.selectionEnd
+        if (startPos === undefined || endPos === undefined) return
+
+        let oldTxt = textarea.value
+        let result =
+          oldTxt.substring(0, startPos) + insertTxt + oldTxt.substring(endPos)
+        textarea.value = result
+        textarea.focus()
+        textarea.selectionStart = startPos + insertTxt.length
+        textarea.selectionEnd = startPos + insertTxt.length
+      }
+
+      insertTxtAndSetcursor(emoji)
+    }
+
     return {
       user,
       BASE_HEAD_LOGO,
@@ -190,10 +213,11 @@ export default defineComponent({
       showModalReply,
       handleOkReply,
       // 删除评论
-      showDeleteConfirm
+      showDeleteConfirm,
+      // 返回的表情包
+      handleGetEmoji
     }
-  },
-  components: { Module }
+  }
 })
 </script>
 
@@ -204,5 +228,9 @@ export default defineComponent({
 
 :deep(.ant-comment-inner) {
   padding-bottom: 0;
+}
+
+:deep(.ant-form-item) {
+  margin-bottom: 10px;
 }
 </style>

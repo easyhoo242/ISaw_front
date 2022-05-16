@@ -13,7 +13,11 @@
         </a-form-item>
         <a-form-item class="pr-4">
           <div class="flex items-center justify-end">
-            <Emoji ref="getEmojiRef" @change="handleGetEmoji" />
+            <Emoji
+              ref="getEmojiRef"
+              style="transform: translateY(-4px)"
+              @change="handleGetEmoji"
+            />
 
             <a-button
               html-type="submit"

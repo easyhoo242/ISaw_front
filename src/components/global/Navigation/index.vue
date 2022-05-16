@@ -158,11 +158,9 @@ export default defineComponent({
     onMounted(() => {
       const res = route.query.label as string
 
-      if (!res) {
-        return
+      if (res) {
+        currentType.value = parseInt(res)
       }
-
-      currentType.value = parseInt(res)
     })
 
     return {

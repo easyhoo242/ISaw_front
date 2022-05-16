@@ -38,8 +38,6 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .list-item {
-  
-
   .item-content {
     .content-item-wrap {
       line-height: 35px;

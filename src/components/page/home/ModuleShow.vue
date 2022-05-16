@@ -31,7 +31,7 @@
           class="item-desc w-full text-white px-3 pb-5 z-10 bg-gradient-to-b from-light-100 to-gray-500"
         >
           <div class="right-item-title text-base font-bold mt-2 min-h-12">
-            {{ item.content }}
+            {{ item.title }}
           </div>
           <div class="right-item-trg mt-3">
             {{ item.author.nickname }}

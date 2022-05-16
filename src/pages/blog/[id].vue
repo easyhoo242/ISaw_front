@@ -227,8 +227,6 @@ export default defineComponent({
 
     // 点赞响应
     const handleAgreeResponse = (res: IResponsType<string>) => {
-      console.log(res)
-
       const { msg, flag } = res
 
       if (!flag) {

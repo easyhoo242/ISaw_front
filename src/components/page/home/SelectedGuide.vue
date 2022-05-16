@@ -41,8 +41,6 @@ export default defineComponent({
     const getData = async () => {
       const res = await requestHotseeList(1)
 
-      console.log('123', res)
-
       list.value = res.data!
     }
 

@@ -248,8 +248,6 @@ export default {
 
       const res = await requestMomentEdit(blogId, data)
 
-      console.log(res)
-
       if (!res.flag) {
         message.error(res.msg, 2)
         return

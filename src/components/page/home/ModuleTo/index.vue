@@ -10,7 +10,9 @@
           </sup>
         </div>
         <div class="item-title-more text-xs">
-          <a href="/about">更多 <span>➕</span></a>
+          <a :href="item.labelInfo.id === 3 ? '/talk' : 'note'">
+            更多 <span>➕</span>
+          </a>
         </div>
       </div>
       <List :list="item.list.slice(0, 5)" />

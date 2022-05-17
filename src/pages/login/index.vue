@@ -4,34 +4,33 @@
       <a-form
         :model="formState"
         name="basic"
-        autocomplete="off"
+        autocomplete="on"
         layout="vertical"
         @finish="onFinish"
-        @finishFailed="onFinishFailed"
         class="mt-5 px-4"
       >
         <a-form-item
           label="用户名"
-          name="username"
+          :name="['user', 'username']"
           :rules="[{ required: true, message: '请输入用户名' }]"
         >
-          <a-input v-model:value="formState.username" />
+          <a-input v-model:value="formState.user.username" />
         </a-form-item>
 
         <a-form-item
           label="密码"
-          name="password"
+          :name="['user', 'password']"
           :rules="[{ required: true, message: '请输入密码' }]"
         >
-          <a-input-password v-model:value="formState.password" />
+          <a-input-password v-model:value="formState.user.password" />
         </a-form-item>
 
-        <a-form-item name="remember">
+        <a-form-item :name="['user', 'password']">
           <div class="flex items-center justify-between">
-            <a-checkbox v-model:checked="formState.remember">
+            <a-checkbox v-model:checked="formState.user.remember">
               记住密码
             </a-checkbox>
-            <div><A>忘记密码</A></div>
+            <A>忘记密码</A>
           </div>
         </a-form-item>
         <a-form-item class="mt-10">
@@ -58,9 +57,11 @@ import type { IAccount } from '~/api'
 import { handleUserLogin } from '~/hooks/userLogin'
 
 interface FormState {
-  username: string
-  password: string
-  remember: boolean
+  user: {
+    username: string
+    password: string
+    remember: boolean
+  }
 }
 
 export default defineComponent({
@@ -68,25 +69,31 @@ export default defineComponent({
     const router = useRouter()
 
     const formState = reactive<FormState>({
-      username: '',
-      password: '',
-      remember: true
+      user: {
+        username: '',
+        password: '',
+        remember: true
+      }
     })
 
-    const onFinish = async (value: IAccount) => {
-      const flag = await handleUserLogin(value)
+    const onFinish = async () => {
+      // console.log(value)
+
+      const data: IAccount = {
+        username: formState.user.username,
+        password: formState.user.password
+      }
+
+      const flag = await handleUserLogin(data)
+
+      console.log(flag)
 
       flag && router.push('/')
     }
 
-    const onFinishFailed = (errorInfo: any) => {
-      console.log('Failed:', errorInfo)
-    }
-
     return {
       formState,
-      onFinish,
-      onFinishFailed
+      onFinish
     }
   }
 })

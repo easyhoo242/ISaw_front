@@ -1,3 +1,4 @@
+import { IMomentCount } from './moment'
 import hyRequest from '~/service'
 import { IResponsType } from './index'
 
@@ -66,7 +67,18 @@ export interface ICreateMoment {
   label: number
 }
 
+export interface IMomentCountList {
+  lookResult: {
+    id: number
+    name: string
+    value: number
+    lookCount: number
+  }[]
+  agreeResult: IMomentCount[]
+  commentResult: IMomentCount[]
+}
 export interface IMomentCount {
+  id: number
   name: string
   value: number
 }
@@ -228,8 +240,9 @@ export const requestMomentLook = (momentId: number) => {
   })
 }
 
+// 文章信息统计接口
 export const requestMomentInfo = () => {
-  return hyRequest.get<IResponsType<IMomentCount[]>>({
+  return hyRequest.get<IResponsType<IMomentCountList>>({
     url: '/moment/momentInfo/1'
   })
 }

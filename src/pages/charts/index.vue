@@ -5,13 +5,15 @@
     </Module>
 
     <div class="flex h-150">
-      <Module title="文章量" class="flex-grow-0 h-600px mr-3">
-        <div id="main" style="width: 600px; height: 550px" />
+      <Module title="文章数" class="flex-grow-0 h-600px mr-3">
+        <div id="momentCount" style="width: 600px; height: 550px" />
       </Module>
 
       <div class="flex-1">
-        <Module title="最近发表" class="h-294px"> 
-          
+        <Module title="浏览量" class="h-294px">
+          <div class="flex items-center justify-center">
+            <div id="momentLook" style="width: 725px; height: 280px" />
+          </div>
         </Module>
         <Module title="最近发表" class="h-294px"> </Module>
       </div>
@@ -22,7 +24,8 @@
 <script setup lang="ts">
 import { reactive, onMounted } from 'vue'
 import { requestMomentInfo } from '~/api'
-import * as echarts from 'echarts/core'
+import * as echartsPet from 'echarts/core'
+import * as echarts from 'echarts'
 import {
   TooltipComponent,
   TooltipComponentOption,
@@ -33,7 +36,7 @@ import { PieChart, PieSeriesOption } from 'echarts/charts'
 import { LabelLayout } from 'echarts/features'
 import { CanvasRenderer } from 'echarts/renderers'
 
-echarts.use([
+echartsPet.use([
   TooltipComponent,
   LegendComponent,
   PieChart,
@@ -41,22 +44,44 @@ echarts.use([
   LabelLayout
 ])
 
-type EChartsOption = echarts.ComposeOption<
+type EChartsOptionPet = echarts.ComposeOption<
   TooltipComponentOption | LegendComponentOption | PieSeriesOption
 >
+
+type EChartsOptionLine = echarts.EChartsOption
 
 interface IMomentCount {
   name: string
   value: number
 }
-const momentInfo = reactive<{ momentCount: IMomentCount[] }>({
-  momentCount: []
+
+interface IMomentInfo {
+  momentCount: IMomentCount[]
+  momentLook: {
+    name: string[]
+    value: number[]
+  }
+}
+
+const momentInfo = reactive<IMomentInfo>({
+  momentCount: [],
+  momentLook: {
+    name: [],
+    value: []
+  }
 })
 
 const getData = async () => {
   const res = await requestMomentInfo()
 
-  momentInfo.momentCount = res.data!
+  console.log(res.data)
+
+  momentInfo.momentCount = res.data?.lookResult!
+
+  res.data?.lookResult.forEach((res) => {
+    momentInfo.momentLook.name.push(res.name)
+    momentInfo.momentLook.value.push(res.lookCount)
+  })
 
   new Promise((resolve) => {
     resolve(1)
@@ -70,11 +95,11 @@ onMounted(() => {
 })
 
 const EChartsInit = () => {
-  const chartDom = document.getElementById('main')!
-  const myChart = echarts.init(chartDom)
-  let option: EChartsOption
+  const momentCountCharDom = document.getElementById('momentCount')!
+  const momentCountChar = echarts.init(momentCountCharDom)
+  let momentCountOption: EChartsOptionPet
 
-  option = {
+  momentCountOption = {
     tooltip: {
       trigger: 'item'
     },
@@ -113,7 +138,57 @@ const EChartsInit = () => {
     ]
   }
 
-  option && myChart.setOption(option)
+  momentCountOption && momentCountChar.setOption(momentCountOption)
+
+  const momentLookChartDom = document.getElementById('momentLook')!
+  const momentLookChart = echarts.init(momentLookChartDom)
+  let momentLookOption: EChartsOptionLine
+
+  momentLookOption = {
+    xAxis: {
+      type: 'category',
+      data: momentInfo.momentLook.name
+    },
+    yAxis: {
+      type: 'value'
+    },
+    tooltip: {
+      trigger: 'item'
+    },
+    series: [
+      {
+        name: '文章浏览量',
+        type: 'bar',
+        color: 'RGB(91,155,213)',
+        data: momentInfo.momentLook.value,
+        itemStyle: {
+          //@ts-ignore
+          normal: {
+            label: {
+              show: true,
+              position: 'top',
+              // 文字的颜色，字体大小，字体加深
+              textStyle: {
+                color: 'RGB(0,112,192)',
+                fontSize: 12,
+                fontWeight: 'bold'
+              }
+            }
+          }
+        },
+        backgroundStyle: {
+          color: 'rgba(180, 180, 180, 0.2)'
+        }
+      }
+    ],
+    grid: {
+      // @ts-ignore
+      // x: 0,
+      y: 20
+    }
+  }
+
+  momentLookOption && momentLookChart.setOption(momentLookOption)
 }
 </script>
 

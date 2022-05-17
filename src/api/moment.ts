@@ -66,6 +66,11 @@ export interface ICreateMoment {
   label: number
 }
 
+export interface IMomentCount {
+  name: string
+  value: number
+}
+
 // 随便看看接口
 export const requestCauseList = (page: number = 1) => {
   const offset = page === 1 ? 0 : (page - 1) * 6
@@ -220,5 +225,11 @@ export const requestMomentSearch = (data: {
 export const requestMomentLook = (momentId: number) => {
   return hyRequest.post({
     url: '/moment/' + momentId + '/look'
+  })
+}
+
+export const requestMomentInfo = () => {
+  return hyRequest.get<IResponsType<IMomentCount[]>>({
+    url: '/moment/momentInfo/1'
   })
 }

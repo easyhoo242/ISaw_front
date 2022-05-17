@@ -32,7 +32,6 @@ export default defineComponent({
 
     const handlePush = () => {
       if (isLogin.value) {
-        // console.log(userInfo)
         // localcache.deleteCache('user')
       } else {
       }

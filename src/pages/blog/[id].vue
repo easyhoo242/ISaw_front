@@ -1,31 +1,31 @@
 <template>
-  <BranchCrumb route="正文" />
-  <BlogHeader :data="headerInfo" @response="handleAgreeResponse" />
-  <FlexCol>
-    <template #body>
-      <Content :data="currentContent" />
-      <Comment
-        :data="comment"
-        @submit="handleSubmit"
-        @reply="handleReply"
-        @delete="handleDelete"
-        :total="total"
-        :totalAll="totalAll"
-      />
+  <div>
+    <BranchCrumb route="正文" />
+    <BlogHeader :data="headerInfo" @response="handleAgreeResponse" />
+    <FlexCol>
+      <template #body>
+        <Content :data="currentContent" />
+        <Comment
+          :data="comment"
+          @submit="handleSubmit"
+          @reply="handleReply"
+          @delete="handleDelete"
+          :total="total"
+          :totalAll="totalAll"
+        />
 
-      <a-pagination
-        v-if="comment.father.length"
-        v-model:pageSize="pagesize"
-        :current="currentPage"
-        :total="total"
-        hideOnSinglePage
-        class="my-3"
-        @change="handlePageChange"
-      />
-    </template>
+        <a-pagination
+          v-if="comment.father.length"
+          v-model:pageSize="pagesize"
+          :current="currentPage"
+          :total="total"
+          hideOnSinglePage
+          class="my-3"
+          @change="handlePageChange"
+        />
+      </template>
 
-    <template #side>
-      <Sidebar>
+      <template #side>
         <Casual />
 
         <!-- 文章操作模块 -->
@@ -37,9 +37,9 @@
             <A href="javascript:void(0);" class="btn">删除文章</A>
           </div>
         </Module>
-      </Sidebar>
-    </template>
-  </FlexCol>
+      </template>
+    </FlexCol>
+  </div>
 </template>
 
 <script lang="ts">

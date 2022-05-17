@@ -35,10 +35,6 @@ export default defineComponent({
       type: Array as PropType<IMomentType[]>,
       default: () => []
     }
-  },
-  setup(props) {
-    console.log(props.data)
-    return {}
   }
 })
 </script>

@@ -214,3 +214,9 @@ export const requestMomentSearch = (data: {
     }
   })
 }
+
+export const requestMomentLook = (momentId: number) => {
+  return hyRequest.post({
+    url: '/moment/' + momentId + '/look'
+  })
+}

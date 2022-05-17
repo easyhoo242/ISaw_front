@@ -10,6 +10,9 @@ import { message } from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.less'
 import 'virtual:windi.css'
 import './styles/main.less'
+
+import { requestMomentLook } from '~/api'
+
 // 引入animatecss
 ;(async () => {
   const app = createApp(App)
@@ -24,21 +27,18 @@ import './styles/main.less'
   router.beforeEach((to) => {
     if (to.path !== '/login' && to.path != '/register') {
       const { token } = localCache.getCache('user')
+
       if (!token) {
         message.error('未登录，正在跳转到登录页...', 2)
         return '/login'
       }
     }
 
-    // if (to.path === '/login') {
-    //   const token = localCache.getCache('token')
-    //   if (token) {
-    //     message.warning('您当前已经登陆, 请勿重复登录~', 2)
-    //     message.success('已为您跳转到首页~', 3)
-    //   }
-    //   return '/'
-    // }
+    const [, item, id] = to.path.split('/')
+
+    item === 'blog' && requestMomentLook(parseInt(id))
   })
+
   app.use(store)
 
   app.use(router)

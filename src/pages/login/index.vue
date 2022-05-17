@@ -54,7 +54,7 @@ meta:
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import { IUserType } from '~/api'
+import type { IAccount } from '~/api'
 import { handleUserLogin } from '~/hooks/userLogin'
 
 interface FormState {
@@ -73,7 +73,7 @@ export default defineComponent({
       remember: true
     })
 
-    const onFinish = async (value: IUserType) => {
+    const onFinish = async (value: IAccount) => {
       const flag = await handleUserLogin(value)
 
       flag && router.push('/')

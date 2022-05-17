@@ -13,7 +13,10 @@
         <a-form-item
           label="用户名"
           name="username"
-          :rules="[{ required: true, message: '请输入用户名' }]"
+          :rules="[
+            { required: true, message: '请输入用户名' },
+            { pattern: usernameRule, message: '4~16位的字母或数字组成' }
+          ]"
         >
           <a-input v-model:value="formState.username" />
         </a-form-item>
@@ -29,7 +32,10 @@
         <a-form-item
           label="密码"
           name="password"
-          :rules="[{ required: true, message: '请输入密码' }]"
+          :rules="[
+            { required: true, message: '请输入密码' },
+            { pattern: passwordRule, message: '4~16位的字母和数字组成' }
+          ]"
         >
           <a-input-password v-model:value="formState.password" />
         </a-form-item>
@@ -37,7 +43,10 @@
         <a-form-item
           label="确认密码"
           name="rePassword"
-          :rules="[{ required: true, message: '请输入密码' }]"
+          :rules="[
+            { required: true, message: '请确认密码' },
+            { pattern: passwordRule, message: '4~16位的字母和数字组成' }
+          ]"
         >
           <a-input-password v-model:value="formState.rePassword" />
         </a-form-item>
@@ -62,9 +71,10 @@ meta:
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import { message } from 'ant-design-vue'
+import { registUser, usernameRule, passwordRule } from '~/api'
 import { handleUserLogin } from '~/hooks'
-import { registUser } from '~/api'
+import { message } from 'ant-design-vue'
+
 import type { IAccount } from '~/api'
 
 interface FormState {
@@ -128,7 +138,9 @@ export default defineComponent({
     return {
       formState,
       onFinish,
-      onFinishFailed
+      onFinishFailed,
+      usernameRule,
+      passwordRule
     }
   }
 })

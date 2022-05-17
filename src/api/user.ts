@@ -6,7 +6,7 @@ enum UserAPI {
   registUser = '/users/', //注册 用法: /users/1
   loginUser = '/login', //登录
   userDetail = '/users/', //'/users/'' + id
-  ChangeUserInfo = '/users/changeInfo' //修改信息
+  ChangeUserInfo = '/users/' //修改信息
 }
 
 export interface IAccount {
@@ -23,23 +23,22 @@ export interface IUserInfoType {
   agree_count: number
 
   // 暂时没有的字段
-  slogan: string
   age: number
   sex: string
-  telPhone: string
   email: string
+  telPhone: string
+  desc: string
+  // 1 普通  6 会员  9 管理员
   type: number
-  vip: number
 }
 
-export interface IChangeUserInfo {
-  name: string
+export interface IUser {
+  nickname: string
   sex: string
   age: number
   email: string
   telPhone: string
-  slogan: string
-  userId: number
+  desc: string
 }
 
 export interface ILoginResult {
@@ -74,9 +73,9 @@ export function getUserDetail(userId: number) {
 }
 
 // 修改信息
-export const changeUserInfo = (data: IChangeUserInfo) => {
-  return hyRequest.post<IResponsType<any>>({
-    url: UserAPI.ChangeUserInfo,
+export const changeUserInfo = (userId: number, data: IUser) => {
+  return hyRequest.post<IResponsType<string>>({
+    url: UserAPI.ChangeUserInfo + userId,
     data
   })
 }

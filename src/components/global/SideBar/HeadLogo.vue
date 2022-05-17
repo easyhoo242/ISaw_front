@@ -20,15 +20,15 @@
               {{ data.nickname }}
             </a>
           </div>
-          <div v-if="!!data.vip" class="v px-1 ml-2">v</div>
+          <div v-if="data.type === 6" class="v px-1 ml-2">v</div>
         </div>
         <div class="desc mt-5px text-gray-500 min-h-42px">
           <a-popover trigger="hover" placement="bottom">
             <template #content>
-              {{ data.slogan || '快来编写你的自我介绍吧~' }}
+              {{ data.desc || '快来编写你的自我介绍吧~' }}
             </template>
             <div>
-              {{ data.slogan || '快来编写你的自我介绍吧~' }}
+              {{ data.desc || '快来编写你的自我介绍吧~' }}
             </div>
           </a-popover>
         </div>
@@ -62,11 +62,11 @@
 import { defineComponent, ref, onMounted } from 'vue'
 import { getUserDetail, BASE_HEAD_LOGO } from '~/api'
 import type { IUserInfoType } from '~/api'
-import cache from '~/utils/cache'
+import localcache from '~/utils/cache'
 
 export default defineComponent({
   setup(_) {
-    const currentUser = cache.getCache('user')
+    const currentUser = localcache.getCache('user')
 
     //@ts-ignore
     const data = ref<IUserInfoType>({})
@@ -74,7 +74,7 @@ export default defineComponent({
     const getUserInfo = async () => {
       const res = await getUserDetail(currentUser.id)
 
-      data.value = res.data as IUserInfoType
+      data.value = res.data!
     }
 
     onMounted(() => {

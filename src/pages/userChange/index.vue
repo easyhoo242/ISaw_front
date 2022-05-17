@@ -83,16 +83,37 @@
             class="mt-10"
             @finish="onPswFinish"
           >
-            <a-form-item :name="['userPsw', 'old']" label="旧密码">
-              <a-input v-model:value="formState.userPsw.old" />
+            <a-form-item
+              :name="['userPsw', 'oldPsw']"
+              label="旧密码"
+              :rules="[{ required: true, message: '不能为空' }]"
+            >
+              <a-input v-model:value="formState.userPsw.oldPsw" />
             </a-form-item>
 
-            <a-form-item :name="['userPsw', 'new']" label="新密码">
-              <a-input v-model:value="formState.userPsw.new" />
+            <a-form-item
+              :name="['userPsw', 'newPsw']"
+              label="新密码"
+              :rules="[
+                { required: true, message: '新密码不能为空' },
+                {
+                  pattern: passwordRule,
+                  message: '4~16位的字母和数字组成'
+                }
+              ]"
+            >
+              <a-input v-model:value="formState.userPsw.newPsw" />
             </a-form-item>
 
-            <a-form-item :name="['userPsw', 'reNew']" label="确认新密码">
-              <a-input v-model:value="formState.userPsw.reNew" />
+            <a-form-item
+              :name="['userPsw', 'reNewPsw']"
+              label="确认新密码"
+              :rules="[
+                { required: true, message: '新密码不能为空' },
+                { pattern: passwordRule, message: '4~16位的字母和数字组成' }
+              ]"
+            >
+              <a-input v-model:value="formState.userPsw.reNewPsw" />
             </a-form-item>
 
             <a-form-item :wrapper-col="{ ...layout.wrapperCol, offset: 10 }">
@@ -111,24 +132,21 @@
 <script lang="ts">
 import { defineComponent, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { changeUserInfo, getUserDetail } from '~/api'
+import {
+  changeUserInfo,
+  getUserDetail,
+  changeUserPsw,
+  passwordRule
+} from '~/api'
+import type { IUser, IChangePsw } from '~/api'
 import localCache from '~/utils/cache'
 // 引用组件
 import { message } from 'ant-design-vue'
 
-interface IUser {
-  nickname: string
-  sex: string
-  age: number
-  email: string
-  telPhone: string
-  desc: string
-}
-
 interface IUserPsw {
-  old: string
-  new: string
-  reNew: string
+  oldPsw: string
+  newPsw: string
+  reNewPsw: string
 }
 
 interface IFormState {
@@ -158,15 +176,14 @@ export default defineComponent({
         desc: ''
       },
       userPsw: {
-        old: '',
-        new: '',
-        reNew: ''
+        oldPsw: '',
+        newPsw: '',
+        reNewPsw: ''
       }
     })
 
     const getData = async () => {
       const res = await getUserDetail(userInfo.id)
-      console.log(res)
       formState.user.nickname = res.data?.nickname! || 'ISaw~'
       formState.user.sex = res.data?.sex! || '保密'
       formState.user.age = res.data?.age! || 18
@@ -192,7 +209,28 @@ export default defineComponent({
       router.push(`/user/${userInfo.id}`)
     }
 
-    const onPswFinish = () => {}
+    const onPswFinish = async () => {
+      const { oldPsw, newPsw, reNewPsw } = formState.userPsw
+
+      if (!(newPsw === reNewPsw)) {
+        message.error('两次密码不一致~')
+        return
+      }
+
+      const data: IChangePsw = {
+        oldPsw,
+        newPsw
+      }
+
+      const res = await changeUserPsw(userInfo.id, data)
+
+      if (!res.flag) {
+        message.error(res.msg, 3)
+        return
+      }
+
+      message.success(res.msg, 3)
+    }
 
     onMounted(() => {
       getData()
@@ -202,7 +240,8 @@ export default defineComponent({
       formState,
       onFinish,
       onPswFinish,
-      layout
+      layout,
+      passwordRule
     }
   }
 })

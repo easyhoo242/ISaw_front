@@ -6,7 +6,8 @@ enum UserAPI {
   registUser = '/users/', //注册 用法: /users/1
   loginUser = '/login', //登录
   userDetail = '/users/', //'/users/'' + id
-  ChangeUserInfo = '/users/' //修改信息
+  ChangeUserInfo = '/users/', //修改信息
+  ChangeUserPsw = '/users/' //修改密码
 }
 
 export interface IAccount {
@@ -39,6 +40,11 @@ export interface IUser {
   email: string
   telPhone: string
   desc: string
+}
+
+export interface IChangePsw {
+  oldPsw: string
+  newPsw: string
 }
 
 export interface ILoginResult {
@@ -76,6 +82,13 @@ export function getUserDetail(userId: number) {
 export const changeUserInfo = (userId: number, data: IUser) => {
   return hyRequest.post<IResponsType<string>>({
     url: UserAPI.ChangeUserInfo + userId,
+    data
+  })
+}
+
+export const changeUserPsw = (userId: number, data: IChangePsw) => {
+  return hyRequest.post<IResponsType<string>>({
+    url: UserAPI.ChangeUserPsw + userId + '/psw',
     data
   })
 }

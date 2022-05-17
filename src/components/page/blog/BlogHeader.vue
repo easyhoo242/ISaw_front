@@ -21,7 +21,13 @@
         </div>
         <div class="desc-tag">
           {{ data?.createTime?.split('T')[0] }}
-          <span class="mx-1 btn" @click="handleAgree(data.momentId)">
+
+          <span class="mx-1"> 👁‍🗨 {{ data.look || 0 }} 浏览 </span>
+          <span
+            :style="!!data.isAgree ? 'background-color: #448ef6;' : ''"
+            class="mt-2 mx-auto btn"
+            @click="handleAgree(data.momentId)"
+          >
             👍 {{ data.agree }} 点赞
           </span>
           <span class="mx-1"> 💬 {{ data.count }} 评论 </span>
@@ -80,7 +86,7 @@ export default defineComponent({
 .btn {
   cursor: pointer;
   padding: 2px 4px;
-  background-color: #fb8c6e;
+
   border-radius: 4px;
 }
 </style>

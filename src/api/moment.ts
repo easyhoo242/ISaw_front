@@ -25,6 +25,7 @@ export interface IMomentType {
   momentId: number
 
   agree: number
+  isAgree: number
   commentCount: number
   look: number
 

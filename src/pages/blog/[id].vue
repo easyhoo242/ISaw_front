@@ -63,7 +63,9 @@ export interface headerInfo {
   nickname: string
   avatarUrl: string
   agree: number
+  isAgree: number
   count: number
+  look: number
 
   title: string
   createTime: string
@@ -107,7 +109,9 @@ export default defineComponent({
         createTime: momentDetail.createTime,
         count: momentDetail.commentCount,
         agree: momentDetail.agree,
-        momentId: momentDetail.momentId
+        isAgree: momentDetail.isAgree,
+        momentId: momentDetail.momentId,
+        look: momentDetail.look
       }
 
       // 是否显示权限操作按钮

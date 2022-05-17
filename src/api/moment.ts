@@ -26,6 +26,7 @@ export interface IMomentType {
 
   agree: number
   commentCount: number
+  look: number
 
   createTime: string
   updateTime: string

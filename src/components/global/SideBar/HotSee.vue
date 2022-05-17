@@ -10,14 +10,15 @@
         <!-- :style="`background: url(${item.images[0] || BASE_LOGO});`" -->
 
         <A :href="`/blog/${item.momentId}`" class="item-bg__wrap rounded-xl">
-          <span></span
-        ></A>
+          <span></span>
+        </A>
         <div class="item-content text-white w-full p-2">
           <div class="item-content__desc pt-2">
             {{ item.title || item.content }}
           </div>
           <div class="item-content__tag text-xs mt-1">
-            {{ item.agree }} 点赞 ， {{ item.createTime }}
+            {{ item.agree }}点赞 {{ item.look }}浏览
+            {{ item?.createTime?.split('T')[0] }}
           </div>
         </div>
       </div>

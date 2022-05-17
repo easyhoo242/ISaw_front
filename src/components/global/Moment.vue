@@ -26,7 +26,8 @@
       <div class="footer pt-2 flex items-center justify-between text-gray-400">
         <div class="tag flex-1 flex items-center">
           <div>🕒 {{ data.createTime.split('T')[0] }}</div>
-          <div>{{ data.agree || 0 }} 点赞</div>
+          <div>👁‍🗨 {{ data.look || 0 }} 浏览</div>
+          <div>🤞 {{ data.agree || 0 }} 点赞</div>
           <div>💬 {{ data.commentCount || 0 }} 评论</div>
         </div>
         <div class="who flex-0">

@@ -17,6 +17,7 @@
             v-model:pageSize="pageSize"
             :total="total"
             show-quick-jumper
+            hideOnSinglePage
             class="my-3"
             @change="onChange"
           />

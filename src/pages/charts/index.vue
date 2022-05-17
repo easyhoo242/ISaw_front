@@ -1,5 +1,7 @@
 <template>
   <div>
+    <BranchCrumb route="图表统计" />
+
     <Module>
       <div>这是图表页面</div>
     </Module>
@@ -15,7 +17,7 @@
             <div id="momentLook" style="width: 725px; height: 280px" />
           </div>
         </Module>
-        <Module title="最近发表" class="h-294px"> </Module>
+        <Module title="点赞 & 评论" class="h-294px"> </Module>
       </div>
     </div>
   </div>

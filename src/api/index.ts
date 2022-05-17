@@ -57,6 +57,10 @@ export const NAVIGATION_LIST: INavigationType[] = [
       {
         name: '评论',
         label: 2
+      },
+      {
+        name: '浏览量',
+        label: 3
       }
     ]
   }

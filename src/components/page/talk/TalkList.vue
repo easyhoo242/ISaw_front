@@ -1,17 +1,19 @@
 <template>
   <div class="module-list grid grid-cols-4 gap-4 mt-6 enter-y">
     <div v-for="item in data" :key="item.momentId" class="shadow-md rounded-lg">
-      <div class="wrap pb-4 bg-white rounded-md overflow-hidden">
+      <div class="wrap bg-white rounded-md overflow-hidden">
         <A :href="`/blog/${item.momentId}`">
           <div class="img h-54"></div>
         </A>
 
-        <div class="content px-4">
+        <div class="content px-4 bg-gray-50 pb-4 pt-1">
           <div class="content-time my-3 ml-3 pl-3">
-            {{ item.createTime.split('T')[0] }}
+            {{ item.createTime.split('T')[0] }} · {{ item.look }} 浏览
           </div>
           <div class="content-desc h-50px">
-            <A :href="`/blog/${item.momentId}`"> {{ item.title }} </A>
+            <A :href="`/blog/${item.momentId}`" class="content-desc__title">
+              {{ item.title }}
+            </A>
           </div>
           <div
             class="content-tag flex items-center justify-between mt-3 text-gray-400"
@@ -70,6 +72,16 @@ export default defineComponent({
 }
 .content-desc {
   line-height: 1.6;
+
+  .content-desc__title {
+    text-overflow: -o-ellipsis-lastline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
 }
 
 .item-tag {

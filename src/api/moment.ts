@@ -1,4 +1,3 @@
-import { IMomentCount } from './moment'
 import hyRequest from '~/service'
 import { IResponsType } from './index'
 

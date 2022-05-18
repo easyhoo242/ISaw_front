@@ -189,7 +189,7 @@ const EChartsInit = () => {
         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
           {
             offset: 0,
-            color: 'rgb(59 130 246 / 50%)'
+            color: 'rgb(59, 130, 246)'
           },
           {
             offset: 1,
@@ -203,9 +203,6 @@ const EChartsInit = () => {
           color: 'RGB(0,112,192)',
           fontSize: 12,
           fontWeight: 'bold'
-        },
-        backgroundStyle: {
-          color: 'rgba(180, 180, 180, 0.2)'
         }
       }
     ],
@@ -240,7 +237,7 @@ const EChartsInit = () => {
         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
           {
             offset: 0,
-            color: 'rgb(59 130 246 / 50%)'
+            color: 'rgb(59, 130, 246)'
           },
           {
             offset: 1,

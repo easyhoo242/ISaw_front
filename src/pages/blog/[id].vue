@@ -4,7 +4,8 @@
     <BlogHeader :data="headerInfo" @response="handleAgreeResponse" />
     <FlexCol>
       <template #body>
-        <Content :data="currentContent" />
+        <Content :data="currentContent" :labelInfo="labelInfo" />
+
         <Comment
           :data="comment"
           @submit="handleSubmit"
@@ -91,6 +92,12 @@ export default defineComponent({
 
     //@ts-ignore
     const headerInfo = ref<headerInfo>({})
+
+    const labelInfo = reactive<{
+      id: number
+      name: string
+    }>({ id: 0, name: '' })
+
     const currentContent = ref('')
 
     const momentId = parseInt(window.location.pathname.split('/')[2])
@@ -113,6 +120,9 @@ export default defineComponent({
         momentId: momentDetail.momentId,
         look: momentDetail.look
       }
+
+      labelInfo.id = momentDetail.label.id
+      labelInfo.name = momentDetail.label.name
 
       // 是否显示权限操作按钮
       isShowPermission.value = user.id === momentDetail.author.id
@@ -252,6 +262,7 @@ export default defineComponent({
       handlePageChange,
       handleReply,
       headerInfo,
+      labelInfo,
       currentContent,
       // 删除评论
       handleDelete,

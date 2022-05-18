@@ -93,8 +93,6 @@ const momentInfo = reactive<IMomentInfo>({
 const getData = async () => {
   const res = await requestMomentInfo()
 
-  console.log(res.data)
-
   momentInfo.momentCount = res.data?.lookResult!
 
   res.data?.lookResult.forEach((res) => {
@@ -199,20 +197,12 @@ const EChartsInit = () => {
           }
         ]),
         data: momentInfo.momentLook.value,
-        itemStyle: {
-          //@ts-ignore
-          normal: {
-            label: {
-              show: true,
-              position: 'top',
-              // 文字的颜色，字体大小，字体加深
-              textStyle: {
-                color: 'RGB(0,112,192)',
-                fontSize: 12,
-                fontWeight: 'bold'
-              }
-            }
-          }
+        label: {
+          show: true,
+          position: 'top',
+          color: 'RGB(0,112,192)',
+          fontSize: 12,
+          fontWeight: 'bold'
         },
         backgroundStyle: {
           color: 'rgba(180, 180, 180, 0.2)'
@@ -258,20 +248,13 @@ const EChartsInit = () => {
           }
         ]),
         data: momentInfo.agreeCount.value,
-        itemStyle: {
-          //@ts-ignore
-          normal: {
-            label: {
-              show: true,
-              position: 'top',
-              // 文字的颜色，字体大小，字体加深
-              textStyle: {
-                color: 'RGB(0,112,192)',
-                fontSize: 12,
-                fontWeight: 'bold'
-              }
-            }
-          }
+        label: {
+          show: true,
+          position: 'top',
+          // 文字的颜色，字体大小，字体加深
+          color: 'RGB(0,112,192)',
+          fontSize: 12,
+          fontWeight: 'bold'
         },
         backgroundStyle: {
           color: 'rgba(180, 180, 180, 0.2)'
@@ -291,20 +274,13 @@ const EChartsInit = () => {
           }
         ]),
         data: momentInfo.commentCount.value,
-        itemStyle: {
-          //@ts-ignore
-          normal: {
-            label: {
-              show: true,
-              position: 'top',
-              // 文字的颜色，字体大小，字体加深
-              textStyle: {
-                color: 'RGB(0,112,192)',
-                fontSize: 12,
-                fontWeight: 'bold'
-              }
-            }
-          }
+        label: {
+          show: true,
+          position: 'top',
+          // 文字的颜色，字体大小，字体加深
+          color: 'RGB(0,112,192)',
+          fontSize: 12,
+          fontWeight: 'bold'
         },
         backgroundStyle: {
           color: 'rgba(180, 180, 180, 0.2)'

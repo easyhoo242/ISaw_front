@@ -1,6 +1,13 @@
 <template>
   <Module class="moment flex">
-    <div class="logo flex-0 w-210px h-158px rounded-md overflow-hidden mr-5">
+    <div
+      class="logo flex-0 w-210px h-158px rounded-md overflow-hidden mr-5 relative"
+    >
+      <span
+        class="logo-label absolute flex items-center justify-center px-3 py-1 rounded-full text-gray-50"
+      >
+        {{ data.label.name }}
+      </span>
       <!-- <A :href="`/blog/${item.id}`"> <img :src="item.img" alt="" /></A> -->
       <A :href="`/blog/${data.momentId}`">
         <!-- <img v-if="data.images" :src="data.images[0]" alt="" /> -->
@@ -10,7 +17,7 @@
 
     <div class="hotlist-content flex-1 pr-3">
       <div class="title flex items-center text-gray-700 overflow-hidden">
-        <div v-if="data.agree > 100" class="hot-tag mr-2">热文</div>
+        <div v-if="data.look > 50" class="hot-tag mr-2">热文</div>
 
         <A :href="`/blog/${data.momentId}`">
           <div class="content-title overflow-hidden">
@@ -65,10 +72,50 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .moment {
+  position: relative;
+
+  &::after {
+    position: absolute;
+    content: ' ';
+    width: 3px;
+    // height: 28px;
+    height: 0px;
+    background-color: #448ef6;
+    left: 0px;
+    top: 17px;
+    transition: 0.5s all;
+  }
+
+  &:hover::after {
+    height: 28px;
+    transition: 0.5s all;
+  }
+
+  &:hover .logo .logo-label {
+    right: 0px;
+    transition: 0.5s all;
+  }
+
+  &:hover .logo img {
+    transform: rotate(20deg) scale(1.5);
+    transition: 2s all;
+  }
+
   .logo {
+    .logo-label {
+      height: 28px;
+      background-color: #448ef6;
+      right: -80px;
+      top: 2px;
+      transition: 0.5s all;
+      z-index: 2;
+    }
+
     img {
       max-width: 100%;
       height: 100%;
+      z-index: 1;
+      transition: 2s all;
     }
   }
 

@@ -17,7 +17,12 @@
             <div id="momentLook" style="width: 725px; height: 280px" />
           </div>
         </Module>
-        <Module title="点赞 & 评论" class="h-294px"> </Module>
+
+        <Module title="点赞 & 评论" class="h-294px">
+          <div class="flex items-center justify-center">
+            <div id="agreeAndComment" style="width: 725px; height: 280px" />
+          </div>
+        </Module>
       </div>
     </div>
   </div>
@@ -57,17 +62,29 @@ interface IMomentCount {
   value: number
 }
 
+interface ImomentCountLine {
+  name: string[]
+  value: number[]
+}
+
 interface IMomentInfo {
   momentCount: IMomentCount[]
-  momentLook: {
-    name: string[]
-    value: number[]
-  }
+  momentLook: ImomentCountLine
+  agreeCount: ImomentCountLine
+  commentCount: ImomentCountLine
 }
 
 const momentInfo = reactive<IMomentInfo>({
   momentCount: [],
   momentLook: {
+    name: [],
+    value: []
+  },
+  agreeCount: {
+    name: [],
+    value: []
+  },
+  commentCount: {
     name: [],
     value: []
   }
@@ -83,6 +100,16 @@ const getData = async () => {
   res.data?.lookResult.forEach((res) => {
     momentInfo.momentLook.name.push(res.name)
     momentInfo.momentLook.value.push(res.lookCount)
+  })
+
+  res.data?.agreeResult.forEach((res) => {
+    momentInfo.agreeCount.name.push(res.name)
+    momentInfo.agreeCount.value.push(res.value)
+  })
+
+  res.data?.commentResult.forEach((res) => {
+    momentInfo.commentCount.name.push(res.name)
+    momentInfo.commentCount.value.push(res.value)
   })
 
   new Promise((resolve) => {
@@ -161,7 +188,16 @@ const EChartsInit = () => {
       {
         name: '文章浏览量',
         type: 'bar',
-        color: 'RGB(91,155,213)',
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          {
+            offset: 0,
+            color: 'rgb(59 130 246 / 50%)'
+          },
+          {
+            offset: 1,
+            color: '#448ef6'
+          }
+        ]),
         data: momentInfo.momentLook.value,
         itemStyle: {
           //@ts-ignore
@@ -191,6 +227,98 @@ const EChartsInit = () => {
   }
 
   momentLookOption && momentLookChart.setOption(momentLookOption)
+
+  const agreeAndCommentChartDom = document.getElementById('agreeAndComment')!
+  const agreeAndCommentChart = echarts.init(agreeAndCommentChartDom)
+  let agreeAndCommentOption: EChartsOptionLine
+
+  agreeAndCommentOption = {
+    xAxis: {
+      type: 'category',
+      data: momentInfo.momentLook.name
+    },
+    yAxis: {
+      type: 'value'
+    },
+    tooltip: {
+      trigger: 'item'
+    },
+    series: [
+      {
+        name: '点赞',
+        type: 'bar',
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          {
+            offset: 0,
+            color: 'rgb(59 130 246 / 50%)'
+          },
+          {
+            offset: 1,
+            color: '#448ef6'
+          }
+        ]),
+        data: momentInfo.agreeCount.value,
+        itemStyle: {
+          //@ts-ignore
+          normal: {
+            label: {
+              show: true,
+              position: 'top',
+              // 文字的颜色，字体大小，字体加深
+              textStyle: {
+                color: 'RGB(0,112,192)',
+                fontSize: 12,
+                fontWeight: 'bold'
+              }
+            }
+          }
+        },
+        backgroundStyle: {
+          color: 'rgba(180, 180, 180, 0.2)'
+        }
+      },
+      {
+        name: '评论',
+        type: 'bar',
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          {
+            offset: 0,
+            color: '#f86'
+          },
+          {
+            offset: 1,
+            color: '#F60'
+          }
+        ]),
+        data: momentInfo.commentCount.value,
+        itemStyle: {
+          //@ts-ignore
+          normal: {
+            label: {
+              show: true,
+              position: 'top',
+              // 文字的颜色，字体大小，字体加深
+              textStyle: {
+                color: 'RGB(0,112,192)',
+                fontSize: 12,
+                fontWeight: 'bold'
+              }
+            }
+          }
+        },
+        backgroundStyle: {
+          color: 'rgba(180, 180, 180, 0.2)'
+        }
+      }
+    ],
+    grid: {
+      // @ts-ignore
+      // x: 0,
+      y: 20
+    }
+  }
+
+  momentLookOption && agreeAndCommentChart.setOption(agreeAndCommentOption)
 }
 </script>
 

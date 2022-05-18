@@ -1,10 +1,48 @@
 <template>
   <div>
-    <BranchCrumb route="图表统计" />
+    <BranchCrumb route="数据统计" />
 
-    <Module>
-      <div>这是图表页面</div>
-    </Module>
+    <div class="grid grid-cols-3 gap-3">
+      <Module class="h-50">
+        <div class="grid grid-cols-2 gap-6">
+          <div class="pl-5">
+            <h5 class="mt-2 mb-5">今日新增文章：</h5>
+            <div>
+              <span class="text-blue-400 text-[2.23rem] pr-2">{{ 0 }}</span>
+              篇
+            </div>
+
+            <div class="mt-10">
+              <A
+                class="mt-3 py-1 px-2 bg-gray-300 rounded-md text-gray-10 text-md"
+                >去发表新文章
+              </A>
+            </div>
+          </div>
+
+          <div>
+            <div class="data-item">
+              过去7天发表 <span> {{ 0 }} </span> 篇
+            </div>
+            <div class="data-item">
+              过去30天发表 <span> {{ 0 }} </span> 篇
+            </div>
+            <div class="data-item">
+              总计发表 <span> {{ 0 }} </span> 篇
+            </div>
+            <div class="data-item">
+              全部分类 <span> {{ 0 }} </span> 篇
+            </div>
+          </div>
+        </div>
+      </Module>
+      <Module>
+        <div>这是图表页面</div>
+      </Module>
+      <Module>
+        <div>这是图表页面</div>
+      </Module>
+    </div>
 
     <div class="flex h-150">
       <Module title="文章数" class="flex-grow-0 h-600px mr-3">
@@ -295,4 +333,16 @@ const EChartsInit = () => {
 }
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.data-item {
+  padding-top: 20px;
+
+  &:first-child {
+    padding-top: 15px;
+  }
+
+  span {
+    color: rgb(96, 165, 250);
+  }
+}
+</style>

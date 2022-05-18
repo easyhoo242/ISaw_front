@@ -3,16 +3,7 @@
     <BranchCrumb route="数据统计" />
 
     <div class="grid grid-cols-3 gap-3">
-      <LatelyData :data="latelyData.moment">
-        <!-- <template #left>
-          <div class="mt-10">
-            <A
-              class="mt-3 py-1 px-2 bg-gray-300 rounded-md text-gray-10 text-md"
-              >去发表新文章
-            </A>
-          </div>
-        </template> -->
-      </LatelyData>
+      <LatelyData :data="latelyData.moment" />
 
       <LatelyData :data="latelyData.look" title="浏览" />
 

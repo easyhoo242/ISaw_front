@@ -1,5 +1,5 @@
 <template>
-  <Module class="h-50">
+  <Module class="h-50 module">
     <div class="grid grid-cols-2 gap-6">
       <div class="pl-5">
         <h5 class="mt-2 mb-5">今日{{ title }}：</h5>
@@ -52,6 +52,9 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
+.module {
+  user-select: none;
+}
 .data-item {
   padding-top: 20px;
 

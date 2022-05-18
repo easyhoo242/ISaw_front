@@ -10,9 +10,12 @@
           </sup>
         </div>
         <div class="item-title-more text-xs">
-          <a :href="item.labelInfo.id === 3 ? '/talk' : 'note'">
-            更多 <span>➕</span>
-          </a>
+          <A
+            :href="item.labelInfo.id === 3 ? '/talk' : 'note'"
+            class="flex items-center"
+          >
+            更多 <plus-outlined class="ml-1" />
+          </A>
         </div>
       </div>
       <List :list="item.list.slice(0, 5)" />
@@ -25,10 +28,12 @@ import { defineComponent, ref, onMounted } from 'vue'
 import { requestModuleTo } from '~/api'
 import type { IMomentListByLabelType } from '~/api'
 import List from './List.vue'
+import { PlusOutlined } from '@ant-design/icons-vue'
 
 export default defineComponent({
   components: {
-    List
+    List,
+    PlusOutlined
   },
   setup() {
     const list = ref<IMomentListByLabelType[]>([])

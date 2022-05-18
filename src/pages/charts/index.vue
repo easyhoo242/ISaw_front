@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 import { reactive, onMounted } from 'vue'
-import { requestMomentInfo, requestMomentData } from '~/api'
+import { requestMomentInfo, requestMomentData, requestDataByDay } from '~/api'
 import type { ILatelyDataType } from '~/api'
 import * as echartsPet from 'echarts/core'
 import * as echarts from 'echarts'
@@ -145,6 +145,10 @@ const getData = async () => {
     momentInfo.commentCount.value.push(res.value)
   })
 
+  const resC = await requestDataByDay()
+
+  console.log(resC)
+
   new Promise((resolve) => {
     resolve(1)
   }).then(function () {
@@ -157,6 +161,7 @@ onMounted(() => {
 })
 
 const EChartsInit = () => {
+  // 文章按类型分
   const momentCountCharDom = document.getElementById('momentCount')!
   const momentCountChar = echarts.init(momentCountCharDom)
   let momentCountOption: EChartsOptionPet
@@ -202,6 +207,7 @@ const EChartsInit = () => {
 
   momentCountOption && momentCountChar.setOption(momentCountOption)
 
+  // 浏览量 按类型
   const momentLookChartDom = document.getElementById('momentLook')!
   const momentLookChart = echarts.init(momentLookChartDom)
   let momentLookOption: EChartsOptionLine
@@ -250,6 +256,7 @@ const EChartsInit = () => {
 
   momentLookOption && momentLookChart.setOption(momentLookOption)
 
+  //  点赞评论 按类型
   const agreeAndCommentChartDom = document.getElementById('agreeAndComment')!
   const agreeAndCommentChart = echarts.init(agreeAndCommentChartDom)
   let agreeAndCommentOption: EChartsOptionLine
@@ -327,6 +334,10 @@ const EChartsInit = () => {
   }
 
   momentLookOption && agreeAndCommentChart.setOption(agreeAndCommentOption)
+
+  //  每天的所有数据
+
+  
 }
 </script>
 

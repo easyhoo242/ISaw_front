@@ -266,3 +266,22 @@ export const requestMomentData = (type: number) => {
     }
   })
 }
+
+export interface IDataByDayItem {
+  value: string
+  datatime: string
+}
+
+export interface IDataByDay {
+  momentCount: IDataByDayItem[]
+  agreeCount: IDataByDayItem[]
+  lookCount: IDataByDayItem[]
+  commentCount: IDataByDayItem[]
+}
+
+// 按天查数据
+export const requestDataByDay = () => {
+  return hyRequest.get<IResponsType<IDataByDay>>({
+    url: '/moment/dataByDay/1'
+  })
+}

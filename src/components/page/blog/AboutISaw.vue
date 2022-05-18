@@ -1,5 +1,6 @@
 <template>
-  <Module title="博客简介">
+  <Module cornor>
+    <div class="pl-4 font-normal">博客简介</div>
     <div class="p-5 mb-3 pt-3 font-extralight" style="font-size: 15px">
       <b> ISaw </b>
       是基于 Node.js 的个人博客系统，采用 Vite + Vue + TypeScript + NodeJs +

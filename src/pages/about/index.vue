@@ -13,7 +13,13 @@
           <h4>杜 成</h4>
         </div>
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <div class="body" v-html="profile.desc" />
+        <div class="body">
+          毕业于某二本院校计算机系，一年半前后端开发经验 <br />
+          熟练掌握JavaScript、TypeScript、Node.js、Vue、
+          MYSQL、MongoDB等语言或技术， <br />
+          具备 Web 全栈独立开发能力。<br />
+          爱好上网、游戏、技术研究，完美主义者，细节控。
+        </div>
         <div v-if="profile.email" class="footer">
           <span v-if="profile.email" title="Email">
             <!-- <font-awesome-icon :icon="['far', 'envelope']" /> -->

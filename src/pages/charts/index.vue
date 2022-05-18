@@ -222,7 +222,7 @@ const EChartsInit = () => {
   agreeAndCommentOption = {
     xAxis: {
       type: 'category',
-      data: momentInfo.momentLook.name
+      data: momentInfo.agreeCount.name
     },
     yAxis: {
       type: 'value'

@@ -18,7 +18,6 @@
             <a-tab-pane key="/">
               <template #tab>
                 <div class="py-2">
-                  <dashicons:index-card class="mr-2" />
                   <strong class="align-top">首页</strong>
                 </div>
               </template>
@@ -26,7 +25,6 @@
             <a-tab-pane key="/note">
               <template #tab>
                 <span class="py-2">
-                  <gg:menu-boxed class="mr-2" />
                   <strong class="align-top">教程笔记</strong>
                 </span>
               </template>
@@ -34,7 +32,6 @@
             <a-tab-pane key="/talk">
               <template #tab>
                 <span class="py-2">
-                  <gg:menu-boxed class="mr-2" />
                   <strong class="align-top">闲言碎语</strong>
                 </span>
               </template>
@@ -42,8 +39,14 @@
             <a-tab-pane key="/subject">
               <template #tab>
                 <span class="py-2">
-                  <gg:menu-boxed class="mr-2" />
                   <strong class="align-top">专题</strong>
+                </span>
+              </template>
+            </a-tab-pane>
+            <a-tab-pane key="/about">
+              <template #tab>
+                <span class="py-2">
+                  <strong class="align-top">关于作者</strong>
                 </span>
               </template>
             </a-tab-pane>

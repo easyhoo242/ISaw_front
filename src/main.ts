@@ -35,8 +35,9 @@ import { requestMomentLook } from '~/api'
     }
 
     const [, item, id] = to.path.split('/')
+    const userId: number = (localCache.getCache('user').id as number) || 38
 
-    item === 'blog' && requestMomentLook(parseInt(id))
+    item === 'blog' && requestMomentLook(parseInt(id), userId)
   })
 
   app.use(store)

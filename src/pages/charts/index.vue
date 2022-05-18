@@ -3,45 +3,20 @@
     <BranchCrumb route="数据统计" />
 
     <div class="grid grid-cols-3 gap-3">
-      <Module class="h-50">
-        <div class="grid grid-cols-2 gap-6">
-          <div class="pl-5">
-            <h5 class="mt-2 mb-5">今日新增文章：</h5>
-            <div>
-              <span class="text-blue-400 text-[2.23rem] pr-2">{{ 0 }}</span>
-              篇
-            </div>
-
-            <div class="mt-10">
-              <A
-                class="mt-3 py-1 px-2 bg-gray-300 rounded-md text-gray-10 text-md"
-                >去发表新文章
-              </A>
-            </div>
+      <LatelyData :data="latelyData.moment">
+        <!-- <template #left>
+          <div class="mt-10">
+            <A
+              class="mt-3 py-1 px-2 bg-gray-300 rounded-md text-gray-10 text-md"
+              >去发表新文章
+            </A>
           </div>
+        </template> -->
+      </LatelyData>
 
-          <div>
-            <div class="data-item">
-              过去7天发表 <span> {{ 0 }} </span> 篇
-            </div>
-            <div class="data-item">
-              过去30天发表 <span> {{ 0 }} </span> 篇
-            </div>
-            <div class="data-item">
-              总计发表 <span> {{ 0 }} </span> 篇
-            </div>
-            <div class="data-item">
-              全部分类 <span> {{ 0 }} </span> 篇
-            </div>
-          </div>
-        </div>
-      </Module>
-      <Module>
-        <div>这是图表页面</div>
-      </Module>
-      <Module>
-        <div>这是图表页面</div>
-      </Module>
+      <LatelyData :data="latelyData.look" title="浏览" />
+
+      <LatelyData :data="latelyData.comment" title="评论" />
     </div>
 
     <div class="flex h-150">
@@ -68,7 +43,8 @@
 
 <script setup lang="ts">
 import { reactive, onMounted } from 'vue'
-import { requestMomentInfo } from '~/api'
+import { requestMomentInfo, requestMomentData } from '~/api'
+import type { ILatelyDataType } from '~/api'
 import * as echartsPet from 'echarts/core'
 import * as echarts from 'echarts'
 import {
@@ -80,6 +56,7 @@ import {
 import { PieChart, PieSeriesOption } from 'echarts/charts'
 import { LabelLayout } from 'echarts/features'
 import { CanvasRenderer } from 'echarts/renderers'
+import LatelyData from '../../components/page/charts/latelyData.vue'
 
 echartsPet.use([
   TooltipComponent,
@@ -112,6 +89,13 @@ interface IMomentInfo {
   commentCount: ImomentCountLine
 }
 
+interface ILatelyData {
+  moment: ILatelyDataType
+  look: ILatelyDataType
+  like: ILatelyDataType
+  comment: ILatelyDataType
+}
+
 const momentInfo = reactive<IMomentInfo>({
   momentCount: [],
   momentLook: {
@@ -128,8 +112,30 @@ const momentInfo = reactive<IMomentInfo>({
   }
 })
 
+const latelyData = reactive<ILatelyData>({
+  // @ts-ignore
+  moment: {},
+  // @ts-ignore
+  look: {},
+  // @ts-ignore
+  like: {},
+  // @ts-ignore
+  comment: {}
+})
+
 const getData = async () => {
   const res = await requestMomentInfo()
+
+  Promise.all(
+    [...'0123'].map((number) => requestMomentData(parseInt(number)))
+  ).then((res) => {
+    res.forEach((item, index) => {
+      const indexOfLatelyData = Object.keys(latelyData)[index]
+
+      // @ts-ignore
+      latelyData[indexOfLatelyData as keyof latelyData] = item.data
+    })
+  })
 
   momentInfo.momentCount = res.data?.lookResult!
 
@@ -333,16 +339,4 @@ const EChartsInit = () => {
 }
 </script>
 
-<style lang="less" scoped>
-.data-item {
-  padding-top: 20px;
-
-  &:first-child {
-    padding-top: 15px;
-  }
-
-  span {
-    color: rgb(96, 165, 250);
-  }
-}
-</style>
+<style lang="less" scoped></style>

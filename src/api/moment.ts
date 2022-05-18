@@ -233,9 +233,13 @@ export const requestMomentSearch = (data: {
   })
 }
 
-export const requestMomentLook = (momentId: number) => {
+// 浏览动态接口
+export const requestMomentLook = (momentId: number, userId: number) => {
   return hyRequest.post({
-    url: '/moment/' + momentId + '/look'
+    url: '/moment/' + momentId + '/look',
+    data: {
+      userId
+    }
   })
 }
 
@@ -243,5 +247,22 @@ export const requestMomentLook = (momentId: number) => {
 export const requestMomentInfo = () => {
   return hyRequest.get<IResponsType<IMomentCountList>>({
     url: '/moment/momentInfo/1'
+  })
+}
+
+export interface ILatelyDataType {
+  today: number
+  yesterday: number
+  week: number
+  month: number
+  all: number
+}
+// 文章信息统计接口
+export const requestMomentData = (type: number) => {
+  return hyRequest.get<IResponsType<ILatelyDataType>>({
+    url: '/moment/momentData/1',
+    params: {
+      type
+    }
   })
 }

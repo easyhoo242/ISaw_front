@@ -11,7 +11,11 @@
         class="logo rounded-full h-20 w-20 overflow-hidden mt-5 mx-auto relative -top-7"
       >
         <!-- <img :src="data.avatarUrl" alt=" " class="w-full h-full" /> -->
-        <img :src="BASE_HEAD_LOGO" alt=" " class="w-full h-full" />
+        <img
+          :src="data.avatarUrl ? data.avatarUrl : BASE_HEAD_LOGO"
+          alt=" "
+          class="w-full h-full"
+        />
       </div>
       <div class="desc relative -top-6">
         <div class="desc-name py-2 text-xl flex items-center justify-center">

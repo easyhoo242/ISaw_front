@@ -196,7 +196,13 @@ const EChartsInit = () => {
 
   momentCountOption = {
     tooltip: {
-      trigger: 'item'
+      trigger: 'axis',
+      axisPointer: {
+        type: 'cross',
+        crossStyle: {
+          color: '#999'
+        }
+      }
     },
     legend: {
       top: '5%',
@@ -241,15 +247,21 @@ const EChartsInit = () => {
   let momentLookOption: EChartsOptionLine
 
   momentLookOption = {
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'cross',
+        crossStyle: {
+          color: '#999'
+        }
+      }
+    },
     xAxis: {
       type: 'category',
       data: momentInfo.momentLook.name
     },
     yAxis: {
       type: 'value'
-    },
-    tooltip: {
-      trigger: 'item'
     },
     series: [
       {
@@ -290,15 +302,21 @@ const EChartsInit = () => {
   let agreeAndCommentOption: EChartsOptionLine
 
   agreeAndCommentOption = {
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'cross',
+        crossStyle: {
+          color: '#999'
+        }
+      }
+    },
     xAxis: {
       type: 'category',
       data: momentInfo.agreeCount.name
     },
     yAxis: {
       type: 'value'
-    },
-    tooltip: {
-      trigger: 'item'
     },
     series: [
       {

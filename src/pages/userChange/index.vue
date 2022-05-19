@@ -88,7 +88,7 @@
               label="旧密码"
               :rules="[{ required: true, message: '不能为空' }]"
             >
-              <a-input v-model:value="formState.userPsw.oldPsw" />
+              <a-input-password v-model:value="formState.userPsw.oldPsw" />
             </a-form-item>
 
             <a-form-item
@@ -102,7 +102,7 @@
                 }
               ]"
             >
-              <a-input v-model:value="formState.userPsw.newPsw" />
+              <a-input-password v-model:value="formState.userPsw.newPsw" />
             </a-form-item>
 
             <a-form-item
@@ -113,7 +113,7 @@
                 { pattern: passwordRule, message: '4~16位的字母和数字组成' }
               ]"
             >
-              <a-input v-model:value="formState.userPsw.reNewPsw" />
+              <a-input-password v-model:value="formState.userPsw.reNewPsw" />
             </a-form-item>
 
             <a-form-item :wrapper-col="{ ...layout.wrapperCol, offset: 10 }">
@@ -123,14 +123,16 @@
         </Module>
       </template>
       <template #side>
-        <HeadLogo />
+        <HeadLogo v-if="isShowHeaderInfo" />
+
+        <HeaderLogoChange @change="handleChange" />
       </template>
     </FlexCol>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, onMounted } from 'vue'
+import { defineComponent, ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import {
   changeUserInfo,
@@ -142,6 +144,7 @@ import type { IUser, IChangePsw } from '~/api'
 import localCache from '~/utils/cache'
 // 引用组件
 import { message } from 'ant-design-vue'
+import HeaderLogoChange from '~/components/page/user/HeaderLogoChange.vue'
 
 interface IUserPsw {
   oldPsw: string
@@ -155,6 +158,9 @@ interface IFormState {
 }
 
 export default defineComponent({
+  components: {
+    HeaderLogoChange
+  },
   inject: ['reload'],
   setup() {
     const router = useRouter()
@@ -232,6 +238,14 @@ export default defineComponent({
       message.success(res.msg, 3)
     }
 
+    // 刷新用户信息
+    const isShowHeaderInfo = ref(true)
+
+    const handleChange = () => {
+      isShowHeaderInfo.value = false
+      isShowHeaderInfo.value = true
+    }
+
     onMounted(() => {
       getData()
     })
@@ -241,7 +255,9 @@ export default defineComponent({
       onFinish,
       onPswFinish,
       layout,
-      passwordRule
+      passwordRule,
+      handleChange,
+      isShowHeaderInfo
     }
   }
 })

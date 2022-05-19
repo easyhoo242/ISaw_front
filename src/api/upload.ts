@@ -8,7 +8,7 @@ const token = localcache.getCache('user').token || ''
 
 enum uploadApi {
   piciutr = '/api/upload/',
-  avatar = '/upload/'
+  avatar = '/api/upload/avatar'
 }
 
 export const requestPicture = () => {
@@ -18,6 +18,19 @@ export const requestPicture = () => {
 export function getUplodBackName(momentId: number, parameter: any) {
   return axios({
     url: uploadApi.piciutr + momentId + '/picture',
+    method: 'post',
+    // 传输文件流需要单独设置请求头
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${token}`
+    },
+    data: parameter
+  })
+}
+
+export function uploadAvatar(parameter: any) {
+  return axios({
+    url: uploadApi.avatar,
     method: 'post',
     // 传输文件流需要单独设置请求头
     headers: {

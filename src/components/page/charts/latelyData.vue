@@ -22,7 +22,7 @@
           过去30天{{ title }}数 <span> {{ data.month }} </span>
         </div>
         <div class="data-item">
-          总计发表{{ title }}数 <span> {{ data.all }} </span>
+          总计{{ title }}数 <span> {{ data.all }} </span>
         </div>
       </div>
     </div>

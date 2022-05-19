@@ -412,19 +412,19 @@ const EChartsInit = () => {
     yAxis: [
       {
         type: 'value',
-        name: '数量',
-
-        interval: 5,
+        name: '人次',
+        interval: 50,
         axisLabel: {
-          formatter: '{value} 篇'
+          formatter: '{value} 次'
         }
       },
       {
         type: 'value',
-        name: '人次',
+        name: '数量',
+
         interval: 10,
         axisLabel: {
-          formatter: '{value} 次'
+          formatter: '{value} 个'
         }
       }
     ],

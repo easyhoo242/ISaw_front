@@ -29,7 +29,11 @@
       <template #side>
         <AboutISaw />
 
-        <Casual />
+        <Lately />
+
+        <TimeLine />
+
+        <Casual v-if="!isShowPermission" />
 
         <!-- 文章操作模块 -->
         <Module v-if="isShowPermission" title="文章权限操作">
@@ -62,6 +66,9 @@ import type { ICommentType, IResponsType } from '~/api'
 import { message, Modal } from 'ant-design-vue'
 import Module from '~/components/global/Module.vue'
 import AboutISaw from '../../components/page/blog/AboutISaw.vue'
+import Lately from '~/components/global/SideBar/Lately/index.vue'
+import LatelyData from '~/components/page/charts/latelyData.vue'
+import Comment from '~/components/page/blog/Comment.vue'
 
 export interface headerInfo {
   id: number
@@ -241,7 +248,7 @@ export default defineComponent({
       handleAgreeResponse
     }
   },
-  components: { Module, AboutISaw }
+  components: { Module, AboutISaw, Lately, LatelyData, Comment }
 })
 </script>
 

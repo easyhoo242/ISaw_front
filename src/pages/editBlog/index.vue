@@ -165,11 +165,11 @@ const previewTitle = ref('')
 
 // @ts-ignore
 const fileList = ref<UploadProps['fileList']>(
-  cache.getCache('editMoment').images.map((res: string) => ({
+  cache.getCache('editMoment')?.images?.map((res: string) => ({
     name: 'image.png',
     status: 'done',
     url: res
-  }))
+  })) || []
 )
 
 const handleCancel = () => {
@@ -201,15 +201,6 @@ const customImageRequest = (info: any) => {
   getUplodBackName(blogId, formData)
     .then(() => {
       message.success('上传成功')
-      getData()
-
-      fileList.value = cache
-        .getCache('editMoment')
-        .images.map((res: string) => ({
-          name: 'image.png',
-          status: 'done',
-          url: res
-        }))
     })
     .catch(() => {
       message.warning('上传失败')

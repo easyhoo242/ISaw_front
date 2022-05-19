@@ -5,7 +5,7 @@
         v-for="item in list"
         :key="item.momentId"
         class="hot-item mb-2.5 h-162px rounded-xl bg-cover"
-        :style="`background: url(${BASE_LOGO});`"
+        :style="`background: url(${item.images ? item.images[0] : BASE_LOGO});`"
       >
         <!-- :style="`background: url(${item.images[0] || BASE_LOGO});`" -->
 

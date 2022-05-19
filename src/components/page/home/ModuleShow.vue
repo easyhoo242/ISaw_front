@@ -23,7 +23,7 @@
       <div
         v-for="item in list"
         :key="item.momentId"
-        :style="`background:url(${BASE_LOGO})`"
+        :style="`background: url(${item.images ? item.images[0] : BASE_LOGO});`"
         class="right-item rounded-md overflow-hidden bg-cover"
       >
         <A

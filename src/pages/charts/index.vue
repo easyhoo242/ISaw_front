@@ -11,18 +11,18 @@
     </div>
 
     <div class="flex h-150 mb-3">
-      <Module title="文章数" class="flex-grow-0 h-600px mr-3">
+      <Module title="文章数" corner class="flex-grow-0 h-600px mr-3">
         <div id="momentCount" style="width: 600px; height: 550px" />
       </Module>
 
       <div class="flex-1">
-        <Module title="浏览量" class="h-294px">
+        <Module title="浏览量" logo class="h-294px">
           <div class="flex items-center justify-center">
             <div id="momentLook" style="width: 725px; height: 280px" />
           </div>
         </Module>
 
-        <Module title="点赞 & 评论" class="h-294px">
+        <Module title="点赞 & 评论" logo class="h-294px">
           <div class="flex items-center justify-center">
             <div id="agreeAndComment" style="width: 725px; height: 280px" />
           </div>

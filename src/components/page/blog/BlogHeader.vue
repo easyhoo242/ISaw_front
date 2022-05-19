@@ -2,7 +2,7 @@
   <div
     class="blog-header -enter-y text-white rounded-md pt-13 text-center overflow-hidden"
   >
-    <div class="blog-header-title font-bold text-3xl pb-6">
+    <div class="blog-header-title font-bold text-3xl pb-6 px-7">
       {{ data.title }}
     </div>
 

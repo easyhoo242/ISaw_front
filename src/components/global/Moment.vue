@@ -11,7 +11,14 @@
       <!-- <A :href="`/blog/${item.id}`"> <img :src="item.img" alt="" /></A> -->
       <A :href="`/blog/${data.momentId}`">
         <!-- <img v-if="data.images" :src="data.images[0]" alt="" /> -->
-        <img :src="BASE_LOGO" alt="" />
+        <img
+          v-if="data.images"
+          :src="data.images[0]"
+          alt=""
+          class="w-full h-full max-h-full"
+        />
+
+        <img v-else :src="BASE_LOGO" alt="" class="w-full h-full max-h-full" />
       </A>
     </div>
 

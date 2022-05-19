@@ -3,7 +3,12 @@
     <div v-for="item in data" :key="item.momentId" class="shadow-md rounded-lg">
       <div class="wrap bg-white rounded-md overflow-hidden">
         <A :href="`/blog/${item.momentId}`">
-          <div class="img h-54"></div>
+          <div
+            class="img h-54"
+            :style="`background: url(${
+              item.images ? item.images[0] : BASE_LOGO
+            });`"
+          ></div>
         </A>
 
         <div class="content px-4 bg-gray-50 pb-4 pt-1">
@@ -29,13 +34,19 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { IMomentType } from '~/api'
+import { BASE_LOGO } from '~/api'
+import type { IMomentType } from '~/api'
 
 export default defineComponent({
   props: {
     data: {
       type: Array as PropType<IMomentType[]>,
       default: () => []
+    }
+  },
+  setup() {
+    return {
+      BASE_LOGO
     }
   }
 })
@@ -51,7 +62,6 @@ export default defineComponent({
   }
 }
 .img {
-  background: url('https://img0.baidu.com/it/u=854216396,1195659348&fm=253&fmt=auto&app=138&f=JPEG?w=1067&h=406');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: center center;

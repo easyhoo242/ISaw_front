@@ -1,6 +1,7 @@
 export * from './comment'
 export * from './moment'
 export * from './user'
+export * from './upload'
 
 export interface IResponsType<T> {
   code: number

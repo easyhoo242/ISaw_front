@@ -14,7 +14,7 @@
         </div>
         <!-- eslint-disable-next-line vue/no-v-html -->
         <div class="body">
-          毕业于某二本院校计算机系，一年半前后端开发经验 <br />
+          全日制本科计算机专业大四准毕业生，一年半前端开发经验 <br />
           熟练掌握JavaScript、TypeScript、Node.js、Vue、
           MYSQL、MongoDB等语言或技术， <br />
           具备 Web 全栈独立开发能力。<br />

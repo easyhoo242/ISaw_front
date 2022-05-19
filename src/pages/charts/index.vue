@@ -10,7 +10,7 @@
       <LatelyData :data="latelyData.comment" title="评论" />
     </div>
 
-    <div class="flex h-150">
+    <div class="flex h-150 mb-3">
       <Module title="文章数" class="flex-grow-0 h-600px mr-3">
         <div id="momentCount" style="width: 600px; height: 550px" />
       </Module>
@@ -29,6 +29,12 @@
         </Module>
       </div>
     </div>
+
+    <Module title="每日动态" class="h-294px mt-[1.70rem]">
+      <div class="flex items-center justify-center">
+        <div id="dataByDay" style="width: 2050px; height: 280px" />
+      </div>
+    </Module>
   </div>
 </template>
 
@@ -62,6 +68,8 @@ type EChartsOptionPet = echarts.ComposeOption<
 >
 
 type EChartsOptionLine = echarts.EChartsOption
+
+type EChartsOption = echarts.EChartsOption
 
 interface IMomentCount {
   name: string
@@ -114,6 +122,22 @@ const latelyData = reactive<ILatelyData>({
   comment: {}
 })
 
+interface IDataByDay {
+  datatime: string[]
+  moment: number[]
+  look: number[]
+  agree: number[]
+  comment: number[]
+}
+
+const dataByDay = reactive<IDataByDay>({
+  datatime: [],
+  moment: [],
+  look: [],
+  agree: [],
+  comment: []
+})
+
 const getData = async () => {
   const res = await requestMomentInfo()
 
@@ -145,9 +169,13 @@ const getData = async () => {
     momentInfo.commentCount.value.push(res.value)
   })
 
-  const resC = await requestDataByDay()
+  const byDay = (await requestDataByDay()).data!
 
-  console.log(resC)
+  dataByDay.datatime = byDay.momentCount.map((res) => res.datatime)
+  dataByDay.moment = byDay.momentCount.map((res) => parseInt(res.value))
+  dataByDay.look = byDay.lookCount.map((res) => parseInt(res.value))
+  dataByDay.agree = byDay.agreeCount.map((res) => parseInt(res.value))
+  dataByDay.comment = byDay.commentCount.map((res) => parseInt(res.value))
 
   new Promise((resolve) => {
     resolve(1)
@@ -337,7 +365,114 @@ const EChartsInit = () => {
 
   //  每天的所有数据
 
-  
+  const dataByDayChartDom = document.getElementById('dataByDay')!
+  const dataByDayChart = echarts.init(dataByDayChartDom)
+  let dataByDayOption: EChartsOption
+
+  dataByDayOption = {
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'cross',
+        crossStyle: {
+          color: '#999'
+        }
+      }
+    },
+    legend: {
+      data: ['文章数量', '浏览人次', '点赞数', '评论数']
+    },
+    xAxis: [
+      {
+        type: 'category',
+        data: dataByDay.datatime,
+        axisPointer: {
+          type: 'shadow'
+        }
+      }
+    ],
+    yAxis: [
+      {
+        type: 'value',
+        name: '数量',
+
+        interval: 5,
+        axisLabel: {
+          formatter: '{value} 篇'
+        }
+      },
+      {
+        type: 'value',
+        name: '人次',
+        interval: 10,
+        axisLabel: {
+          formatter: '{value} 次'
+        }
+      }
+    ],
+    series: [
+      {
+        name: '文章数量',
+        type: 'bar',
+        tooltip: {
+          // @ts-ignore
+          valueFormatter: function (value: number) {
+            return value + ' 篇'
+          }
+        },
+        data: dataByDay.moment
+      },
+      {
+        name: '浏览人次',
+        type: 'line',
+        tooltip: {
+          // @ts-ignore
+          valueFormatter: function (value: number) {
+            return value + ' 次'
+          }
+        },
+        data: dataByDay.look
+      },
+      {
+        name: '点赞数',
+        type: 'bar',
+        yAxisIndex: 1,
+        tooltip: {
+          // @ts-ignore
+          valueFormatter: function (value: number) {
+            return value + ' 次'
+          }
+        },
+        data: dataByDay.agree
+      },
+      {
+        name: '评论数',
+        type: 'line',
+        yAxisIndex: 1,
+        tooltip: {
+          // @ts-ignore
+          valueFormatter: function (value: number) {
+            return value + ' 次'
+          }
+        },
+        data: dataByDay.comment
+      }
+      // {
+      //   name: '点赞数',
+      //   type: 'line',
+      //   yAxisIndex: 1,
+      //   tooltip: {
+      //     // @ts-ignore
+      //     valueFormatter: function (value: number) {
+      //       return value + ' 次'
+      //     }
+      //   },
+      //   data: dataByDay.agree
+      // }
+    ]
+  }
+
+  dataByDayOption && dataByDayChart.setOption(dataByDayOption)
 }
 </script>
 

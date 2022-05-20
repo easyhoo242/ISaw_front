@@ -5,7 +5,15 @@
         class="mx-auto w-23 h-23 overflow-hidden rounded-full border-white border-5 z-30 mb-3"
       >
         <img
-          :src="data.avatar || BASE_HEAD_LOGO"
+          v-if="data.avatar"
+          :src="data.avatar"
+          alt=""
+          class="w-auto h-auto max-w-full max-h-full"
+        />
+
+        <img
+          v-else
+          :src="BASE_HEAD_LOGO"
           alt=""
           class="w-auto h-auto max-w-full max-h-full"
         />
@@ -69,11 +77,14 @@ export default defineComponent({
     const currentUser = localcache.getCache('user')
 
     //@ts-ignore
-    const data = ref<IUserInfoType>({})
+    const data = ref<IUserInfoType>({
+      avatar: ''
+    })
 
     const getUserInfo = async () => {
       const res = await getUserDetail(currentUser.id)
 
+      data.value.avatar = ''
       data.value = res.data!
     }
 

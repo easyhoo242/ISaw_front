@@ -132,7 +132,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, onMounted } from 'vue'
+import { defineComponent, ref, reactive, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import {
   changeUserInfo,
@@ -243,7 +243,10 @@ export default defineComponent({
 
     const handleChange = () => {
       isShowHeaderInfo.value = false
-      isShowHeaderInfo.value = true
+
+      nextTick(() => {
+        isShowHeaderInfo.value = true
+      })
     }
 
     onMounted(() => {

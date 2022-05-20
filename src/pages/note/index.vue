@@ -23,10 +23,10 @@
       <template #side>
         <SideBar>
           <Lately />
-          <!-- 随便看看 -->
-          <Casual />
           <!-- 热门文章 -->
           <HotSee />
+          <!-- 随便看看 -->
+          <Casual />
         </SideBar>
       </template>
     </FlexCol>

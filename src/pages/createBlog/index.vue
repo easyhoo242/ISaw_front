@@ -54,6 +54,8 @@
     </template>
 
     <template #side>
+      <AboutISaw />
+
       <HeadLogo />
 
       <TagList :data="blogType" @emitData="handleGetBlogType" />
@@ -111,6 +113,7 @@ import { message } from 'ant-design-vue'
 import { PlusOutlined } from '@ant-design/icons-vue'
 //@ts-ignore
 import { UploadProps } from 'ant-design-vue'
+import AboutISaw from '~/components/page/blog/AboutISaw.vue'
 
 function getBase64(file: File) {
   return new Promise((resolve, reject) => {
@@ -122,7 +125,7 @@ function getBase64(file: File) {
 }
 
 export default {
-  components: { Editor, Toolbar, TagList, Module, PlusOutlined },
+  components: { Editor, Toolbar, TagList, Module, PlusOutlined, AboutISaw },
   setup() {
     const router = useRouter()
     const blogTitle = ref('')

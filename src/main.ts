@@ -14,6 +14,7 @@ import './styles/main.less'
 import { requestMomentLook } from '~/api'
 
 // 引入animatecss
+import { count } from 'console'
 ;(async () => {
   const app = createApp(App)
 
@@ -38,6 +39,29 @@ import { requestMomentLook } from '~/api'
     const userId: number = (localCache.getCache('user').id as number) || 38
 
     item === 'blog' && requestMomentLook(parseInt(id), userId)
+  })
+
+  function countFn() {
+    let count = 0
+
+    return {
+      incrementCount() {
+        count++
+      },
+      getCount() {
+        return count
+      }
+    }
+  }
+
+  // @ts-ignore
+  window.countObj = countFn()
+
+  app.mixin({
+    mounted() {
+      // @ts-ignore
+      window?.countObj.incrementCount()
+    }
   })
 
   app.use(store)

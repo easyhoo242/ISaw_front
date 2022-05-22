@@ -28,7 +28,7 @@
         >
           <div class="mb-2">
             <span class="rt-times mr-3">页面加载时长：xxxx秒</span>
-            <span class="rt-sql mr-3">数据库查询：xx 次</span>
+            <span class="rt-sql mr-3">组件挂载：{{ refCount }} 次</span>
             <span class="rt-memory mr-3">占用内存：x.xxMB</span>
           </div>
           <span>
@@ -48,11 +48,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 
 export default defineComponent({
   setup() {
-    return {}
+    return {
+      // @ts-ignore
+      refCount: computed(() => window?.countObj.getCount())
+    }
   }
 })
 </script>

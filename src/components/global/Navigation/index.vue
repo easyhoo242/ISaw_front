@@ -152,7 +152,7 @@ export default defineComponent({
     const handleSearch = () => {
       preKeyboard = currentKeyboard.value
 
-      emit('change', getCurrentInfo(preKeyboard))
+      emit('change', getCurrentInfo(preKeyboard || ''))
     }
 
     onMounted(() => {

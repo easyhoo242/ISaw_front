@@ -1,15 +1,21 @@
 <template>
   <div class="bg-gray-200 mb-4 rounded-md overflow-hidden relative mt-3">
-    <div class="bg-img h-300px" :style="`background-image: url(${Show.url});`">
+    <div
+      class="bg-img h-300px"
+      :style="`background-image: url(${
+        Show?.url ||
+        'https://cn.bing.com/th?id=OHR.MistyVineyard_EN-CN1858699388_1920x1080.jpg'
+      });`"
+    >
       <div></div>
     </div>
     <div class="content absolute bottom-0 p-15px w-full">
       <div class="content-title">
-        {{ Show.title }}
+        {{ Show?.title }}
         <sup class="content-title__tag mx-1"> {{ total }} </sup>
       </div>
       <div class="content-desc mt-5px">
-        {{ Show.desc }}
+        {{ Show?.desc }}
       </div>
     </div>
   </div>
@@ -27,7 +33,6 @@ interface IDataType {
 export default defineComponent({
   props: {
     data: {
-      type: Number,
       default: 2
     },
     total: {
@@ -39,22 +44,22 @@ export default defineComponent({
     const list: IDataType[] = [
       {
         title: '互联网',
-        desc: '教程笔记模块主要分享电脑软件、操作系统及网站建设过程中的各种问题和解决方案，致力于创造一个高质量的交流分享平台',
+        desc: 'ISaw互联网频道专注互联网科技前言,提供互联科技行业资讯',
         url: 'https://cn.bing.com/th?id=OHR.SiberianSunset_ZH-CN5711093662_1920x1080.jpg&rf=LaDigue_1920x1080.jpg?https://cn.bing.com/th?id=OHR.SiestaKey_ZH-CN1759696989_1920x1080.jpg'
       },
       {
         title: '教程笔记',
-        desc: '教程笔记模块主要分享电脑软件、操作系统及网站建设过程中的各种问题和解决方案，致力于创造一个高质量的交流分享平台',
+        desc: 'ISaw教程笔记模块主要分享电脑软件、操作系统及网站建设过程中的各种问题和解决方案，致力于创造一个高质量的交流分享平台',
         url: 'https://cn.bing.com/th?id=OHR.SalcombeDevon_ZH-CN5806331292_1920x1080.jpg'
       },
       {
         title: '闲言碎语',
-        desc: '教程笔记模块主要分享电脑软件、操作系统及网站建设过程中的各种问题和解决方案，致力于创造一个高质量的交流分享平台',
+        desc: '',
         url: 'https://cn.bing.com/th?id=OHR.MistyVineyard_EN-CN1858699388_1920x1080.jpg'
       }
     ]
 
-    const Show = computed(() => list[props.data - 1])
+    const Show = computed(() => list[props.data - 1 || 0])
 
     return {
       Show

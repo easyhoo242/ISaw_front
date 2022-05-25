@@ -31,7 +31,9 @@ declare module '@vue/runtime-core' {
     ModuleShow: typeof import('./src/components/page/home/ModuleShow.vue')['default']
     ModuleTo: typeof import('./src/components/page/home/ModuleTo/index.vue')['default']
     Moment: typeof import('./src/components/global/Moment.vue')['default']
+    NavHeader: typeof import('./src/components/page/back/NavHeader/index.vue')['default']
     Navigation: typeof import('./src/components/global/Navigation/index.vue')['default']
+    NavMenu: typeof import('./src/components/page/back/NavMenu/index.vue')['default']
     Overlay: typeof import('./src/components/global/Overlay.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
@@ -45,6 +47,7 @@ declare module '@vue/runtime-core' {
     TalkList: typeof import('./src/components/page/talk/TalkList.vue')['default']
     TimeLine: typeof import('./src/components/global/SideBar/TimeLine/index.vue')['default']
     UserForm: typeof import('./src/components/global/UserForm/index.vue')['default']
+    UserHeader: typeof import('./src/components/page/back/NavHeader/UserHeader.vue')['default']
     UserInfo: typeof import('./src/components/page/user/UserInfo.vue')['default']
     WelcomeBar: typeof import('./src/components/page/home/WelcomeBar.vue')['default']
   }

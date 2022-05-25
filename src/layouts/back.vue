@@ -2,22 +2,29 @@
   <a-layout style="min-height: 100vh">
     <a-layout-sider v-model:collapsed="collapsed" collapsible>
       <div class="py-4 text-base text-gray-200 text-center">
-        ISaw 后台管理系统
+        {{ !collapsed ? 'ISaw 后台管理系统' : 'ISaw' }}
       </div>
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
-        <a-menu-item v-for="item in currentMenu" :key="item.key">
-          <pie-chart-filled />
-          <router-link :to="item.url">{{ item.label }}</router-link>
+        <a-menu-item
+          v-for="item in currentMenu"
+          :key="item.key"
+          @click="handleMenuItemClick(item.url)"
+        >
+          <CodepenSquareFilled v-if="item.key === '1'" />
+          <BarChartOutlined v-if="item.key === '2'" />
+          <UserOutlined v-if="item.key === '3'" />
+          <SnippetsFilled v-if="item.key === '4'" />
+          <ContainerFilled v-if="item.key === '5'" />
+          <SwitcherFilled v-if="item.key === '6'" />
+          <span class="pl-2">{{ item.label }}</span>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
 
     <a-layout>
-      <a-layout-header style="background: #fff; padding: 0" />
       <a-layout-content style="margin: 0 16px">
         <a-breadcrumb style="margin: 16px 0">
-          <a-breadcrumb-item>User</a-breadcrumb-item>
-          <a-breadcrumb-item>Bill</a-breadcrumb-item>
+          <a-breadcrumb-item>{{ branchValue }}</a-breadcrumb-item>
         </a-breadcrumb>
         <div
           :style="{ padding: '24px', background: '#fff', minHeight: '80vh' }"
@@ -45,11 +52,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import NavHeader from '~/components/page/back/NavHeader/index.vue'
 import {
   PieChartOutlined,
+  BarChartOutlined,
   DesktopOutlined,
+  SnippetsFilled,
+  SwitcherFilled,
+  ContainerFilled,
+  CodepenSquareFilled,
   UserOutlined,
   TeamOutlined,
   FileOutlined
@@ -58,20 +71,26 @@ import {
 export default defineComponent({
   components: {
     PieChartOutlined,
+    BarChartOutlined,
     DesktopOutlined,
+    SnippetsFilled,
+    ContainerFilled,
+    SwitcherFilled,
+    CodepenSquareFilled,
     UserOutlined,
     TeamOutlined,
     FileOutlined,
     NavHeader
   },
   setup() {
+    const route = useRoute()
+    const router = useRouter()
+
     const isCollapse = ref(false)
 
     const handleFoldChange = (isFold: boolean) => {
       isCollapse.value = isFold
     }
-
-    const handleMenuItemClick = () => {}
 
     const currentMenu = [
       {
@@ -106,12 +125,25 @@ export default defineComponent({
       }
     ]
 
+    const branchValue = ref('')
+
+    const handleMenuItemClick = (url: string) => {
+      const path = computed(() => route.path)
+      currentMenu.forEach((res) => {
+        if (res.url === path.value) {
+          branchValue.value = res.label
+        }
+      })
+      router.push(url)
+    }
+
     return {
       collapsed: ref<boolean>(false),
       selectedKeys: ref<string[]>(['1']),
       currentMenu,
       handleFoldChange,
-      handleMenuItemClick
+      handleMenuItemClick,
+      branchValue
     }
   }
 })

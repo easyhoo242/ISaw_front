@@ -43,13 +43,6 @@
                 </span>
               </template>
             </a-tab-pane>
-            <a-tab-pane key="/charts">
-              <template #tab>
-                <span class="py-2">
-                  <strong class="align-top">数据统计</strong>
-                </span>
-              </template>
-            </a-tab-pane>
             <a-tab-pane key="/about">
               <template #tab>
                 <span class="py-2">

@@ -128,13 +128,14 @@ export default defineComponent({
     const branchValue = ref('')
 
     const handleMenuItemClick = (url: string) => {
+      router.push(url)
+
       const path = computed(() => route.path)
       currentMenu.forEach((res) => {
         if (res.url === path.value) {
           branchValue.value = res.label
         }
       })
-      router.push(url)
     }
 
     return {

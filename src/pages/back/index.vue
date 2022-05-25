@@ -1,11 +1,17 @@
 <template>
-  <div>back主页面</div>
+  <div>
+    <OverView />
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import OverView from '~/components/page/back/overview/overview.vue'
 
 export default defineComponent({
+  components: {
+    OverView
+  },
   setup() {
     return {}
   }

@@ -35,6 +35,7 @@ declare module '@vue/runtime-core' {
     Navigation: typeof import('./src/components/global/Navigation/index.vue')['default']
     NavMenu: typeof import('./src/components/page/back/NavMenu/index.vue')['default']
     Overlay: typeof import('./src/components/global/Overlay.vue')['default']
+    Overview: typeof import('./src/components/page/back/overview/overview.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Search: typeof import('./src/components/global/Header/Search.vue')['default']

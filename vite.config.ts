@@ -7,6 +7,10 @@ import Layouts from 'vite-plugin-vue-layouts'
 import ViteComponents from 'vite-plugin-components'
 import ViteIcons, { ViteIconsResolver } from 'vite-plugin-icons'
 
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+
 import { viteThemePlugin, antdDarkThemePlugin } from 'vite-plugin-theme'
 import { getLessVars } from 'antd-theme-generator'
 // antd自定义变量和暗黑模式变量
@@ -61,6 +65,13 @@ export default defineConfig({
         'primary-color': '#448ef6',
         ...antdDarkVars
       }
+    }),
+    // ...
+    AutoImport({
+      resolvers: [ElementPlusResolver()]
+    }),
+    Components({
+      resolvers: [ElementPlusResolver()]
     })
   ],
   server: {

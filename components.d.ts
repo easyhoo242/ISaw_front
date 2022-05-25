@@ -49,6 +49,7 @@ declare module '@vue/runtime-core' {
     UserForm: typeof import('./src/components/global/UserForm/index.vue')['default']
     UserHeader: typeof import('./src/components/page/back/NavHeader/UserHeader.vue')['default']
     UserInfo: typeof import('./src/components/page/user/UserInfo.vue')['default']
+    Users: typeof import('./src/components/page/back/users/index.vue')['default']
     WelcomeBar: typeof import('./src/components/page/home/WelcomeBar.vue')['default']
   }
 }

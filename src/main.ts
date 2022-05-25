@@ -14,7 +14,6 @@ import './styles/main.less'
 import { requestMomentLook } from '~/api'
 
 // 引入animatecss
-import { count } from 'console'
 ;(async () => {
   const app = createApp(App)
 
@@ -22,7 +21,41 @@ import { count } from 'console'
 
   const router = createRouter({
     history: createWebHistory(),
-    routes
+    routes: [
+      ...routes,
+      {
+        path: '/back',
+        name: '网站核心技术',
+        components: () => import('~/pages/back/index.vue'),
+        children: [
+          {
+            path: '/back/info',
+            name: '网站信息统计',
+            component: () => import('~/pages/back/users/index.vue')
+          },
+          {
+            path: '/back/users',
+            name: '用户管理',
+            component: () => import('~/pages/back/users/index.vue')
+          },
+          {
+            path: '/back/moment',
+            name: '文章管理',
+            component: () => import('~/pages/back/users/index.vue')
+          },
+          {
+            path: '/back/comment',
+            name: '评论管理',
+            component: () => import('~/pages/back/users/index.vue')
+          },
+          {
+            path: '/back/did',
+            name: '网站动态',
+            component: () => import('~/pages/back/users/index.vue')
+          }
+        ]
+      }
+    ]
   })
 
   router.beforeEach((to) => {

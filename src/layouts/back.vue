@@ -24,6 +24,7 @@
     <a-layout>
       <a-layout-content style="margin: 0 16px">
         <a-breadcrumb style="margin: 16px 0">
+          <a-breadcrumb-item>后台管理 </a-breadcrumb-item>
           <a-breadcrumb-item>{{ branchValue }}</a-breadcrumb-item>
         </a-breadcrumb>
         <div
@@ -52,7 +53,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue'
+import { defineComponent, ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import NavHeader from '~/components/page/back/NavHeader/index.vue'
 import {
@@ -127,16 +128,22 @@ export default defineComponent({
 
     const branchValue = ref('')
 
-    const handleMenuItemClick = (url: string) => {
-      router.push(url)
+    const handleMenuItemClick = (url: string) => router.push(url)
 
-      const path = computed(() => route.path)
-      currentMenu.forEach((res) => {
-        if (res.url === path.value) {
-          branchValue.value = res.label
-        }
-      })
-    }
+    const path = computed(() => route.path)
+
+    watch(
+      () => path.value,
+      () => {
+        console.log(path.value)
+
+        currentMenu.forEach((res) => {
+          if (res.url === path.value) {
+            branchValue.value = res.label
+          }
+        })
+      }
+    )
 
     return {
       collapsed: ref<boolean>(false),

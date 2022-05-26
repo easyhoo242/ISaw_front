@@ -1,10 +1,5 @@
 <template>
-  <a-card class="box-card mt-4">
-    <template #header>
-      <div class="card-header">
-        <span>{{ title }}</span>
-      </div>
-    </template>
+  <a-card class="box-card mt-4" :title="title">
     <div class="item">
       <slot></slot>
     </div>
@@ -16,7 +11,6 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   components: {},
-
   props: {
     title: {
       type: String,

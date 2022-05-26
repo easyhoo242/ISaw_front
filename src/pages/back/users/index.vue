@@ -8,6 +8,22 @@
       :rowClassName="(_:any, index:number) => (index % 2 === 1 ? 'table-striped' : null)"
       bordered
     >
+      <template #type="{ text: type }">
+        <span>
+          <a-tag
+            :color="
+              type === '管理员'
+                ? 'volcano'
+                : type == '会员'
+                ? 'geekblue'
+                : 'green'
+            "
+          >
+            {{ type }}
+          </a-tag>
+        </span>
+      </template>
+
       <template #action="{ record }">
         <a-button type="default" size="small" @click="handleEdit(record)">
           编辑
@@ -121,6 +137,12 @@ const columns = [
     key: 'email'
   },
   {
+    title: '权限',
+    dataIndex: 'type',
+    key: 'type',
+    slots: { customRender: 'type' }
+  },
+  {
     title: '创建时间',
     dataIndex: 'createTime',
     key: 'createTime'
@@ -145,7 +167,7 @@ interface IFormState {
   telPhone: string
   email: string
   sex: string
-  type: number
+  type: number | string
   desc: string
   age: number
 }
@@ -167,7 +189,11 @@ export default defineComponent({
     const getData = async () => {
       const res = await requestUserList()
 
-      data.value = res.userList!
+      // @ts-ignore
+      data.value = res.userList.map((res) => ({
+        ...res,
+        type: res.type === 3 ? '普通用户' : res.type === 6 ? '会员' : '管理员'
+      }))
       total.value = res.count!
     }
 

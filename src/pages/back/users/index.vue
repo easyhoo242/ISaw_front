@@ -13,14 +13,14 @@
           编辑
         </a-button>
 
-        <a-button
-          type="default"
-          size="small"
-          class="ml-1"
-          @click="handleDelete(record)"
+        <a-popconfirm
+          title="确定删除这条数据吗？"
+          ok-text="删除"
+          cancel-text="取消"
+          @confirm="handleDelete(record)"
         >
-          删除
-        </a-button>
+          <a-button type="default" size="small" class="ml-1"> 删除 </a-button>
+        </a-popconfirm>
       </template>
     </a-table>
 
@@ -79,7 +79,7 @@
 <script lang="ts">
 import { defineComponent, ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { requestUserList, changeUserInfo } from '~/api'
+import { requestUserList, changeUserInfo, requestdeleteUser } from '~/api'
 import type { IUserInfoType } from '~/api'
 import { SmileOutlined, DownOutlined } from '@ant-design/icons-vue'
 import { message } from 'ant-design-vue'
@@ -177,6 +177,7 @@ export default defineComponent({
       })
     }
 
+    // 修改用户
     const visibleEdit = ref<boolean>(false)
 
     const formState = reactive<IFormState>({
@@ -217,8 +218,19 @@ export default defineComponent({
       formState.desc = data.desc
     }
 
+    // 删除用户
     const handleDelete = async (user: IUserInfoType) => {
       console.log(user)
+      const res = await requestdeleteUser(user.id)
+
+      if (!res.flag) {
+        message.error(res.msg, 3)
+        return
+      }
+
+      message.success(res.msg, 3)
+
+      getData()
     }
 
     onMounted(() => {

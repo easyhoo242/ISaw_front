@@ -28,7 +28,7 @@
               {{ data.nickname }}
             </a>
           </div>
-          <div v-if="data.type === 6" class="v px-1 ml-2">v</div>
+          <div v-if="data.type >= 6" class="v px-1 ml-2">v</div>
         </div>
         <div class="desc mt-5px text-gray-500 min-h-42px">
           <a-popover trigger="hover" placement="bottom">

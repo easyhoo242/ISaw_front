@@ -40,6 +40,7 @@ export interface IUser {
   email: string
   telPhone: string
   desc: string
+  type?: number
 }
 
 export interface IChangePsw {
@@ -96,5 +97,12 @@ export const changeUserPsw = (userId: number, data: IChangePsw) => {
 export const requestUserList = () => {
   return hyRequest.get<{ userList: IUserInfoType[]; count: number }>({
     url: '/users/back/userList/1'
+  })
+}
+
+// 删除用户
+export const requestdeleteUser = (id: number) => {
+  return hyRequest.delete<IResponsType<any>>({
+    url: '/users/back/userDelete/' + id
   })
 }

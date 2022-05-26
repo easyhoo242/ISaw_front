@@ -3,7 +3,7 @@
     <div class="mx-auto flex flex-col items-center">
       <div class="logo h-30 w-30 rounded-full overflow-hidden mt-5">
         <img
-          :src="userInfo.avatar"
+          :src="userInfo.avatar || BASE_HEAD_LOGO"
           :alt="userInfo.nickname"
           class="w-full h-full"
         />
@@ -13,8 +13,8 @@
         <div class="slogan-title">
           {{ userInfo.nickname }}
         </div>
-        <div v-if="userInfo.vip" class="slogan-tag">V</div>
-        <div v-if="userInfo.type === 4" class="slogan-tag">管理员</div>
+        <div v-if="userInfo.type >= 6" class="slogan-tag">V</div>
+        <div v-if="userInfo.type === 9" class="slogan-tag">管理员</div>
       </div>
 
       <div class="desc flex items-center justify-center">
@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue'
-import { getUserDetail } from '~/api'
+import { getUserDetail, BASE_HEAD_LOGO } from '~/api'
 import type { IUserInfoType } from '~/api'
 import cache from '~/utils/cache'
 
@@ -52,7 +52,8 @@ export default defineComponent({
     })
 
     return {
-      userInfo
+      userInfo,
+      BASE_HEAD_LOGO
     }
   }
 })

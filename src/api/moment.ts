@@ -285,3 +285,16 @@ export const requestDataByDay = () => {
     url: '/moment/dataByDay/1'
   })
 }
+
+export const requestBackMomentListAll = () => {
+  return hyRequest.get({
+    url: '/moment/back/search/1',
+    params: {
+      keyBoard: '',
+      sort: '1',
+      limit: '10',
+      offset: '0',
+      audit: '0'
+    }
+  })
+}

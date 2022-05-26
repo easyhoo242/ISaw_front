@@ -3,7 +3,7 @@
     :pagination="{ total: total }"
     :columns="col"
     :data-source="data"
-    :rowKey="(data: any) => data.id || data.index"
+    :rowKey="(data: any) => data.momentId || data.index"
     :rowClassName="(_:any, index:number) => (index % 2 === 1 ? 'table-striped' : null)"
     @change="handleTableChange"
     bordered

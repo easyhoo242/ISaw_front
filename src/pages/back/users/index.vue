@@ -11,15 +11,9 @@
       <template #type="{ text: type }">
         <span>
           <a-tag
-            :color="
-              type === '管理员'
-                ? 'volcano'
-                : type == '会员'
-                ? 'geekblue'
-                : 'green'
-            "
+            :color="type === 9 ? 'volcano' : type == 6 ? 'geekblue' : 'green'"
           >
-            {{ type }}
+            {{ type === 3 ? '普通用户' : type === 6 ? '会员' : '管理员' }}
           </a-tag>
         </span>
       </template>
@@ -96,7 +90,7 @@
 import { defineComponent, ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { requestUserList, changeUserInfo, requestdeleteUser } from '~/api'
-import type { IUserInfoType } from '~/api'
+import type { IUserInfoType, IUser } from '~/api'
 import { SmileOutlined, DownOutlined } from '@ant-design/icons-vue'
 import { message } from 'ant-design-vue'
 
@@ -162,16 +156,6 @@ const columns = [
   align: 'center'
 }))
 
-interface IFormState {
-  nickname: string
-  telPhone: string
-  email: string
-  sex: string
-  type: number | string
-  desc: string
-  age: number
-}
-
 const data = ref<IUserInfoType[]>([])
 
 export default defineComponent({
@@ -191,8 +175,7 @@ export default defineComponent({
 
       // @ts-ignore
       data.value = res.userList.map((res) => ({
-        ...res,
-        type: res.type === 3 ? '普通用户' : res.type === 6 ? '会员' : '管理员'
+        ...res
       }))
       total.value = res.count!
     }
@@ -208,7 +191,7 @@ export default defineComponent({
     // 修改用户
     const visibleEdit = ref<boolean>(false)
 
-    const formState = reactive<IFormState>({
+    const formState = reactive<IUser>({
       nickname: '',
       telPhone: '',
       email: '',

@@ -31,7 +31,7 @@ import { requestMomentLook } from '~/api'
           {
             path: '/back/info',
             name: '网站信息统计',
-            component: () => import('~/pages/back/users/index.vue')
+            component: () => import('~/pages/back/info/index.vue')
           },
           {
             path: '/back/users',
@@ -41,17 +41,22 @@ import { requestMomentLook } from '~/api'
           {
             path: '/back/moment',
             name: '文章管理',
-            component: () => import('~/pages/back/users/index.vue')
+            component: () => import('~/pages/back/moment/index.vue')
           },
           {
             path: '/back/comment',
             name: '评论管理',
-            component: () => import('~/pages/back/users/index.vue')
+            component: () => import('~/pages/back/comment/index.vue')
           },
           {
-            path: '/back/did',
-            name: '网站动态',
-            component: () => import('~/pages/back/users/index.vue')
+            path: '/back/look',
+            name: '浏览记录',
+            component: () => import('~/pages/back/look/index.vue')
+          },
+          {
+            path: '/back/like',
+            name: '点赞记录',
+            component: () => import('~/pages/back/like/index.vue')
           }
         ]
       }

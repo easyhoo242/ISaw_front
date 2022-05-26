@@ -320,3 +320,43 @@ export const requestBackMomentDelete = (momentId: number) => {
     url: momentApi.momentDelete + momentId + '/back'
   })
 }
+
+export interface IBackLookList {
+  user_id: number
+  moment_id: number
+  createTime: string
+  moment: {
+    id: number
+    title: string
+  }
+  author: {
+    id: number
+    avatar: string
+    nickname: string
+  }
+}
+
+export interface IBackLook {
+  list: IBackLookList[]
+  count: number
+}
+
+export const requestBackMomentLook = (page: number) => {
+  const offset = page === 1 ? 0 : (page - 1) * 20
+  return hyRequest.get<IBackLook>({
+    url: '/moment/back/look/1',
+    params: {
+      offset
+    }
+  })
+}
+
+export const requestBackMomentLike = (page: number) => {
+  const offset = page === 1 ? 0 : (page - 1) * 10
+  return hyRequest.get<IBackLook>({
+    url: '/moment/back/like/1',
+    params: {
+      offset
+    }
+  })
+}

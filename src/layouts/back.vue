@@ -126,8 +126,13 @@ export default defineComponent({
       },
       {
         key: '6',
-        label: '网站动态',
-        url: '/back/did'
+        label: '浏览记录',
+        url: '/back/look'
+      },
+      {
+        key: '7',
+        label: '点赞记录',
+        url: '/back/like'
       }
     ]
 

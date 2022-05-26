@@ -94,7 +94,7 @@ export const changeUserPsw = (userId: number, data: IChangePsw) => {
 }
 
 export const requestUserList = () => {
-  return hyRequest.get<IUserInfoType[]>({
+  return hyRequest.get<{ userList: IUserInfoType[]; count: number }>({
     url: '/users/back/userList/1'
   })
 }

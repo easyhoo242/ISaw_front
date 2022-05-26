@@ -1,6 +1,10 @@
 <template>
   <a-layout style="min-height: 100vh">
-    <a-layout-sider v-model:collapsed="collapsed" collapsible>
+    <a-layout-sider
+      v-model:collapsed="collapsed"
+      collapsible
+      :style="{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }"
+    >
       <div class="py-4 text-base text-gray-200 text-center">
         {{ !collapsed ? 'ISaw 后台管理系统' : 'ISaw' }}
       </div>
@@ -21,7 +25,7 @@
       </a-menu>
     </a-layout-sider>
 
-    <a-layout>
+    <a-layout :style="{ marginLeft: !collapsed ? '200px' : '80px' }">
       <a-layout-content style="margin: 0 16px">
         <a-breadcrumb style="margin: 16px 0">
           <a-breadcrumb-item>后台管理 </a-breadcrumb-item>

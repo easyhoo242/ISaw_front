@@ -1,5 +1,6 @@
 <template>
   <a-table
+    :pagination="{ total: total }"
     :columns="columns"
     :data-source="data"
     :rowKey="(data: any) => data.id || data.index"
@@ -77,12 +78,13 @@ export default defineComponent({
     DownOutlined
   },
   setup() {
-    const getData = async () => {
-      const res: IUserInfoType[] = await requestUserList()
+    const total = ref(0)
 
-      data.value = res.map((res) => ({
-        ...res
-      }))
+    const getData = async () => {
+      const res = await requestUserList()
+
+      data.value = res.userList!
+      total.value = res.count!
     }
 
     onMounted(() => {
@@ -91,6 +93,7 @@ export default defineComponent({
 
     return {
       data,
+      total,
       columns
     }
   }

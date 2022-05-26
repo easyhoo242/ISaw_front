@@ -230,12 +230,14 @@ export default defineComponent({
     }
 
     const handleKeyWordSearch = () => {
+      formState.offset = 0
       keyWord = currentKeyword.value
       getData()
     }
 
     const handleOrderChange = (sort: number) => {
-      console.log(formState)
+      formState.offset = 0
+
       formState.sort = sort
 
       getData()
@@ -257,7 +259,7 @@ export default defineComponent({
       formState.keyBoard = ''
       formState.sort = 1
       formState.limit = 10
-      formState.offset = 1
+      formState.offset = 0
 
       getData()
     }

@@ -1,27 +1,14 @@
 <template>
-  <a-table :columns="columns" :data-source="data" bordered>
-    <template #headerCell="{ column }">
-      <template v-if="column.key === 'name'">
-        <span>
-          <smile-outlined />
-          Name
-        </span>
-      </template>
-    </template>
-
-    <template #bodyCell="{ column }">
-      <div v-if="column.dataIndex === 'operation'">
-        <span>
-          <!-- <a>Invite 一 {{ record.name }}</a> -->
-          <a-divider type="vertical" />
-          <a>Delete</a>
-          <a-divider type="vertical" />
-          <a class="ant-dropdown-link">
-            More actions
-            <down-outlined />
-          </a>
-        </span>
-      </div>
+  <a-table
+    :columns="columns"
+    :data-source="data"
+    :rowKey="(data: any) => data.id || data.index"
+    :rowClassName="(_:any, index:number) => (index % 2 === 1 ? 'table-striped' : null)"
+    bordered
+  >
+    <template #action>
+      <a-button type="default" size="small">编辑</a-button>
+      <a-button type="default" size="small" class="ml-1">删除</a-button>
     </template>
   </a-table>
 </template>
@@ -34,43 +21,53 @@ import { SmileOutlined, DownOutlined } from '@ant-design/icons-vue'
 const columns = [
   {
     title: '序号',
-    dataIndex: 'id'
+    dataIndex: 'id',
+    key: '1'
   },
   {
     title: '用户名',
-    dataIndex: 'username'
+    dataIndex: 'username',
+    key: '2'
   },
   {
     title: '昵称',
     dataIndex: 'nickname',
-    key: 'name'
+    key: '3'
   },
   {
     title: '手机号码',
-    dataIndex: 'telPhone'
+    dataIndex: 'telPhone',
+    key: '4'
   },
   {
     title: '邮箱',
-    dataIndex: 'email'
+    dataIndex: 'email',
+    key: '5'
   },
   {
     title: '性别',
-    dataIndex: 'sex'
+    dataIndex: 'sex',
+    key: '6'
   },
   {
     title: '创建时间',
-    dataIndex: 'createTime'
+    dataIndex: 'createTime',
+    key: '7'
   },
   {
     title: '更新时间',
-    dataIndex: 'updateTime'
+    dataIndex: 'updateTime',
+    key: '8'
   },
   {
     title: '操作',
     dataIndex: 'operation',
-    key: 'operation'
+    slots: { customRender: 'action' }
   }
-]
+].map((res) => ({
+  ...res,
+  align: 'center'
+}))
 
 const data = ref<IUserInfoType[]>([])
 
@@ -84,8 +81,7 @@ export default defineComponent({
       const res: IUserInfoType[] = await requestUserList()
 
       data.value = res.map((res) => ({
-        ...res,
-        key: 'action'
+        ...res
       }))
     }
 
@@ -100,6 +96,12 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="less" scoped>
+:deep(.table-striped) td {
+  background-color: #fafafa;
+}
+</style>
 
 <route lang="yaml">
 meta:

@@ -198,9 +198,11 @@ export default defineComponent({
     }
 
     const handleAddUser = () => {
-      router.push({
+      const routeUrl = router.resolve({
         path: '/register'
       })
+
+      window.open(routeUrl.href, '_blank')
     }
 
     // 修改用户
@@ -218,6 +220,7 @@ export default defineComponent({
 
     const handleOkEdit = async () => {
       visibleEdit.value = false
+      // @ts-ignore
       const res = await changeUserInfo(currentUser.value, formState)
 
       if (!res.flag) {

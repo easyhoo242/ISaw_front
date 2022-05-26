@@ -163,7 +163,7 @@ export default defineComponent({
       keyBoard: '',
       sort: 1,
       limit: 10,
-      offset: 1,
+      offset: 0,
       audit: 0
     })
 
@@ -235,6 +235,7 @@ export default defineComponent({
     }
 
     const handleOrderChange = (sort: number) => {
+      console.log(formState)
       formState.sort = sort
 
       getData()
@@ -283,6 +284,10 @@ export default defineComponent({
         {
           label: '发表时间',
           value: 4
+        },
+        {
+          label: '修改时间',
+          value: 0
         }
       ],
 

@@ -1,97 +1,69 @@
 <template>
   <div>
-    <a-tabs>
+    <a-form :model="formState" :label-col="labelCol" :wrapper-col="wrapperCol">
+      <a-form-item label="搜索">
+        <a-input
+          v-model:value="currentKeyword"
+          placeholder="输入内容按回车键搜索"
+          @keyup.enter.native="handleKeyWordSearch"
+          style="width: 300px"
+        />
+      </a-form-item>
+
+      <a-form-item label="排序">
+        <a-radio-group v-model:value="formState.sort">
+          <a-radio-button
+            v-for="item in radioList"
+            :value="item.value"
+            @click.prevent="handleOrderChange(item.value)"
+          >
+            {{ item.label }}
+          </a-radio-button>
+        </a-radio-group>
+      </a-form-item>
+    </a-form>
+
+    <a-tabs v-model:activeKey="currentTab" @change="handleTabChange">
       <a-tab-pane key="done" tab="已完成">
-        <a-table
-          :pagination="{ total: total }"
-          :columns="columns"
-          :data-source="data"
-          :rowKey="(data: any) => data.id || data.index"
-          :rowClassName="(_:any, index:number) => (index % 2 === 1 ? 'table-striped' : null)"
-          bordered
+        <BackTable
+          :total="total"
+          :data="data"
+          :col="columns"
+          :current="formState.offset"
+          @audit="handleAudit"
+          @delete="handleDelete"
+          @page="handlePageChange"
         >
-          <template #type="{ text: type }">
-            <span>
-              <a-tag
-                :color="
-                  type === 9 ? 'volcano' : type == 6 ? 'geekblue' : 'green'
-                "
-              >
-                {{ type === 3 ? '普通用户' : type === 6 ? '会员' : '管理员' }}
-              </a-tag>
-            </span>
+          <template #action>
+            <span>驳回文章</span>
           </template>
-
-          <template #action="{ record }">
-            <a-button type="default" size="small" @click="handleEdit(record)">
-              编辑
-            </a-button>
-
-            <a-popconfirm
-              title="确定删除这条数据吗？"
-              ok-text="删除"
-              cancel-text="取消"
-              @confirm="handleDelete(record)"
-            >
-              <a-button type="default" size="small" class="ml-1">
-                删除
-              </a-button>
-            </a-popconfirm>
-          </template>
-        </a-table>
+        </BackTable>
       </a-tab-pane>
+
       <a-tab-pane key="audit" tab="审核中">
-        <a-button class="float-left mb-3" @click="handleAddUser" type="primary">
+        <BackTable
+          :total="total"
+          :data="data"
+          :col="columns"
+          :current="formState.offset"
+          @audit="handleAudit"
+          @delete="handleDelete"
+          @page="handlePageChange"
+        >
+          <template #action>
+            <span>审核文章</span>
+          </template>
+        </BackTable>
+
+        <a-button
+          class="float-left mb-3"
+          type="primary"
+          @click="handlecreateMoment"
+        >
           添加记录
         </a-button>
       </a-tab-pane>
     </a-tabs>
-
-    <a-modal
-      v-model:visible="visibleEdit"
-      title="修改用户信息"
-      @ok="handleOkEdit"
-    >
-      <a-form
-        :model="formState"
-        :label-col="labelCol"
-        :wrapper-col="wrapperCol"
-      >
-        <a-form-item label="昵称">
-          <a-input v-model:value="formState.nickname" />
-        </a-form-item>
-        <a-form-item label="手机号码">
-          <a-input v-model:value="formState.telPhone" />
-        </a-form-item>
-        <a-form-item label="邮箱">
-          <a-input v-model:value="formState.email" />
-        </a-form-item>
-
-        <a-form-item label="年龄">
-          <a-input type="number" v-model:value="formState.age" />
-        </a-form-item>
-
-        <a-form-item label="性别">
-          <a-select v-model:value="formState.sex" placeholder="选择性别">
-            <a-select-option :value="'男'">男</a-select-option>
-            <a-select-option :value="'女'">女</a-select-option>
-            <a-select-option :value="'保密'">保密</a-select-option>
-          </a-select>
-        </a-form-item>
-
-        <a-form-item label="权限级别">
-          <a-select v-model:value="formState.type" placeholder="用户权限级别">
-            <a-select-option :value="3">普通用户</a-select-option>
-            <a-select-option :value="6">会员</a-select-option>
-            <a-select-option :value="9">管理员</a-select-option>
-          </a-select>
-        </a-form-item>
-
-        <a-form-item label="签名">
-          <a-textarea v-model:value="formState.desc"></a-textarea>
-        </a-form-item>
-      </a-form>
-    </a-modal>
   </div>
 </template>
 
@@ -99,130 +71,147 @@
 import { defineComponent, ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import {
-  requestUserList,
-  changeUserInfo,
-  requestdeleteUser,
-  requestBackMomentListAll
+  requestBackMomentListAll,
+  requestBackAudit,
+  requestBackMomentDelete,
+  BASE_LOGO
 } from '~/api'
-import type { IUserInfoType, IUser } from '~/api'
+import type { IMomentType, IBackSearch } from '~/api'
+import { filterHtml } from '~/utils/filterHtml'
 import { SmileOutlined, DownOutlined } from '@ant-design/icons-vue'
 import { message } from 'ant-design-vue'
-
-const columns = [
-  {
-    title: '序号',
-    dataIndex: 'id',
-    key: 'id'
-  },
-  {
-    title: '用户名',
-    dataIndex: 'username',
-    key: 'username'
-  },
-  {
-    title: '昵称',
-    dataIndex: 'nickname',
-    key: 'nickname'
-  },
-  {
-    title: '性别',
-    dataIndex: 'sex',
-    key: 'sex'
-  },
-  {
-    title: '年龄',
-    dataIndex: 'age',
-    key: 'age'
-  },
-  {
-    title: '手机号码',
-    dataIndex: 'telPhone',
-    key: 'telPhone'
-  },
-  {
-    title: '邮箱',
-    dataIndex: 'email',
-    key: 'email'
-  },
-  {
-    title: '权限',
-    dataIndex: 'type',
-    key: 'type',
-    slots: { customRender: 'type' }
-  },
-  {
-    title: '创建时间',
-    dataIndex: 'createTime',
-    key: 'createTime'
-  },
-  {
-    title: '更新时间',
-    dataIndex: 'updateTime',
-    key: 'updateTime'
-  },
-  {
-    title: '操作',
-    dataIndex: 'operation',
-    slots: { customRender: 'action' }
-  }
-].map((res) => ({
-  ...res,
-  align: 'center'
-}))
-
-const data = ref<IUserInfoType[]>([])
+import BackTable from '~/components/page/back/BackTable.vue'
 
 export default defineComponent({
   components: {
     SmileOutlined,
-    DownOutlined
+    DownOutlined,
+    BackTable
   },
   setup() {
     const router = useRouter()
 
     const total = ref(0)
 
-    const currentUser = ref(0)
+    const columns = [
+      {
+        title: '序号',
+        dataIndex: 'momentId',
+        key: 'momentId',
+        width: '150px'
+      },
+      {
+        title: '发布者',
+        dataIndex: 'author.nickname',
+        key: 'userId',
+        width: '150px'
+      },
+      {
+        title: '标题',
+        dataIndex: 'title',
+        key: 'title',
+        width: '200px'
+      },
+      {
+        title: '内容',
+        dataIndex: 'content',
+        key: 'content',
+        width: '600px'
+      },
+      {
+        title: '封面',
+        dataIndex: 'images',
+        key: 'images',
+        width: '200px',
+        slots: { customRender: 'img' }
+      },
+      {
+        title: '审核结果',
+        dataIndex: 'audit',
+        key: 'audit',
+        slots: { customRender: 'audit' },
+        width: '200px'
+      },
+      {
+        title: '创建时间',
+        dataIndex: 'createTime',
+        key: 'createTime',
+        width: '250px'
+      },
+      {
+        title: '更新时间',
+        dataIndex: 'updateTime',
+        key: 'updateTime',
+        width: '260px'
+      },
+      {
+        title: '操作',
+        dataIndex: 'operation',
+        slots: { customRender: 'action' }
+      }
+    ].map((res) => ({
+      ...res,
+      align: 'center'
+    }))
+
+    const data = ref<IMomentType[]>([])
+
+    const currentKeyword = ref('')
+    let keyWord = currentKeyword.value
+
+    const formState = reactive<IBackSearch>({
+      keyBoard: '',
+      sort: 1,
+      limit: 10,
+      offset: 1,
+      audit: 0
+    })
 
     const getData = async () => {
-      const res = await requestUserList()
+      const momentListRes = await requestBackMomentListAll({
+        ...formState,
+        keyBoard: keyWord
+      })
 
-      // @ts-ignore
-      data.value = res.userList.map((res) => ({
-        ...res
-      }))
-      total.value = res.count!
+      data.value = momentListRes.data?.list.map((res) => ({
+        ...res,
+        content: filterHtml(res.content).substring(0, 50) + '......',
+        title: res.title.substring(0, 20)
+      }))!
 
-      const aaa = await requestBackMomentListAll()
-
-      console.log(aaa)
+      total.value = momentListRes.data?.momentCount!
     }
 
-    const handleAddUser = () => {
+    // 新建文章
+    const handlecreateMoment = () => {
       const routeUrl = router.resolve({
-        path: '/register'
+        path: '/createBlog'
       })
 
       window.open(routeUrl.href, '_blank')
     }
 
-    // 修改用户
-    const visibleEdit = ref<boolean>(false)
+    // 审核文章
+    const handleAudit = async (id: number) => {
+      const res = await requestBackAudit(
+        id,
+        currentTab.value === 'done' ? 1 : 0
+      )
 
-    const formState = reactive<IUser>({
-      nickname: '',
-      telPhone: '',
-      email: '',
-      sex: '',
-      type: 3,
-      desc: '',
-      age: 18
-    })
+      const tipMsg = currentTab.value === 'done' ? '驳回' : '审核'
+      if (!res.flag) {
+        message.error(tipMsg + '文章失败', 3)
+        return
+      }
 
-    const handleOkEdit = async () => {
-      visibleEdit.value = false
-      // @ts-ignore
-      const res = await changeUserInfo(currentUser.value, formState)
+      message.success(tipMsg + '文章成功', 3)
+
+      getData()
+    }
+
+    // 删除文章
+    const handleDelete = async (moment: IMomentType) => {
+      const res = await requestBackMomentDelete(moment.momentId)
 
       if (!res.flag) {
         message.error(res.msg, 3)
@@ -234,31 +223,40 @@ export default defineComponent({
       getData()
     }
 
-    const handleEdit = async (data: IUserInfoType) => {
-      visibleEdit.value = true
-
-      currentUser.value = data.id
-
-      formState.nickname = data.nickname
-      formState.telPhone = data.telPhone
-      formState.email = data.email
-      formState.sex = data.sex
-      formState.age = data.age
-      formState.type = data.type
-      formState.desc = data.desc
+    // 页码变化
+    const handlePageChange = (page: number) => {
+      formState.offset = page
+      getData()
     }
 
-    // 删除用户
-    const handleDelete = async (user: IUserInfoType) => {
-      console.log(user)
-      const res = await requestdeleteUser(user.id)
+    const handleKeyWordSearch = () => {
+      keyWord = currentKeyword.value
+      getData()
+    }
 
-      if (!res.flag) {
-        message.error(res.msg, 3)
-        return
+    const handleOrderChange = (sort: number) => {
+      formState.sort = sort
+
+      getData()
+    }
+
+    // tab切换
+    const currentTab = ref('done')
+
+    const handleTabChange = (currentTab: string) => {
+      if (currentTab === 'done') {
+        formState.audit = 0
+      } else {
+        // 初始化搜索
+        formState.audit = 1
       }
 
-      message.success(res.msg, 3)
+      currentKeyword.value = ''
+
+      formState.keyBoard = ''
+      formState.sort = 1
+      formState.limit = 10
+      formState.offset = 1
 
       getData()
     }
@@ -268,17 +266,41 @@ export default defineComponent({
     })
 
     return {
+      BASE_LOGO,
+      radioList: [
+        {
+          label: '点赞',
+          value: 1
+        },
+        {
+          label: '评论数',
+          value: 2
+        },
+        {
+          label: '浏览量',
+          value: 3
+        },
+        {
+          label: '发表时间',
+          value: 4
+        }
+      ],
+
       data,
       total,
       columns,
-      handleAddUser,
-      formState,
-      handleEdit,
-      visibleEdit,
-      handleOkEdit,
+      handlecreateMoment,
+      handleAudit,
       handleDelete,
-      labelCol: { span: 4 },
-      wrapperCol: { span: 14 }
+      handlePageChange,
+      labelCol: { span: 1 },
+      wrapperCol: { span: 14 },
+      currentTab,
+      handleTabChange,
+      formState,
+      currentKeyword,
+      handleKeyWordSearch,
+      handleOrderChange
     }
   }
 })

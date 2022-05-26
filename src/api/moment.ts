@@ -34,6 +34,8 @@ export interface IMomentType {
 
   images: string[]
 
+  audit?: number
+
   label: {
     id: number
     name: string
@@ -286,15 +288,35 @@ export const requestDataByDay = () => {
   })
 }
 
-export const requestBackMomentListAll = () => {
-  return hyRequest.get({
+export interface IBackSearch {
+  keyBoard: string
+  sort: number
+  limit: number
+  offset: number
+  audit: number
+}
+
+// 后台文章搜索
+export const requestBackMomentListAll = (data: IBackSearch) => {
+  return hyRequest.get<IResponsType<IMomentListType>>({
     url: '/moment/back/search/1',
-    params: {
-      keyBoard: '',
-      sort: '1',
-      limit: '10',
-      offset: '0',
-      audit: '0'
+    params: data
+  })
+}
+
+// 审核
+export const requestBackAudit = (id: number, type: number) => {
+  return hyRequest.post<IResponsType<string>>({
+    url: '/moment/' + id + '/back/audit',
+    data: {
+      type
     }
+  })
+}
+
+// 文章删除接口
+export const requestBackMomentDelete = (momentId: number) => {
+  return hyRequest.delete<IResponsType<string>>({
+    url: momentApi.momentDelete + momentId + '/back'
   })
 }

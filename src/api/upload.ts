@@ -32,7 +32,6 @@ export function uploadAvatar(parameter: any) {
   return axios({
     url: uploadApi.avatar,
     method: 'post',
-    // 传输文件流需要单独设置请求头
     headers: {
       'Content-Type': 'multipart/form-data',
       Authorization: `Bearer ${token}`

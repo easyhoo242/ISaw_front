@@ -12,6 +12,7 @@
         <a-menu-item
           v-for="item in currentMenu"
           :key="item.key"
+          class="h-17"
           @click="handleMenuItemClick(item.url)"
         >
           <CodepenSquareFilled v-if="item.key === '1'" />

@@ -18,13 +18,13 @@
       <div class="flex-1">
         <Module title="浏览量" logo class="h-294px">
           <div class="flex items-center justify-center">
-            <div id="momentLook" style="width: 725px; height: 280px" />
+            <div id="momentLook" style="width: 1525px; height: 280px" />
           </div>
         </Module>
 
         <Module title="点赞 & 评论" logo class="h-294px">
           <div class="flex items-center justify-center">
-            <div id="agreeAndComment" style="width: 725px; height: 280px" />
+            <div id="agreeAndComment" style="width: 1525px; height: 280px" />
           </div>
         </Module>
       </div>

@@ -159,3 +159,8 @@ onMounted(() => {
   getData()
 })
 </script>
+
+<route lang="yaml">
+meta:
+  layout: fullpage
+</route>

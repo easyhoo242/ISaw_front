@@ -36,10 +36,10 @@
                 </span>
               </template>
             </a-tab-pane>
-            <a-tab-pane key="/subject">
+            <a-tab-pane key="/message">
               <template #tab>
                 <span class="py-2">
-                  <strong class="align-top">专题</strong>
+                  <strong class="align-top">留言板</strong>
                 </span>
               </template>
             </a-tab-pane>

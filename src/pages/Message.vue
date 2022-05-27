@@ -23,7 +23,7 @@
           <a-rate v-model:value="score" size="small" :tooltips="scoredesc" />
           <span class="ant-rate-text">{{ scoredesc[score - 1] }}</span>
         </span>
-        <a-button class="mt-3" type="" @click="handleAdd">留言</a-button>
+        <a-button class="mt-3" type="default" @click="handleAdd">留言</a-button>
       </div>
     </Module>
 
@@ -52,6 +52,16 @@
         </template>
       </a-comment>
     </Module>
+
+    <a-pagination
+      :current="currentPage"
+      :pageSize="10"
+      :total="total || 200"
+      show-quick-jumper
+      hideOnSinglePage
+      class="my-3"
+      @change="handlePageChange"
+    />
   </div>
 </template>
 
@@ -65,6 +75,9 @@ import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { message } from 'ant-design-vue'
 
 const messageList = ref<IMessageList[]>([])
+
+const total = ref(100)
+const currentPage = ref(1)
 
 // 编辑器实例，必须用 shallowRef
 const editorRef = shallowRef()
@@ -149,10 +162,14 @@ const scoredesc = ref<string[]>([
 ])
 
 const getData = async () => {
-  const res = await requestMessageList()
+  const res = await requestMessageList(currentPage.value)
 
   messageList.value = res.data?.list!
-  console.log(res)
+  total.value = res.data?.count!
+}
+
+const handlePageChange = (page: number) => {
+  currentPage.value = page
 }
 
 onMounted(() => {

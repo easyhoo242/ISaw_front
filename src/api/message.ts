@@ -31,9 +31,14 @@ export interface IMessageContent {
   score: number
 }
 
-export const requestMessageList = () => {
+export const requestMessageList = (page: number = 1) => {
+  const offset = page === 1 ? 0 : (page - 1) * 10
+
   return hyRequest.get<IResponsType<IMessage>>({
-    url: MessageApi.list
+    url: MessageApi.list,
+    params: {
+      offset
+    }
   })
 }
 

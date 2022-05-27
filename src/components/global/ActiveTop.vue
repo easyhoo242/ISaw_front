@@ -1,6 +1,7 @@
 <template>
   <div
-    class="active-top h-103 flex items-center justify-center"
+    class="active-top flex items-center justify-center"
+    :class="list.title === '留言板' ? 'h-63' : 'h-103'"
     :style="`background-image: url(${list.url})`"
   >
     <section

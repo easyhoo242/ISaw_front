@@ -49,6 +49,11 @@ import { requestMomentLook } from '~/api'
             component: () => import('~/pages/back/comment/index.vue')
           },
           {
+            path: '/back/message',
+            name: '留言管理',
+            component: () => import('~/pages/back/message/index.vue')
+          },
+          {
             path: '/back/look',
             name: '浏览记录',
             component: () => import('~/pages/back/look/index.vue')

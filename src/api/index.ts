@@ -3,6 +3,7 @@ export * from './moment'
 export * from './user'
 export * from './upload'
 export * from './socket'
+export * from './message'
 
 export interface IResponsType<T> {
   code: number

@@ -12,7 +12,7 @@
         <a-menu-item
           v-for="item in currentMenu"
           :key="item.key"
-          class="h-17"
+          class="h-17 flex items-center"
           @click="handleMenuItemClick(item.url)"
         >
           <CodepenSquareFilled v-if="item.key === '1'" />
@@ -21,6 +21,7 @@
           <SnippetsFilled v-if="item.key === '4'" />
           <ContainerFilled v-if="item.key === '5'" />
           <SwitcherFilled v-if="item.key === '6'" />
+          <DownSquareOutlined v-if="item.key === '7'" />
           <span class="pl-2">{{ item.label }}</span>
         </a-menu-item>
       </a-menu>
@@ -69,6 +70,7 @@ import {
   SwitcherFilled,
   ContainerFilled,
   CodepenSquareFilled,
+  DownSquareOutlined,
   UserOutlined,
   TeamOutlined,
   FileOutlined
@@ -83,6 +85,7 @@ export default defineComponent({
     ContainerFilled,
     SwitcherFilled,
     CodepenSquareFilled,
+    DownSquareOutlined,
     UserOutlined,
     TeamOutlined,
     FileOutlined,
@@ -126,11 +129,16 @@ export default defineComponent({
       },
       {
         key: '6',
+        label: '留言管理',
+        url: '/back/message'
+      },
+      {
+        key: '7',
         label: '浏览记录',
         url: '/back/look'
       },
       {
-        key: '7',
+        key: '8',
         label: '点赞记录',
         url: '/back/like'
       }

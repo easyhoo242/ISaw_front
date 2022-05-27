@@ -170,6 +170,7 @@ const getData = async () => {
 
 const handlePageChange = (page: number) => {
   currentPage.value = page
+  getData()
 }
 
 onMounted(() => {

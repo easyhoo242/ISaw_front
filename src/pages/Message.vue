@@ -70,6 +70,7 @@ import { ref, shallowRef, onMounted, onBeforeUnmount } from 'vue'
 import moment from 'moment'
 import { requestMessageList, requestAddMesage } from '~/api'
 import type { IMessageList } from '~/api'
+import { filterHtml } from '~/utils/filterHtml'
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { message } from 'ant-design-vue'
@@ -139,6 +140,16 @@ const handleCreated = (editor: any) => {
 }
 
 const handleAdd = async () => {
+  if (!filterHtml(valueHtml.value)) {
+    message.error('留言不能为空', 3)
+    return
+  }
+
+  if (!score.value) {
+    message.error('请选择评分', 3)
+    return
+  }
+
   const res = await requestAddMesage(valueHtml.value, score.value)
   if (!res.flag) {
     message.error(res.msg, 3)

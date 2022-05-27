@@ -1,17 +1,16 @@
+import { hhhWords } from '~/api'
+
 function filter(input: string) {
   // 获取输入框的内容inputContent
-
-  // 多个敏感词，这里直接以数组的形式展示出来
-  var arrMg = ['fuck', 'tmd', '他妈的']
 
   // 正则表达式
   // \d 匹配数字
 
   let flag = false
 
-  for (var i = 0; i < arrMg.length; i++) {
+  for (var i = 0; i < hhhWords.length; i++) {
     // 创建一个正则表达式
-    var r = new RegExp(arrMg[i], 'ig')
+    var r = new RegExp(hhhWords[i], 'ig')
 
     if (r.test(input)) {
       flag = true

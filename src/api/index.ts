@@ -72,3 +72,5 @@ export const NAVIGATION_LIST: INavigationType[] = [
 export const usernameRule = /^[a-zA-Z0-9]{4,16}$/
 export const passwordRule =
   /^(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$)(?!([^(0-9a-zA-Z)])+$).{4,16}$/
+
+export const hhhWords = ['他妈的', 'tmd', 'fuck', 'nnd', '就这']

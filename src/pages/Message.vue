@@ -71,6 +71,7 @@ import moment from 'moment'
 import { requestMessageList, requestAddMesage } from '~/api'
 import type { IMessageList } from '~/api'
 import { filterHtml } from '~/utils/filterHtml'
+import filterWords from '~/utils/filterWords'
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { message } from 'ant-design-vue'
@@ -147,6 +148,11 @@ const handleAdd = async () => {
 
   if (!score.value) {
     message.error('请选择评分', 3)
+    return
+  }
+
+  if (filterWords(valueHtml.value)) {
+    message.error('检测到关键词, 请使用文明用语', 3)
     return
   }
 

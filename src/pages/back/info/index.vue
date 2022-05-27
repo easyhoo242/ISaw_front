@@ -2,8 +2,22 @@
   <div>
     <BranchCrumb route="数据统计" />
 
-    <div class="grid grid-cols-3 gap-3">
+    <div class="grid grid-cols-4 gap-3">
       <LatelyData :data="latelyData.moment" />
+
+      <Module>
+        <div class="flex">
+          <div class="pl-5">
+            <h5 class="mt-2 mb-5">用户评价 :</h5>
+            <div class="mt-10 ml-3">
+              <span class="text-blue-400 text-[3.23rem]"> {{ score }} </span>
+
+              <span class="text-blue-400 text-[2.23rem]">/</span>
+              <span class="text-blue-200 text-[1.23rem]">5</span>
+            </div>
+          </div>
+        </div>
+      </Module>
 
       <LatelyData :data="latelyData.look" title="浏览" />
 
@@ -39,8 +53,13 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, onMounted } from 'vue'
-import { requestMomentInfo, requestMomentData, requestDataByDay } from '~/api'
+import { ref, reactive, onMounted } from 'vue'
+import {
+  requestMomentInfo,
+  requestMomentData,
+  requestDataByDay,
+  requestMessageList
+} from '~/api'
 import type { ILatelyDataType } from '~/api'
 import * as echartsPet from 'echarts/core'
 import * as echarts from 'echarts'
@@ -138,7 +157,26 @@ const dataByDay = reactive<IDataByDay>({
   comment: []
 })
 
+const score = ref(5)
+
+const scoreDesc = ['建议remake', '弟中之弟', '一般', '不错', '好好好！']
+
+const showScoreDesc = ref('')
+
 const getData = async () => {
+  const scoreList = await requestMessageList()
+
+  const len = scoreList.data?.list.length!
+
+  let sum = 0
+  scoreList.data?.list.forEach((item, index) => {
+    sum += item.score
+  })
+
+  score.value = parseFloat((sum / len).toFixed(2))
+
+  showScoreDesc.value = scoreDesc[Math.ceil(score.value) - 1]
+
   const res = await requestMomentInfo()
 
   Promise.all(

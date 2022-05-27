@@ -7,6 +7,7 @@
       :rowKey="(data: any) => data.id || data.index"
       :rowClassName="(_:any, index:number) => (index % 2 === 1 ? 'table-striped' : null)"
       bordered
+      @change="handleTableChange"
     >
       <template #action="{ record }">
         <a-button
@@ -65,6 +66,7 @@ import { defineComponent, ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { requestMessageList, requestDelMesage, requestEditMessage } from '~/api'
 import type { IMessageContent, IMessageList } from '~/api'
+import { filterHtml } from '~/utils/filterHtml'
 import { SmileOutlined, DownOutlined } from '@ant-design/icons-vue'
 import { message } from 'ant-design-vue'
 
@@ -119,11 +121,16 @@ export default defineComponent({
 
     const currentUser = ref(0)
 
+    const currentPage = ref(1)
+
     const getData = async () => {
-      const res = await requestMessageList()
+      const res = await requestMessageList(currentPage.value)
 
       // @ts-ignore
-      data.value = res.data?.list!
+      data.value = res.data?.list.map((res) => ({
+        ...res,
+        content: filterHtml(res.content)
+      }))
       total.value = res.data?.count!
     }
 
@@ -182,6 +189,12 @@ export default defineComponent({
       getData()
     }
 
+    const handleTableChange = (page: any) => {
+      currentPage.value = page.current
+
+      getData()
+    }
+
     onMounted(() => {
       getData()
     })
@@ -197,7 +210,8 @@ export default defineComponent({
       handleOkEdit,
       handleDelete,
       labelCol: { span: 4 },
-      wrapperCol: { span: 14 }
+      wrapperCol: { span: 14 },
+      handleTableChange
     }
   }
 })

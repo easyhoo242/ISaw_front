@@ -19,9 +19,9 @@
           <BarChartOutlined v-if="item.key === '2'" />
           <UserOutlined v-if="item.key === '3'" />
           <SnippetsFilled v-if="item.key === '4'" />
-          <ContainerFilled v-if="item.key === '5'" />
-          <SwitcherFilled v-if="item.key === '6'" />
-          <DownSquareOutlined v-if="item.key === '7'" />
+          <ProjectFilled v-if="item.key === '5'" />
+          <FireFilled v-if="item.key === '6'" />
+          <LikeFilled v-if="item.key === '7'" />
           <span class="pl-2">{{ item.label }}</span>
         </a-menu-item>
       </a-menu>
@@ -67,13 +67,13 @@ import {
   BarChartOutlined,
   DesktopOutlined,
   SnippetsFilled,
-  SwitcherFilled,
+  FireFilled,
   ContainerFilled,
   CodepenSquareFilled,
-  DownSquareOutlined,
+  LikeFilled,
   UserOutlined,
   TeamOutlined,
-  FileOutlined
+  ProjectFilled
 } from '@ant-design/icons-vue'
 
 export default defineComponent({
@@ -83,12 +83,12 @@ export default defineComponent({
     DesktopOutlined,
     SnippetsFilled,
     ContainerFilled,
-    SwitcherFilled,
+    FireFilled,
     CodepenSquareFilled,
-    DownSquareOutlined,
+    LikeFilled,
     UserOutlined,
     TeamOutlined,
-    FileOutlined,
+    ProjectFilled,
     NavHeader
   },
   setup() {
@@ -124,21 +124,16 @@ export default defineComponent({
       },
       {
         key: '5',
-        label: '评论管理',
-        url: '/back/comment'
-      },
-      {
-        key: '6',
         label: '留言管理',
         url: '/back/message'
       },
       {
-        key: '7',
+        key: '6',
         label: '浏览记录',
         url: '/back/look'
       },
       {
-        key: '8',
+        key: '7',
         label: '点赞记录',
         url: '/back/like'
       }

@@ -38,7 +38,7 @@
         </template>
 
         <template #content>
-          <a-typography v-html="item.content"></a-typography>
+          <div v-html="item.content"></div>
         </template>
 
         <template #datetime>

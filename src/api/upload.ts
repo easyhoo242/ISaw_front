@@ -11,10 +11,6 @@ enum uploadApi {
   avatar = '/api/upload/avatar'
 }
 
-export const requestPicture = () => {
-  return axios.post('')
-}
-
 export function getUplodBackName(momentId: number, parameter: any) {
   return axios({
     url: uploadApi.piciutr + momentId + '/picture',

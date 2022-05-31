@@ -209,6 +209,8 @@ export default defineComponent({
 
       message.success('个人信息修改成功~', 3)
 
+      console.log(data)
+
       // 个人信息修成功后将信息存储到localStorage
       localCache.setCache('userDetail', data)
 

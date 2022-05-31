@@ -5,13 +5,13 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { setupLayouts } from 'layouts-generated'
 import generatedRoutes from 'pages-generated'
 import localCache from '~/utils/cache'
-import { message } from 'ant-design-vue'
+import { message, notification } from 'ant-design-vue'
 
 import 'ant-design-vue/dist/antd.less'
 import 'virtual:windi.css'
 import './styles/main.less'
 
-import { requestMomentLook } from '~/api'
+import { requestMomentLook, getUserDetail } from '~/api'
 
 // 引入animatecss
 ;(async () => {
@@ -76,6 +76,30 @@ import { requestMomentLook } from '~/api'
         message.error('未登录，正在跳转到登录页...', 2)
         return '/login'
       }
+    }
+
+    if (to.path === '/back') {
+      const { id, nickname } = localCache.getCache('user')
+
+      // 提示框
+      const openNotification = () => {
+        notification.open({
+          message: `你好,管理员：${nickname}`,
+          description: '欢迎来到ISAW后台管理系统'
+        })
+      }
+
+      getUserDetail(id).then((res) => {
+        const type = res.data?.type!
+
+        if (!(type === 9)) {
+          message.error('您不是管理员， 无法进入后台管理系统')
+          message.warn('正在为您跳转到首页...')
+          router.push('/')
+        } else {
+          openNotification()
+        }
+      })
     }
 
     const [, item, id] = to.path.split('/')

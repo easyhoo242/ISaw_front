@@ -51,7 +51,7 @@
           @page="handlePageChange"
         >
           <template #action>
-            <span>审核文章</span>
+            <span>通过审核</span>
           </template>
         </BackTable>
 
@@ -116,7 +116,7 @@ export default defineComponent({
         title: '内容',
         dataIndex: 'content',
         key: 'content',
-        width: '600px'
+        width: '400px'
       },
       {
         title: '封面',
@@ -147,7 +147,8 @@ export default defineComponent({
       {
         title: '操作',
         dataIndex: 'operation',
-        slots: { customRender: 'action' }
+        slots: { customRender: 'action' },
+        width: '300px'
       }
     ].map((res) => ({
       ...res,
@@ -199,6 +200,7 @@ export default defineComponent({
       )
 
       const tipMsg = currentTab.value === 'done' ? '驳回' : '审核'
+
       if (!res.flag) {
         message.error(tipMsg + '文章失败', 3)
         return

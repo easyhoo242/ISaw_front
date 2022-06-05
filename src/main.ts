@@ -69,7 +69,11 @@ import { requestMomentLook, getUserDetail } from '~/api'
   })
 
   router.beforeEach((to) => {
-    if (to.path !== '/login' && to.path != '/register') {
+    const [, firstPath, secondPath] = to.path.split('/')
+
+    console.log(firstPath, secondPath)
+
+    if (firstPath !== 'login' && firstPath != 'register') {
       const { token } = localCache.getCache('user')
 
       if (!token) {
@@ -78,27 +82,30 @@ import { requestMomentLook, getUserDetail } from '~/api'
       }
     }
 
-    if (to.path === '/back') {
+    if (firstPath === 'back') {
       const { id, nickname } = localCache.getCache('user')
 
       // 提示框
       const openNotification = () => {
-        notification.open({
-          message: `你好,管理员：${nickname}`,
-          description: '欢迎来到ISAW后台管理系统'
-        })
+        // notification.open({
+        //   message: `你好,管理员：${nickname}`,
+        //   description: '欢迎来到ISAW后台管理系统'
+        // })
       }
 
       getUserDetail(id).then((res) => {
         const type = res.data?.type!
 
-        if (!(type === 9)) {
+        if (type !== 9) {
           message.error('您不是管理员， 无法进入后台管理系统')
           message.warn('正在为您跳转到首页...')
+
           router.push('/')
-        } else {
-          openNotification()
+
+          return
         }
+
+        openNotification()
       })
     }
 

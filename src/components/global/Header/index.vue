@@ -82,6 +82,7 @@
         </div>
 
         <a-button
+          v-if="userInfo.token !== 'unLogin'"
           class="absolute -right-25 t-0"
           type="primary"
           @click="showDrawer"
@@ -98,16 +99,17 @@
       :visible="visible"
       @close="onClose"
     >
-      <div class="text-base text-center">
-        当前在线人数 : {{ currentOnlineNum || 2 }}
+      <div class="text-base text-center mb-3">
+        当前在线人数 : {{ currentOnlineNum }}
       </div>
+
       <div
-        ref="socketRef"
-        class="w-80% p-3 overflow-auto bg-gray-200 rounded-md dark:bg-dark-600"
-        :class="{ 'h-1000px': true }"
+        v-show="isShowSocket"
+        id="socketRef"
+        class="w-80% p-3 overflow-auto bg-gray-200 rounded-md dark:bg-dark-600 h-1000px"
       >
         <div v-for="item in msgList" class="mb-2">
-          <div v-if="userInfo.id !== item.user.id" class="flex enter-y">
+          <div v-if="userInfo.id !== item.user.id" class="flex -enter-x">
             <div class="logo flex-0 mr-3 pt-2">
               <a-avatar :src="item.user?.avatarUrl" />
             </div>
@@ -127,7 +129,7 @@
             </div>
           </div>
 
-          <div v-else class="flex enter-y">
+          <div v-else class="flex -enter-x">
             <div class="body flex-1">
               <div class="title text-right">
                 <span class="text-xs">
@@ -150,17 +152,34 @@
         </div>
       </div>
 
-      <div class="mt-4 flex">
-        <a-input v-model:value="message" placeholder="请输入聊天信息" />
+      <div v-if="isShowSocket" class="mt-4 flex">
+        <a-input
+          id="textareaRef"
+          v-model:value="cutrrentMessage"
+          placeholder="请输入聊天信息"
+          @keyup.enter.native="handleSend"
+        />
 
-        <a-button type="default" @click="handleSend">发送</a-button>
+        <Emoji
+          ref="getEmojiRef"
+          style="transform: translateY(-4px)"
+          @change="handleGetEmoji"
+        />
+
+        <a-button type="default" class="ml-3" @click="handleSend">
+          发送
+        </a-button>
       </div>
+
+      <a-button v-if="!isShowSocket" type="primary" @click="handleJoin">
+        加入聊天
+      </a-button>
     </a-drawer>
   </header>
 </template>
 
 <script setup lang="ts">
-import { watch, ref, onMounted, onUpdated } from 'vue'
+import { watch, ref, onMounted, onUpdated, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import dayjs from 'dayjs'
@@ -168,6 +187,8 @@ import relativeTime from 'dayjs/plugin/relativeTime' // 到指定时间需要的
 import 'dayjs/locale/zh' // 集成中文
 import { useToggleDark, useWebsocket } from '~/hooks'
 import localcache from '~/utils/cache'
+import filterWords from '~/utils/filterWords'
+import { notification } from 'ant-design-vue'
 
 dayjs.extend(relativeTime)
 dayjs.locale('zh')
@@ -195,7 +216,7 @@ watch(darkSwitch, () => {
   toggleDark()
 })
 
-const visible = ref<boolean>(true)
+const visible = ref<boolean>(false)
 
 const showDrawer = () => {
   visible.value = true
@@ -207,11 +228,9 @@ const onClose = () => {
 
 // 聊天  发送
 const userInfo = localcache.getCache('user')
-const message = ref('')
+const cutrrentMessage = ref('')
 const msgList = ref<IMsgType[]>([])
 const currentOnlineNum = ref(0)
-
-const socketRef = ref(null)
 
 const ws = useWebsocket()
 
@@ -224,6 +243,14 @@ ws.addEventListener(
       localcache.setCache('socket', res?.data)
 
       msgList.value = localcache.getCache('socket')
+
+      const socketRef = document.getElementById(
+        'socketRef'
+      ) as HTMLTextAreaElement
+
+      nextTick(() => {
+        socketRef.scrollTop = socketRef.scrollHeight
+      })
     }
 
     if (typeof res?.onLineCount === 'number') {
@@ -235,6 +262,14 @@ ws.addEventListener(
 
       currentOnlineNum.value = res.onLineCount
 
+      const socketRef = document.getElementById(
+        'socketRef'
+      ) as HTMLTextAreaElement
+
+      nextTick(() => {
+        socketRef.scrollTop = socketRef.scrollHeight
+      })
+
       localcache.setCache('socket', msgList.value)
     }
 
@@ -243,8 +278,41 @@ ws.addEventListener(
   false
 )
 
+// 表情
+const handleGetEmoji = (emoji: string) => {
+  const textarea = document.getElementById('textareaRef') as HTMLTextAreaElement
+
+  function insertTxtAndSetcursor(insertTxt: string) {
+    // 获取到指定标签
+    let startPos = textarea.selectionEnd
+    let endPos = textarea.selectionEnd
+    if (startPos === undefined || endPos === undefined) return
+
+    let oldTxt = textarea.value
+    let result =
+      oldTxt.substring(0, startPos) + insertTxt + oldTxt.substring(endPos)
+    textarea.value = result
+    textarea.focus()
+    textarea.selectionStart = startPos + insertTxt.length
+    textarea.selectionEnd = startPos + insertTxt.length
+
+    return result
+  }
+
+  cutrrentMessage.value = insertTxtAndSetcursor(emoji)!
+}
+
 const handleSend = () => {
-  const _msg = message.value.trim()
+  const _msg = cutrrentMessage.value.trim()
+
+  if (filterWords(_msg)) {
+    notification.open({
+      message: '有违规词！',
+      description: '聊天内容禁止出现违规词，请谨慎发言'
+    })
+
+    return
+  }
 
   ws.send(
     JSON.stringify({
@@ -253,15 +321,18 @@ const handleSend = () => {
     })
   )
 
-  message.value = ''
+  cutrrentMessage.value = ''
+}
 
-  // @ts-ignore
-  socketRef.scrollTop = socketRef.scrollHeight
+const isShowSocket = ref(false)
+
+const handleJoin = () => {
+  handleSend()
+
+  isShowSocket.value = true
 }
 
 onMounted(() => {
-  // socketRef?.scrollTop = socketRef?.scrollHeigth
-
   activeKey.value = router.currentRoute.value.path
   store.dispatch('actionGetUserInfo')
 

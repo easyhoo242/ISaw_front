@@ -137,7 +137,6 @@ export default {
     const valueHtml = ref('')
 
     // 模拟 ajax 异步获取内容
-
     const toolbarConfig = {}
     const editorConfig = { placeholder: '请输入内容...' }
 
@@ -255,7 +254,7 @@ export default {
         return
       }
 
-      message.success(res.msg, 2)
+      message.success(res.msg + '请等待管理员审核...', 2)
 
       setTimeout(() => {
         router.push('/')

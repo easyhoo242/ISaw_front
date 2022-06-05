@@ -70,7 +70,12 @@ export const NAVIGATION_LIST: INavigationType[] = [
 ]
 
 export const usernameRule = /^[a-zA-Z0-9]{4,16}$/
+
 export const passwordRule =
   /^(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$)(?!([^(0-9a-zA-Z)])+$).{4,16}$/
+
+export const emailRule = /^\w+@[\da-z\.-]+\.([a-z]{2,6}|[\u2E80-\u9FFF]{2,3})$/
+
+export const phoneRule = /^1[3|4|5|8][0-9]\d{4,8}$/
 
 export const hhhWords = ['他妈的', 'tmd', 'fuck', 'nnd', '就这']

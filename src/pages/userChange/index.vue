@@ -30,8 +30,13 @@
               </a-form-item>
               <a-form-item
                 :name="['user', 'email']"
+                :rules="[
+                  {
+                    pattern: emailRule,
+                    message: '输入正确的邮箱格式'
+                  }
+                ]"
                 label="邮箱"
-                :rules="[{ type: 'email' }]"
               >
                 <a-input v-model:value="formState.user.email" />
               </a-form-item>
@@ -57,7 +62,14 @@
                 <a-input-number v-model:value="formState.user.age" />
               </a-form-item>
 
-              <a-form-item :name="['user', 'website']" label="电话">
+              <a-form-item
+                :name="['user', 'telPhone']"
+                :rules="{
+                  pattern: phoneRule,
+                  message: '请输入正确的电话'
+                }"
+                label="电话"
+              >
                 <a-input v-model:value="formState.user.telPhone" />
               </a-form-item>
 
@@ -138,7 +150,9 @@ import {
   changeUserInfo,
   getUserDetail,
   changeUserPsw,
-  passwordRule
+  passwordRule,
+  phoneRule,
+  emailRule
 } from '~/api'
 import type { IUser, IChangePsw } from '~/api'
 import localCache from '~/utils/cache'
@@ -261,6 +275,8 @@ export default defineComponent({
       onPswFinish,
       layout,
       passwordRule,
+      phoneRule,
+      emailRule,
       handleChange,
       isShowHeaderInfo
     }

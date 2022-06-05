@@ -165,15 +165,26 @@ export default defineComponent({
     }
     // 发表评论
     const handleSubmit = async (currntComment: string) => {
+      const userInfo = localCache.getCache('user')
+
+      if (userInfo.token === 'unLogin') {
+        message.info('未登录，登录后可发表评论~')
+        return
+      }
+
       if (!currntComment) {
         return
       }
+
       const { flag, msg } = await requestPostComment(momentId, currntComment)
+
       if (!flag) {
         message.error('评论发表失败~', 3)
         return
       }
+
       message.success(msg, 3)
+
       // 刷新列表
       getData()
     }

@@ -71,19 +71,21 @@ import { requestMomentLook, getUserDetail } from '~/api'
   router.beforeEach((to) => {
     const [, firstPath, secondPath] = to.path.split('/')
 
-    console.log(firstPath, secondPath)
+    const { token } = localCache.getCache('user')
 
-    if (firstPath !== 'login' && firstPath != 'register') {
-      const { token } = localCache.getCache('user')
-
-      if (!token) {
-        message.error('未登录，正在跳转到登录页...', 2)
+    if (
+      firstPath === 'user' ||
+      firstPath === 'createBlog' ||
+      firstPath === 'editBlog'
+    ) {
+      if (token === 'unLogin') {
+        message.error('未登录，正在跳转到登录页...', 1)
         return '/login'
       }
     }
 
     if (firstPath === 'back') {
-      const { id, nickname } = localCache.getCache('user')
+      const { id } = localCache.getCache('user')
 
       // 提示框
       const openNotification = () => {

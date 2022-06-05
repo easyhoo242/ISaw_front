@@ -1,5 +1,5 @@
 <template>
-  <a :href="href" :target="target">
+  <a :href="href" :target="target" class="dark:text-dark-400">
     <slot name="default"></slot>
   </a>
 </template>

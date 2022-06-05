@@ -30,7 +30,6 @@
             <a-checkbox v-model:checked="formState.user.remember">
               记住密码
             </a-checkbox>
-            <A>忘记密码</A>
           </div>
         </a-form-item>
         <a-form-item class="mt-10">
@@ -85,8 +84,6 @@ export default defineComponent({
       }
 
       const flag = await handleUserLogin(data)
-
-      console.log(flag)
 
       flag && router.push('/')
     }

@@ -97,8 +97,8 @@ import { requestMomentLook, getUserDetail } from '~/api'
         const type = res.data?.type!
 
         if (type !== 9) {
-          message.error('您不是管理员， 无法进入后台管理系统')
-          message.warn('正在为您跳转到首页...')
+          message.error('您不是管理员， 无法进入后台管理系统', 1)
+          message.warn('正在跳转到首页...', 1)
 
           router.push('/')
 

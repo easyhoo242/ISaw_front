@@ -1,28 +1,58 @@
 <template>
   <div>
-    <a-list item-layout="horizontal" :data-source="data">
-      <template #renderItem="{ item }">
-        <a-list-item>
-          <a-list-item-meta>
-            <template #title>
-              <a :href="`/user/${item.user_id}`">{{ item.author.nickname }}</a>
-            </template>
-            <template #avatar>
-              <a-avatar :src="item.author.avatar || BASE_HEAD_LOGO" />
-            </template>
-            <template #description>
-              <span>浏览了文章：</span>
-              <A :href="`/blog/${item.moment_id}`">
-                {{ item.moment.title }}
-              </A>
-              <span>
-                于<b> {{ item.createTime }}</b>
-              </span>
-            </template>
-          </a-list-item-meta>
-        </a-list-item>
-      </template>
-    </a-list>
+    <div class="grid grid-cols-2 gap-3">
+      <a-list item-layout="horizontal" :data-source="data.slice(0, 10)">
+        <template #renderItem="{ item }">
+          <a-list-item>
+            <a-list-item-meta>
+              <template #title>
+                <a :href="`/user/${item.user_id}`">{{
+                  item.author.nickname
+                }}</a>
+              </template>
+              <template #avatar>
+                <a-avatar :src="item.author.avatar || BASE_HEAD_LOGO" />
+              </template>
+              <template #description>
+                <span>浏览了文章：</span>
+                <A :href="`/blog/${item.moment_id}`">
+                  {{ item.moment.title }}
+                </A>
+                <span>
+                  于<b> {{ item.createTime }}</b>
+                </span>
+              </template>
+            </a-list-item-meta>
+          </a-list-item>
+        </template>
+      </a-list>
+
+      <a-list item-layout="horizontal" :data-source="data.slice(10, 20)">
+        <template #renderItem="{ item }">
+          <a-list-item>
+            <a-list-item-meta>
+              <template #title>
+                <a :href="`/user/${item.user_id}`">{{
+                  item.author.nickname
+                }}</a>
+              </template>
+              <template #avatar>
+                <a-avatar :src="item.author.avatar || BASE_HEAD_LOGO" />
+              </template>
+              <template #description>
+                <span>浏览了文章：</span>
+                <A :href="`/blog/${item.moment_id}`">
+                  {{ item.moment.title }}
+                </A>
+                <span>
+                  于<b> {{ item.createTime }}</b>
+                </span>
+              </template>
+            </a-list-item-meta>
+          </a-list-item>
+        </template>
+      </a-list>
+    </div>
 
     <a-pagination
       :current="currentPage"

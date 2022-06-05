@@ -27,13 +27,13 @@
         <div v-if="data.look > 50" class="hot-tag mr-2">热文</div>
 
         <A :href="`/blog/${data.momentId}`">
-          <div class="content-title overflow-hidden">
+          <div class="content-title overflow-hidden w-670px">
             {{ data.title || '这个人也太懒了吧 居然忘了取标题' }}
           </div>
         </A>
       </div>
 
-      <div class="content text-sm my-3 text-gray-500 min-h-77px">
+      <div class="content text-sm my-3 text-gray-500 min-h-77px w-727px">
         {{ filterHtml(data.content) || '这是内容' }}
       </div>
 

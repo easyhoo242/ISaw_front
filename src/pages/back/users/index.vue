@@ -51,10 +51,24 @@
         <a-form-item label="昵称">
           <a-input v-model:value="formState.nickname" />
         </a-form-item>
-        <a-form-item label="手机号码">
+        <a-form-item
+          label="手机号码"
+          :name="['telPhone']"
+          :rules="{
+            pattern: phoneRule,
+            message: '请输入正确的电话'
+          }"
+        >
           <a-input v-model:value="formState.telPhone" />
         </a-form-item>
-        <a-form-item label="邮箱">
+        <a-form-item
+          label="邮箱"
+          :name="['email']"
+          :rules="{
+            pattern: emailRule,
+            message: '请输入正确的邮箱'
+          }"
+        >
           <a-input v-model:value="formState.email" />
         </a-form-item>
 
@@ -89,7 +103,13 @@
 <script lang="ts">
 import { defineComponent, ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { requestUserList, changeUserInfo, requestdeleteUser } from '~/api'
+import {
+  requestUserList,
+  changeUserInfo,
+  requestdeleteUser,
+  phoneRule,
+  emailRule
+} from '~/api'
 import type { IUserInfoType, IUser } from '~/api'
 import { SmileOutlined, DownOutlined } from '@ant-design/icons-vue'
 import { message } from 'ant-design-vue'
@@ -260,7 +280,9 @@ export default defineComponent({
       handleOkEdit,
       handleDelete,
       labelCol: { span: 4 },
-      wrapperCol: { span: 14 }
+      wrapperCol: { span: 14 },
+      phoneRule,
+      emailRule
     }
   }
 })

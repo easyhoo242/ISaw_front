@@ -8,7 +8,7 @@
       <template #content> 使用其他账号登录 </template>
 
       <div @click="handlePush" class="btn login">
-        {{ isLogin ? '切换' : '登录' }}
+        {{ isLogin ? '登出' : '登录' }}
       </div>
     </a-popover>
   </div>
@@ -22,18 +22,21 @@ import localcache from '~/utils/cache'
 export default defineComponent({
   setup() {
     const router = useRouter()
-    const isLogin = ref(true)
+    const isLogin = ref(false)
 
-    const userInfo = localcache.getCache('user') || {}
+    const userInfo = localcache.getCache('user')
 
-    if (!userInfo?.token) {
+    if (userInfo.token === 'unLogin') {
+      isLogin.value = false
+    } else {
       isLogin.value = true
     }
 
     const handlePush = () => {
       if (isLogin.value) {
-        // localcache.deleteCache('user')
-      } else {
+        localcache.setCache('user', {
+          token: 'unLogin'
+        })
       }
 
       router.push('/login')

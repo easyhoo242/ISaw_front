@@ -15,7 +15,7 @@
 
       <template #side>
         <SideBar>
-          <HeadLogo />
+          <HeadLogo v-if="isLogin" />
 
           <AboutISaw />
 
@@ -37,10 +37,13 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+import { ref } from 'vue'
+import localcache from '~/utils/cache'
 
-export default defineComponent({
-  name: '首页'
-})
+const userInfo = localcache.getCache('user')
+
+const isLogin = ref(false)
+
+isLogin.value = userInfo.token === 'unLogin' ? false : true
 </script>

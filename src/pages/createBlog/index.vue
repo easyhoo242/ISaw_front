@@ -56,8 +56,6 @@
     <template #side>
       <AboutISaw />
 
-      <HeadLogo />
-
       <TagList :data="blogType" @emitData="handleGetBlogType" />
 
       <Module class="flex items-center justify-between">

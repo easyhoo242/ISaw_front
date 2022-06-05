@@ -136,16 +136,16 @@
         </Module>
       </template>
       <template #side>
-        <HeadLogo v-if="isShowHeaderInfo" />
+        <HeadLogo />
 
-        <HeaderLogoChange @change="handleChange" />
+        <HeaderLogoChange />
       </template>
     </FlexCol>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, onMounted, nextTick } from 'vue'
+import { defineComponent, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import {
   changeUserInfo,
@@ -255,17 +255,6 @@ export default defineComponent({
       message.success(res.msg, 3)
     }
 
-    // 刷新用户信息
-    const isShowHeaderInfo = ref(true)
-
-    const handleChange = () => {
-      isShowHeaderInfo.value = false
-
-      nextTick(() => {
-        isShowHeaderInfo.value = true
-      })
-    }
-
     onMounted(() => {
       getData()
     })
@@ -277,9 +266,7 @@ export default defineComponent({
       layout,
       passwordRule,
       phoneRule,
-      emailRule,
-      handleChange,
-      isShowHeaderInfo
+      emailRule
     }
   }
 })

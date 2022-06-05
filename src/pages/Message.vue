@@ -146,17 +146,18 @@ const handleAdd = async () => {
     return
   }
 
-  if (!score.value) {
-    message.error('请选择评分', 3)
-    return
-  }
-
   if (filterWords(valueHtml.value)) {
     message.error('检测到关键词, 请使用文明用语', 3)
     return
   }
 
+  if (!score.value) {
+    message.error('请选择评分', 3)
+    return
+  }
+
   const res = await requestAddMesage(valueHtml.value, score.value)
+
   if (!res.flag) {
     message.error(res.msg, 3)
     return

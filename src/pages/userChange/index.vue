@@ -28,18 +28,6 @@
               >
                 <a-input v-model:value="formState.user.nickname" />
               </a-form-item>
-              <a-form-item
-                :name="['user', 'email']"
-                :rules="[
-                  {
-                    pattern: emailRule,
-                    message: '输入正确的邮箱格式'
-                  }
-                ]"
-                label="邮箱"
-              >
-                <a-input v-model:value="formState.user.email" />
-              </a-form-item>
 
               <a-form-item label="性别">
                 <a-radio-group v-model:value="formState.user.sex">
@@ -71,6 +59,19 @@
                 label="电话"
               >
                 <a-input v-model:value="formState.user.telPhone" />
+              </a-form-item>
+
+              <a-form-item
+                :name="['user', 'email']"
+                :rules="[
+                  {
+                    pattern: emailRule,
+                    message: '输入正确的邮箱格式'
+                  }
+                ]"
+                label="邮箱"
+              >
+                <a-input v-model:value="formState.user.email" />
               </a-form-item>
 
               <a-form-item :name="['user', 'introduction']" label="简介">

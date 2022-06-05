@@ -76,20 +76,108 @@
               class="h-8 w-8 rounded-full bortder-gray-700 border-2px text-center"
               style="line-height: 30px"
             >
-              IS
+              文
             </div>
           </A>
         </div>
+
+        <a-button
+          class="absolute -right-25 t-0"
+          type="primary"
+          @click="showDrawer"
+        >
+          C
+        </a-button>
       </div>
     </div>
+
+    <a-drawer
+      :width="500"
+      title="ISaw 聊天室"
+      placement="left"
+      :visible="visible"
+      @close="onClose"
+    >
+      <div class="text-base text-center">
+        当前在线人数 : {{ currentOnlineNum || 2 }}
+      </div>
+      <div
+        ref="socketRef"
+        class="w-80% p-3 overflow-auto bg-gray-200 rounded-md dark:bg-dark-600"
+        :class="{ 'h-1000px': true }"
+      >
+        <div v-for="item in msgList" class="mb-2">
+          <div v-if="userInfo.id !== item.user.id" class="flex enter-y">
+            <div class="logo flex-0 mr-3 pt-2">
+              <a-avatar :src="item.user?.avatarUrl" />
+            </div>
+            <div class="body flex-1">
+              <div class="title">
+                {{ item.user.nickname }}
+                |
+                <span class="text-xs">
+                  {{ dayjs(item.createTime).fromNow() }}
+                </span>
+              </div>
+              <div>
+                <span class="content">
+                  {{ item.content }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div v-else class="flex enter-y">
+            <div class="body flex-1">
+              <div class="title text-right">
+                <span class="text-xs">
+                  {{ dayjs().from(dayjs(item.createTime)) }}
+                </span>
+                |
+                {{ item.user?.nickname }}
+              </div>
+              <div class="flex justify-end">
+                <span class="content active">
+                  {{ item.content }}
+                </span>
+              </div>
+            </div>
+
+            <div class="logo flex-0 ml-3 pt-2">
+              <a-avatar :src="item.user?.avatarUrl" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 flex">
+        <a-input v-model:value="message" placeholder="请输入聊天信息" />
+
+        <a-button type="default" @click="handleSend">发送</a-button>
+      </div>
+    </a-drawer>
   </header>
 </template>
 
 <script setup lang="ts">
-import { watch, ref, onMounted } from 'vue'
+import { watch, ref, onMounted, onUpdated } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import { useToggleDark } from '~/hooks'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime' // 到指定时间需要的插件
+import 'dayjs/locale/zh' // 集成中文
+import { useToggleDark, useWebsocket } from '~/hooks'
+import localcache from '~/utils/cache'
+
+dayjs.extend(relativeTime)
+dayjs.locale('zh')
+
+interface IMsgType {
+  content: string
+  createTime: string
+
+  user: { id: number; nickname: string; avatarUrl: string }
+}
 
 const { isDark, toggleDark } = useToggleDark()
 const router = useRouter()
@@ -107,8 +195,142 @@ watch(darkSwitch, () => {
   toggleDark()
 })
 
+const visible = ref<boolean>(true)
+
+const showDrawer = () => {
+  visible.value = true
+}
+
+const onClose = () => {
+  visible.value = false
+}
+
+// 聊天  发送
+const userInfo = localcache.getCache('user')
+const message = ref('')
+const msgList = ref<IMsgType[]>([])
+const currentOnlineNum = ref(0)
+
+const socketRef = ref(null)
+
+const ws = useWebsocket()
+
+ws.addEventListener(
+  'message',
+  (e) => {
+    const res = JSON.parse(e.data)
+
+    if (Array.isArray(res?.data)) {
+      localcache.setCache('socket', res?.data)
+
+      msgList.value = localcache.getCache('socket')
+    }
+
+    if (typeof res?.onLineCount === 'number') {
+      currentOnlineNum.value = res?.onLineCount
+    }
+
+    if (typeof res.data === 'object' && !Array.isArray(res?.data)) {
+      msgList.value.push(res.data)
+
+      currentOnlineNum.value = res.onLineCount
+
+      localcache.setCache('socket', msgList.value)
+    }
+
+    // console.log(msgList.value)
+  },
+  false
+)
+
+const handleSend = () => {
+  const _msg = message.value.trim()
+
+  ws.send(
+    JSON.stringify({
+      userInfo,
+      message: _msg
+    })
+  )
+
+  message.value = ''
+
+  // @ts-ignore
+  socketRef.scrollTop = socketRef.scrollHeight
+}
+
 onMounted(() => {
+  // socketRef?.scrollTop = socketRef?.scrollHeigth
+
   activeKey.value = router.currentRoute.value.path
   store.dispatch('actionGetUserInfo')
+
+  msgList.value = localcache.getCache('socket')
 })
+
+onUpdated(() => {})
 </script>
+
+<style lang="less" scoped>
+.title {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+.content {
+  position: relative;
+  font-size: 16px;
+  background-color: #fff;
+  border-radius: 5px;
+  max-width: 220px;
+  padding: 2px 10px 2px 8px;
+  display: inline-block;
+  z-index: 99;
+
+  &:hover {
+    background-color: rgb(252, 246, 246);
+  }
+
+  &::before {
+    content: ' ';
+    position: absolute;
+    left: -3px;
+    top: 8px;
+    height: 10px;
+    width: 10px;
+    padding: 2px;
+    background-color: #fff;
+    transform: rotate(45deg);
+
+    z-index: -1;
+  }
+
+  &.active {
+    background-color: #95ec69;
+    padding: 2px 8px 2px 10px;
+
+    &:hover {
+      background-color: #89e45b;
+    }
+
+    &:hover::after {
+      background-color: #89e45b;
+    }
+
+    &::before {
+      display: none;
+    }
+
+    &::after {
+      content: ' ';
+      position: absolute;
+      right: -3px;
+      top: 8px;
+      height: 10px;
+      width: 10px;
+      padding: 2px;
+      background-color: #95ec69;
+      transform: rotate(40deg);
+    }
+  }
+}
+</style>

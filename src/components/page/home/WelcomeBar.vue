@@ -6,7 +6,9 @@
       <div class="w-1/2">
         <h1 class="text-lg font-semibold">{{ sayHi }},</h1>
         <p class="mb-0">
-          {{ `欢迎回来，${userInfo?.nickname || nickname} 😊` }}
+          {{
+            `欢迎回来，${userInfo?.nickname || nickname || '期待您的加入！'} 😊`
+          }}
         </p>
       </div>
     </div>

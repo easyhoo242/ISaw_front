@@ -80,7 +80,7 @@ import { requestMomentLook, getUserDetail } from '~/api'
   })
 
   router.beforeEach((to) => {
-    const [, firstPath, secondPath] = to.path.split('/')
+    const [, firstPath] = to.path.split('/')
 
     const { token } = localCache.getCache('user') || {
       token: 'unLogin'

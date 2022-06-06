@@ -5,7 +5,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { setupLayouts } from 'layouts-generated'
 import generatedRoutes from 'pages-generated'
 import localCache from '~/utils/cache'
-import { message, notification } from 'ant-design-vue'
+import { message } from 'ant-design-vue'
 
 import 'ant-design-vue/dist/antd.less'
 import 'virtual:windi.css'
@@ -16,6 +16,7 @@ import { requestMomentLook, getUserDetail } from '~/api'
 // 引入animatecss
 ;(async () => {
   //  防止浏览器第一次登陆卡死   给一个未登录的token
+  document.title = 'ISaw 博客交流平台'
 
   if (!localCache.getCache('user')) {
     localCache.setCache('user', {

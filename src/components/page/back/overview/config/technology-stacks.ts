@@ -31,7 +31,7 @@ export const technologyStacks = [
 
   {
     title: 'UI 框架',
-    desp: 'Element Plus'
+    desp: 'Ant Design Vue'
   },
 
   {
@@ -46,24 +46,18 @@ export const technologyStacks = [
 
   {
     title: '工具库',
-    desp: ' @vueuse/core + dayjs + countup.js'
+    desp: ' @vueuse/core + dayjs'
   },
 
   {
     title: 'CSS 预编译',
-    desp: 'Sass / Less'
+    desp: 'Scss / Less'
   },
 
   {
     title: 'HTTP 工具',
     desp: 'Axios'
   },
-
-  {
-    title: 'Git Hook 工具',
-    desp: 'husky'
-  },
-
   {
     title: '代码规范',
     desp: 'EditorConfig + Prettier + ESLint'
@@ -72,10 +66,5 @@ export const technologyStacks = [
   {
     title: '提交规范',
     desp: 'Commitizen + Commitlint'
-  },
-
-  {
-    title: '自动部署',
-    desp: 'Centos + Jenkins + Nginx'
   }
 ]

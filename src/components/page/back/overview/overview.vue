@@ -2,7 +2,7 @@
   <div class="overview">
     <hy-card title="关于">
       <div class="c-left">
-        Vue3Admin 是基于 Vue3、Vuex、VueRouter、Vite、 ElementPlus
+        ISaw Admin 是基于 Vue3、Vuex、VueRouter、Vite、 Ant Design
         、TypeScript、Echart5 等后台系统解决方案。
       </div>
     </hy-card>
@@ -85,12 +85,6 @@
         />
       </hy-card>
     </div>
-
-    <hy-card title="项目结构">
-      <div class="c-left">
-        <hy-code language="bash" :code="projectDir" />
-      </div>
-    </hy-card>
   </div>
 </template>
 
@@ -102,12 +96,7 @@ import HyTextLink from '~/base-ui/text-link'
 import HyCode from '~/base-ui/code'
 import HyCard from '~/base-ui/card'
 
-import {
-  technologyStacks,
-  dependencies,
-  devDependencies,
-  projectDir
-} from './config'
+import { technologyStacks, dependencies, devDependencies } from './config'
 export default defineComponent({
   components: {
     HyDescriptions,
@@ -120,8 +109,7 @@ export default defineComponent({
     return {
       technologyStacks,
       dependencies,
-      devDependencies,
-      projectDir
+      devDependencies
     }
   }
 })

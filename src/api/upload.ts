@@ -4,7 +4,9 @@ import localcache from '~/utils/cache'
 
 // import { IResponsType } from './index'
 
-const token = localcache.getCache('user').token || ''
+const { token } = localcache.getCache('user') || {
+  token: 'unLogin'
+}
 
 enum uploadApi {
   piciutr = '/api/upload/',

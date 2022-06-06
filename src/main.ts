@@ -15,6 +15,11 @@ import { requestMomentLook, getUserDetail } from '~/api'
 
 // 引入animatecss
 ;(async () => {
+  //  防止浏览器第一次登陆卡死   给一个未登录的token
+  localCache.setCache('user', {
+    token: 'unLogin'
+  })
+
   const app = createApp(App)
 
   const routes = setupLayouts(generatedRoutes)
@@ -71,7 +76,9 @@ import { requestMomentLook, getUserDetail } from '~/api'
   router.beforeEach((to) => {
     const [, firstPath, secondPath] = to.path.split('/')
 
-    const { token } = localCache.getCache('user')
+    const { token } = localCache.getCache('user') || {
+      token: 'unLogin'
+    }
 
     if (
       firstPath === 'user' ||

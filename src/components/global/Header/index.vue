@@ -188,9 +188,9 @@
         </a-button>
       </div>
 
-      <a-button v-if="!isShowSocket" type="primary" @click="handleJoin">
-        加入聊天
-      </a-button>
+      <div v-if="!isShowSocket" @click="handleJoin" class="join-room">
+        进入聊天室
+      </div>
     </a-drawer>
   </header>
 </template>
@@ -431,6 +431,36 @@ onUpdated(() => {})
       background-color: #95ec69;
       transform: rotate(40deg);
     }
+  }
+}
+
+.join-room {
+  cursor: pointer;
+  margin: 100px auto;
+  width: 300px;
+  height: 300px;
+
+  color: skyblue;
+  font-size: 25px;
+  font-weight: bold;
+  background-color: #ebebebcc;
+
+  // border: 1px solid skyblue;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 0.5s ease-in-out;
+
+  &:hover {
+    background-color: skyblue;
+    color: #fff;
+    transform: scale(102%) rotate(360deg);
+
+    transition: all 0.5s ease-in-out;
   }
 }
 </style>

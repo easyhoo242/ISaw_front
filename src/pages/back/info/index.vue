@@ -234,13 +234,7 @@ const EChartsInit = () => {
 
   momentCountOption = {
     tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'cross',
-        crossStyle: {
-          color: '#999'
-        }
-      }
+      trigger: 'item'
     },
     legend: {
       top: '5%',

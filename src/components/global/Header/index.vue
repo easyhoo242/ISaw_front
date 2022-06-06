@@ -83,11 +83,12 @@
 
         <a-button
           v-if="userInfo.token !== 'unLogin'"
-          class="absolute -right-25 t-0"
+          class="absolute -right-20 t-0"
           type="primary"
+          shape="circle"
           @click="showDrawer"
         >
-          C
+          聊
         </a-button>
       </div>
     </div>
@@ -273,7 +274,7 @@ ws.addEventListener(
       localcache.setCache('socket', msgList.value)
     }
 
-    if (typeof res?.data === 'string' && res?.data.search(/上线/) !== -1) {
+    if (typeof res?.data === 'string') {
       notification.open({
         message: `${res.data}啦~`
       })
@@ -312,6 +313,10 @@ const handleGetEmoji = (emoji: string) => {
 
 const handleSend = () => {
   const _msg = cutrrentMessage.value.trim()
+
+  if (!_msg) {
+    return
+  }
 
   if (filterWords(_msg)) {
     notification.open({

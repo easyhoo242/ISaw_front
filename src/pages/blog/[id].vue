@@ -7,6 +7,7 @@
         <Content :data="currentContent" :labelInfo="labelInfo" />
 
         <Comment
+          id="comment"
           :data="comment"
           @submit="handleSubmit"
           @reply="handleReply"

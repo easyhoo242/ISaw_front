@@ -13,7 +13,7 @@
     </div>
 
     <div class="content flex-1">
-      <A :href="`/blog/${data.momentId}`">
+      <A :href="`/blog/${data.momentId}#comment`">
         <div class="content-text w-55 font-normal text-sm mb-2px">
           {{ data.content }}
         </div>

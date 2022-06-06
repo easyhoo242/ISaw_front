@@ -6,7 +6,7 @@
         :key="item.id"
         class="img-box w-full h-116 overflow-hidden"
       >
-        <img :src="item.url" alt="" class="w-full z-0" />
+        <img :src="item.url" alt="" class="w-full max-h-full z-0" />
       </div>
     </a-carousel>
   </Module>
@@ -31,25 +31,6 @@ async function getData() {
 onMounted(() => {
   getData()
 })
-
-// const list = [
-//   {
-//     id: 1,
-//     url: 'https://img0.baidu.com/it/u=1577615142,907299332&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500'
-//   },
-//   {
-//     id: 2,
-//     url: 'https://img0.baidu.com/it/u=1577615142,907299332&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500'
-//   },
-//   {
-//     id: 3,
-//     url: 'https://img0.baidu.com/it/u=1577615142,907299332&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500'
-//   },
-//   {
-//     id: 5,
-//     url: 'https://img0.baidu.com/it/u=1577615142,907299332&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500'
-//   }
-// ]
 </script>
 
 <style lang="less" scoped>

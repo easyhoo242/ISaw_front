@@ -59,8 +59,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, watch } from 'vue'
+import { defineComponent, ref, computed, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import localcache from '~/utils/cache'
 import NavHeader from '~/components/page/back/NavHeader/index.vue'
 import {
   PieChartOutlined,
@@ -100,6 +101,10 @@ export default defineComponent({
     const handleFoldChange = (isFold: boolean) => {
       isCollapse.value = isFold
     }
+
+    const selectedKeys = ref<string[]>(['1'])
+
+    localcache.setCache('backSelectKeys', selectedKeys.value)
 
     const currentMenu = [
       {
@@ -148,8 +153,6 @@ export default defineComponent({
     watch(
       () => path.value,
       () => {
-        console.log(path.value)
-
         currentMenu.forEach((res) => {
           if (res.url === path.value) {
             branchValue.value = res.label
@@ -158,9 +161,13 @@ export default defineComponent({
       }
     )
 
+    onMounted(() => {
+      selectedKeys.value = localcache.getCache('backSelectKeys') || ['1']
+    })
+
     return {
       collapsed: ref<boolean>(false),
-      selectedKeys: ref<string[]>(['1']),
+      selectedKeys,
       currentMenu,
       handleFoldChange,
       handleMenuItemClick,

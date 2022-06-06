@@ -20,7 +20,7 @@
           :mode="mode"
         />
         <Editor
-          style="height: 500px; overflow-y: hidden"
+          style="height: 700px; overflow-y: hidden"
           v-model="valueHtml"
           :defaultConfig="editorConfig"
           :mode="mode"
@@ -28,29 +28,42 @@
         />
       </Module>
 
-      <Module title="上传封面">
-        <div class="pt-2 pl-2">
-          <a-upload
-            v-model:file-list="fileList"
-            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-            list-type="picture-card"
-            @preview="handlePreview"
-          >
-            <div v-if="fileList.length < 8">
-              <plus-outlined />
-              <div style="margin-top: 8px">Upload</div>
-            </div>
-          </a-upload>
-          <a-modal
-            :visible="previewVisible"
-            :title="previewTitle"
-            :footer="null"
-            @cancel="handleCancel"
-          >
-            <img alt="example" style="width: 100%" :src="previewImage" />
-          </a-modal>
+      <a-drawer
+        v-model:visible="isShowEdited"
+        :placement="placement"
+        :width="550"
+        class="custom-class"
+        title="草稿"
+        placement="right"
+      >
+        <template #extra> </template>
+
+        <div
+          :style="{
+            position: 'absolute',
+            right: 0,
+            bottom: 0,
+            width: '100%',
+            borderTop: '1px solid #e9e9e9',
+            padding: '10px 16px',
+            background: '#fff',
+            textAlign: 'right',
+            zIndex: 1
+          }"
+        >
+          <a-button style="margin-right: 8px" @click="handleUseEdit">
+            应用
+          </a-button>
         </div>
-      </Module>
+
+        <div>
+          <h1>标题</h1>
+          <p>{{ edited?.title || '' }}</p>
+          <hr />
+          <h2 class="mt-3">内容</h2>
+          <div v-html="edited?.content || ''" />
+        </div>
+      </a-drawer>
     </template>
 
     <template #side>
@@ -79,17 +92,11 @@
       </Module>
 
       <Module>
-        <a-button type="" @click="isShowEdited = !isShowEdited"
-          >查看上次编辑的内容</a-button
-        >
-      </Module>
-
-      <Module v-show="isShowEdited" class="enter-x">
-        <h1>标题</h1>
-        <p>{{ edited?.title || '' }}</p>
-        <hr />
-        <h2 class="mt-3">内容</h2>
-        <div v-html="edited?.content || ''" />
+        <div class="flex items-center justify-between">
+          <a-button type="" @click="isShowEdited = !isShowEdited">
+            查看上次编辑的内容
+          </a-button>
+        </div>
       </Module>
     </template>
   </FlexCol>
@@ -98,7 +105,7 @@
 <script lang="ts">
 import { onBeforeUnmount, ref, shallowRef, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import cache from '~/utils/cache'
+import localcache from '~/utils/cache'
 import { requestCreateMoment } from '~/api'
 import type { ICreateMoment } from '~/api'
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
@@ -106,24 +113,10 @@ import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import TagList from '~/components/page/createBlog/TagList.vue'
 import Module from '~/components/global/Module.vue'
 import { message } from 'ant-design-vue'
-
-// 上传封面
-import { PlusOutlined } from '@ant-design/icons-vue'
-//@ts-ignore
-import { UploadProps } from 'ant-design-vue'
 import AboutISaw from '~/components/page/blog/AboutISaw.vue'
 
-function getBase64(file: File) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = () => resolve(reader.result)
-    reader.onerror = (error) => reject(error)
-  })
-}
-
 export default {
-  components: { Editor, Toolbar, TagList, Module, PlusOutlined, AboutISaw },
+  components: { Editor, Toolbar, TagList, Module, AboutISaw },
   setup() {
     const router = useRouter()
     const blogTitle = ref('')
@@ -156,36 +149,6 @@ export default {
       blogType.value = id
     }
 
-    // 上传封面
-    const previewVisible = ref(false)
-    const previewImage = ref('')
-    const previewTitle = ref('')
-
-    //@ts-ignore
-    const fileList = ref<UploadProps['fileList']>([
-      // {
-      //   uid: '-1',
-      //   name: 'image.png',
-      //   status: 'done',
-      //   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-      // }
-    ])
-
-    const handleCancel = () => {
-      previewVisible.value = false
-      previewTitle.value = ''
-    }
-    //@ts-ignore
-    const handlePreview = async (file: UploadProps['fileList'][number]) => {
-      if (!file.url && !file.preview) {
-        file.preview = (await getBase64(file.originFileObj)) as string
-      }
-      previewImage.value = file.url || file.preview
-      previewVisible.value = true
-      previewTitle.value =
-        file.name || file.url.substring(file.url.lastIndexOf('/') + 1)
-    }
-
     // 文章内容
     const visible = ref<boolean>(false)
 
@@ -194,13 +157,13 @@ export default {
     }
 
     const saveEdit = () => {
-      cache.setCache('editingBlog', {
+      localcache.setCache('editingBlog', {
         title: blogTitle.value,
         content: valueHtml.value,
         type: blogType.value
       })
 
-      const isSave = cache.getCache('editingBlog')
+      const isSave = localcache.getCache('editingBlog')
 
       if (isSave) {
         message.success('保存成功')
@@ -210,6 +173,19 @@ export default {
         }, 1000)
       }
       visible.value = false
+    }
+
+    // 应用上次编辑的内容
+    const handleUseEdit = () => {
+      const { content, title, type } = localcache.getCache('editingBlog')
+
+      setTimeout(() => {
+        valueHtml.value = content
+      }, 0)
+
+      blogTitle.value = title
+
+      blogType.value = type
     }
 
     const nosaveEdit = () => {
@@ -243,8 +219,6 @@ export default {
         label: blogType.value
       }
 
-      cache.setCache('EditingMoment', data)
-
       const res = await requestCreateMoment(data)
 
       if (!res.flag) {
@@ -268,7 +242,7 @@ export default {
       // blogType.value = result.type
     })
 
-    const edited = cache.getCache('editingBlog')
+    const edited = localcache.getCache('editingBlog')
 
     const isShowEdited = ref(false)
 
@@ -284,21 +258,15 @@ export default {
       blogType,
       handleGetBlogType,
       handleClick() {},
-      // 上传封面部分
-      previewVisible,
-      previewImage,
-      fileList,
-      handleCancel,
-      handlePreview,
       // 保存文章
-      previewTitle,
       visible,
       handleQuitEdit,
       saveEdit,
       nosaveEdit,
       handlePushBlog,
       edited,
-      isShowEdited
+      isShowEdited,
+      handleUseEdit
     }
   }
 }

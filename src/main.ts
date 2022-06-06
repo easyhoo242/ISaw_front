@@ -16,9 +16,14 @@ import { requestMomentLook, getUserDetail } from '~/api'
 // 引入animatecss
 ;(async () => {
   //  防止浏览器第一次登陆卡死   给一个未登录的token
-  localCache.setCache('user', {
-    token: 'unLogin'
-  })
+
+  if (!localCache.getCache('user')) {
+    localCache.setCache('user', {
+      token: 'unLogin'
+    })
+
+    return
+  }
 
   const app = createApp(App)
 

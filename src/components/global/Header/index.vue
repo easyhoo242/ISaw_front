@@ -118,8 +118,14 @@
               <div class="title">
                 {{ item.user.nickname }}
                 |
-                <span class="text-xs">
+
+                <span
+                  v-if="dayjs(item.createTime).fromNow().search(/天前/) !== -1"
+                >
                   {{ dayjs(item.createTime).fromNow() }}
+                </span>
+                <span v-else class="text-xs">
+                  {{ dayjs(item.createTime).format('HH : mm') }}
                 </span>
               </div>
               <div>
@@ -133,8 +139,13 @@
           <div v-else class="flex -enter-x">
             <div class="body flex-1">
               <div class="title text-right">
-                <span class="text-xs">
-                  {{ dayjs().from(dayjs(item.createTime)) }}
+                <span
+                  v-if="dayjs(item.createTime).fromNow().search(/天前/) !== -1"
+                >
+                  {{ dayjs(item.createTime).fromNow() }}
+                </span>
+                <span v-else class="text-xs">
+                  {{ dayjs(item.createTime).format('HH : mm') }}
                 </span>
                 |
                 {{ item.user?.nickname }}
@@ -159,6 +170,7 @@
           v-model:value="cutrrentMessage"
           placeholder="请输入聊天信息"
           @keyup.enter.native="handleSend"
+          class="rounded-md"
         />
 
         <Emoji
@@ -167,7 +179,11 @@
           @change="handleGetEmoji"
         />
 
-        <a-button type="default" class="ml-3" @click="handleSend">
+        <a-button
+          type="default"
+          class="ml-3 mt-1 rounded-full"
+          @click="handleSend"
+        >
           发送
         </a-button>
       </div>

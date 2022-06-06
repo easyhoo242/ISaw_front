@@ -13,7 +13,7 @@
         <!-- <img v-if="data.images" :src="data.images[0]" alt="" /> -->
         <img
           v-if="data.images"
-          :src="data.images[0]"
+          :src="data.images[data.images.length - 1]"
           alt=""
           class="w-full h-full max-h-full"
         />

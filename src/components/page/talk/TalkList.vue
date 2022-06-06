@@ -62,7 +62,7 @@ export default defineComponent({
   }
 }
 .img {
-  background-size: 100% 100%;
+  background-size: 220px 220px;
   background-repeat: no-repeat;
   background-position: center center;
 }

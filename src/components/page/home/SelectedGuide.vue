@@ -39,7 +39,7 @@ export default defineComponent({
   setup() {
     const list = ref<IMomentType[]>([])
     const getData = async () => {
-      const res = await requestHotseeList(1)
+      const res = await requestHotseeList(2)
 
       list.value = res.data!
     }

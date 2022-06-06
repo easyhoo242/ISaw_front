@@ -274,7 +274,7 @@ ws.addEventListener(
       localcache.setCache('socket', msgList.value)
     }
 
-    if (typeof res?.data === 'string') {
+    if (typeof res?.data === 'string' && res?.data.search(/上线/) !== -1) {
       notification.open({
         message: `${res.data}啦~`
       })
@@ -313,10 +313,6 @@ const handleGetEmoji = (emoji: string) => {
 
 const handleSend = () => {
   const _msg = cutrrentMessage.value.trim()
-
-  if (!_msg) {
-    return
-  }
 
   if (filterWords(_msg)) {
     notification.open({

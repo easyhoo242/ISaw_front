@@ -273,14 +273,12 @@ ws.addEventListener(
       localcache.setCache('socket', msgList.value)
     }
 
-    if (typeof res?.data === 'string') {
-      if (res?.data.search(/上线/) !== -1) {
-        notification.open({
-          message: `${res.data}啦~`
-        })
+    if (typeof res?.data === 'string' && res?.data.search(/上线/) !== -1) {
+      notification.open({
+        message: `${res.data}啦~`
+      })
 
-        return
-      }
+      return
     }
 
     // console.log(msgList.value)

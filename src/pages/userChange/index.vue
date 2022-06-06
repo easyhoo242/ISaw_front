@@ -24,7 +24,7 @@
               <a-form-item
                 :name="['user', 'nickname']"
                 label="昵称"
-                :rules="[{ required: true }]"
+                :rules="[{ required: true, message: '请输入昵称' }]"
               >
                 <a-input v-model:value="formState.user.nickname" />
               </a-form-item>

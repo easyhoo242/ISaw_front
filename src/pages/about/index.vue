@@ -14,16 +14,19 @@
         </div>
         <!-- eslint-disable-next-line vue/no-v-html -->
         <div class="body">
-          全日制本科计算机专业大四准毕业生，一年半前端开发经验 <br />
-          熟练掌握JavaScript、TypeScript、Node.js、Vue、
-          MYSQL、MongoDB等语言或技术， <br />
+          全日制本科计算机专业大四准毕业生，一年前端开发经验 <br />
+          熟练掌握JavaScript、TypeScript、Node.js、Koa、Vue2、
+          Vue3、MYSQL等语言或技术， <br />
           具备 Web 全栈独立开发能力。<br />
           爱好上网、游戏、技术研究，完美主义者，细节控。
         </div>
         <div v-if="profile.email" class="footer">
           <span v-if="profile.email" title="Email">
             <!-- <font-awesome-icon :icon="['far', 'envelope']" /> -->
-            {{ profile.email }}
+
+            <A href="https://gitee.com/Isaw/vitesse-blog" target="_blank">
+              {{ `gitee地址: https://gitee.com/Isaw` }}
+            </A>
           </span>
         </div>
       </div>

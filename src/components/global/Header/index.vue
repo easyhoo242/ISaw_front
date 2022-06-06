@@ -107,7 +107,7 @@
       <div
         v-show="isShowSocket"
         id="socketRef"
-        class="w-80% p-3 overflow-auto bg-gray-200 rounded-md dark:bg-dark-600 h-1000px"
+        class="w-80% p-3 overflow-auto bg-gray-200 rounded-md dark:bg-dark-600 h-78vh"
       >
         <div v-for="item in msgList" class="mb-2">
           <div v-if="userInfo.id !== item.user.id" class="flex -enter-x">
@@ -367,6 +367,10 @@ onUpdated(() => {})
   z-index: 99;
 
   &:hover {
+    background-color: rgb(252, 246, 246);
+  }
+
+  &:hover::before {
     background-color: rgb(252, 246, 246);
   }
 

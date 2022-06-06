@@ -29,6 +29,15 @@
             </A>
           </span>
         </div>
+
+        <div class="body mt-3">
+          {{
+            `网站logo寓意 绽放 
+          三个色彩取自打印机中的三原色即CMYK中的C（青）M（品）Y（黄），
+          打印机用这三种颜色打印出绚丽的图片，
+          论坛中的各位从讨论中获得多元多彩的结果；`
+          }}
+        </div>
       </div>
     </div>
   </div>
@@ -61,7 +70,7 @@ onMounted(() => {
   margin: 0 auto;
   position: relative;
   padding: 30px;
-  top: 100px;
+  top: 85px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 
   .avatar-wrap {
@@ -100,7 +109,7 @@ onMounted(() => {
 
     .body {
       font-size: 16px;
-      margin-top: 40px;
+      margin-top: 30px;
       white-space: pre-line;
     }
 

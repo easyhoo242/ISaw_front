@@ -200,14 +200,14 @@ import { watch, ref, onMounted, onUpdated, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime' // 到指定时间需要的插件
+// import relativeTime from 'dayjs/plugin/relativeTime' // 到指定时间需要的插件
 import 'dayjs/locale/zh' // 集成中文
 import { useToggleDark, useWebsocket } from '~/hooks'
 import localcache from '~/utils/cache'
 import filterWords from '~/utils/filterWords'
 import { notification } from 'ant-design-vue'
 
-dayjs.extend(relativeTime)
+// dayjs.extend(relativeTime)
 dayjs.locale('zh')
 
 interface IMsgType {

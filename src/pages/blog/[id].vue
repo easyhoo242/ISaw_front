@@ -34,7 +34,7 @@
 
         <TimeLine />
 
-        <Casual v-if="!isShowPermission" />
+        <!-- <Casual v-if="!isShowPermission" /> -->
 
         <!-- 文章操作模块 -->
         <Module v-if="isShowPermission" title="文章权限操作">

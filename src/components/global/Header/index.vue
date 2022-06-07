@@ -101,7 +101,7 @@
       @close="onClose"
     >
       <div class="text-base text-center mb-3">
-        当前在线人数 : {{ currentOnlineNum }}
+        当前在线人数 : {{ isShowSocket ? currentOnlineNum : '?' }}
       </div>
 
       <div
@@ -189,7 +189,7 @@
       </div>
 
       <div v-if="!isShowSocket" @click="handleJoin" class="join-room">
-        进入聊天室
+        进入群聊
       </div>
     </a-drawer>
   </header>

@@ -34,10 +34,6 @@ const userInfo = localcache.getCache('user')
 const message = ref('')
 const msgList = ref<IMsgType[]>([])
 
-const handleMessage = (e: any) => {
-  console.log(e)
-}
-
 const ws = useWebsocket()
 
 const handleSend = () => {
@@ -58,4 +54,5 @@ const handleSend = () => {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>

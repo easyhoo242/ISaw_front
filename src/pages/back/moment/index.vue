@@ -2,21 +2,13 @@
   <div>
     <a-form :model="formState" :label-col="labelCol" :wrapper-col="wrapperCol">
       <a-form-item label="搜索">
-        <a-input
-          v-model:value="currentKeyword"
-          placeholder="输入内容按回车键搜索"
-          @keyup.enter.native="handleKeyWordSearch"
-          style="width: 300px"
-        />
+        <a-input v-model:value="currentKeyword" placeholder="输入内容按回车键搜索" @keyup.enter.native="handleKeyWordSearch"
+          style="width: 300px" />
       </a-form-item>
 
       <a-form-item label="排序">
         <a-radio-group v-model:value="formState.sort">
-          <a-radio-button
-            v-for="item in radioList"
-            :value="item.value"
-            @click.prevent="handleOrderChange(item.value)"
-          >
+          <a-radio-button v-for="item in radioList" :value="item.value" @click.prevent="handleOrderChange(item.value)">
             {{ item.label }}
           </a-radio-button>
         </a-radio-group>
@@ -25,15 +17,8 @@
 
     <a-tabs v-model:activeKey="currentTab" @change="handleTabChange">
       <a-tab-pane key="done" tab="已完成">
-        <BackTable
-          :total="total"
-          :data="data"
-          :col="columns"
-          :current="formState.offset"
-          @audit="handleAudit"
-          @delete="handleDelete"
-          @page="handlePageChange"
-        >
+        <BackTable :total="total" :data="data"  :current="formState.offset" @audit="handleAudit"
+          @delete="handleDelete" @page="handlePageChange">
           <template #action>
             <span>驳回文章</span>
           </template>
@@ -41,25 +26,14 @@
       </a-tab-pane>
 
       <a-tab-pane key="audit" tab="审核中">
-        <BackTable
-          :total="total"
-          :data="data"
-          :col="columns"
-          :current="formState.offset"
-          @audit="handleAudit"
-          @delete="handleDelete"
-          @page="handlePageChange"
-        >
+        <BackTable :total="total" :data="data"  :current="formState.offset" @audit="handleAudit"
+          @delete="handleDelete" @page="handlePageChange">
           <template #action>
             <span>通过审核</span>
           </template>
         </BackTable>
 
-        <a-button
-          class="float-left mb-3"
-          type="primary"
-          @click="handlecreateMoment"
-        >
+        <a-button class="float-left mb-3" type="primary" @click="handlecreateMoment">
           添加记录
         </a-button>
       </a-tab-pane>
@@ -93,67 +67,7 @@ export default defineComponent({
 
     const total = ref(0)
 
-    const columns = [
-      {
-        title: '序号',
-        dataIndex: 'momentId',
-        key: 'momentId',
-        width: '150px'
-      },
-      {
-        title: '发布者',
-        dataIndex: 'author.nickname',
-        key: 'userId',
-        width: '150px'
-      },
-      {
-        title: '标题',
-        dataIndex: 'title',
-        key: 'title',
-        width: '200px'
-      },
-      {
-        title: '内容',
-        dataIndex: 'content',
-        key: 'content',
-        width: '400px'
-      },
-      {
-        title: '封面',
-        dataIndex: 'images',
-        key: 'images',
-        width: '200px',
-        slots: { customRender: 'img' }
-      },
-      {
-        title: '审核结果',
-        dataIndex: 'audit',
-        key: 'audit',
-        slots: { customRender: 'audit' },
-        width: '200px'
-      },
-      {
-        title: '创建时间',
-        dataIndex: 'createTime',
-        key: 'createTime',
-        width: '250px'
-      },
-      {
-        title: '更新时间',
-        dataIndex: 'updateTime',
-        key: 'updateTime',
-        width: '260px'
-      },
-      {
-        title: '操作',
-        dataIndex: 'operation',
-        slots: { customRender: 'action' },
-        width: '300px'
-      }
-    ].map((res) => ({
-      ...res,
-      align: 'center'
-    }))
+  
 
     const data = ref<IMomentType[]>([])
 
@@ -297,7 +211,6 @@ export default defineComponent({
 
       data,
       total,
-      columns,
       handlecreateMoment,
       handleAudit,
       handleDelete,

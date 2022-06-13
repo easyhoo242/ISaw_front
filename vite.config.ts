@@ -12,12 +12,11 @@ import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 import { viteThemePlugin, antdDarkThemePlugin } from 'vite-plugin-theme'
-import { getLessVars } from 'antd-theme-generator'
-// antd自定义变量和暗黑模式变量
-import antdCustomVars from './src/antd/custom'
-const antdDarkVars = getLessVars(
-  './node_modules/ant-design-vue/lib/style/themes/dark.less'
-)
+// import { getLessVars } from 'antd-theme-generator'
+// // antd自定义变量和暗黑模式变量
+// const antdDarkVars = getLessVars(
+//   './node_modules/ant-design-vue/lib/style/themes/dark.less'
+// )
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -63,7 +62,7 @@ export default defineConfig({
     antdDarkThemePlugin({
       darkModifyVars: {
         'primary-color': '#448ef6',
-        ...antdDarkVars
+        // ...antdDarkVars
       }
     }),
     // ...

@@ -3,54 +3,31 @@
     <template #body>
       <Module>
         <div class="text-left text-lg mx-2.5 pb-2.5 font-bold">标题</div>
-        <a-input
-          v-model:value="blogTitle"
-          class="text-center"
-          size="large"
-          placeholder="请输入标题..."
-        />
+        <a-input v-model:value="blogTitle" class="text-center" size="large" placeholder="请输入标题..." />
       </Module>
       <Module>
         <div class="text-left text-lg mx-2.5 pb-2.5 font-bold">正文</div>
 
-        <Toolbar
-          style="border-bottom: 1px solid #ccc"
-          :editor="editorRef"
-          :defaultConfig="toolbarConfig"
-          :mode="mode"
-        />
-        <Editor
-          style="height: 700px; overflow-y: hidden"
-          v-model="valueHtml"
-          :defaultConfig="editorConfig"
-          :mode="mode"
-          @onCreated="handleCreated"
-        />
+        <Toolbar style="border-bottom: 1px solid #ccc" :editor="editorRef" :defaultConfig="toolbarConfig"
+          :mode="mode" />
+        <Editor style="height: 700px; overflow-y: hidden" v-model="valueHtml" :defaultConfig="editorConfig" :mode="mode"
+          @onCreated="handleCreated" />
       </Module>
 
-      <a-drawer
-        v-model:visible="isShowEdited"
-        :placement="placement"
-        :width="550"
-        class="custom-class"
-        title="草稿"
-        placement="right"
-      >
+      <a-drawer v-model:visible="isShowEdited" :width="550" class="custom-class" title="草稿" placement="right">
         <template #extra> </template>
 
-        <div
-          :style="{
-            position: 'absolute',
-            right: 0,
-            bottom: 0,
-            width: '100%',
-            borderTop: '1px solid #e9e9e9',
-            padding: '10px 16px',
-            background: '#fff',
-            textAlign: 'right',
-            zIndex: 1
-          }"
-        >
+        <div :style="{
+          position: 'absolute',
+          right: 0,
+          bottom: 0,
+          width: '100%',
+          borderTop: '1px solid #e9e9e9',
+          padding: '10px 16px',
+          background: '#fff',
+          textAlign: 'right',
+          zIndex: 1
+        }">
           <a-button style="margin-right: 8px" @click="handleUseEdit">
             应用
           </a-button>
@@ -79,14 +56,8 @@
           发布
         </div>
 
-        <a-modal
-          v-model:visible="visible"
-          title="提示"
-          ok-text="保存"
-          cancel-text="不保存"
-          @ok="saveEdit"
-          @cancel="nosaveEdit"
-        >
+        <a-modal v-model:visible="visible" title="提示" ok-text="保存" cancel-text="不保存" @ok="saveEdit"
+          @cancel="nosaveEdit">
           <p>是否保存草稿</p>
         </a-modal>
       </Module>
@@ -257,7 +228,7 @@ export default {
       // 选择标签
       blogType,
       handleGetBlogType,
-      handleClick() {},
+      handleClick() { },
       // 保存文章
       visible,
       handleQuitEdit,

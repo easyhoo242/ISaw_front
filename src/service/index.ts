@@ -15,7 +15,10 @@ const hyRequest = new HYRequest({
         return config
       }
 
-      config.headers.Authorization = `Bearer ${token}`
+      if(config.headers) {
+
+        config.headers.Authorization = `Bearer ${token}`
+      } 
 
       return config
     },

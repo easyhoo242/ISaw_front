@@ -42,7 +42,6 @@ declare module '@vue/runtime-core' {
     Search: typeof import('./src/components/global/Header/Search.vue')['default']
     SelectedGuide: typeof import('./src/components/page/home/SelectedGuide.vue')['default']
     SideBar: typeof import('./src/components/global/SideBar/index.vue')['default']
-    Socket: typeof import('./src/components/global/Header/Socket.vue')['default']
     SubjectItem: typeof import('./src/components/page/subject/SubjectList/SubjectItem.vue')['default']
     SubjectList: typeof import('./src/components/page/subject/SubjectList/index.vue')['default']
     SwiperBar: typeof import('./src/components/page/home/SwiperBar.vue')['default']
@@ -52,7 +51,6 @@ declare module '@vue/runtime-core' {
     UserForm: typeof import('./src/components/global/UserForm/index.vue')['default']
     UserHeader: typeof import('./src/components/page/back/NavHeader/UserHeader.vue')['default']
     UserInfo: typeof import('./src/components/page/user/UserInfo.vue')['default']
-    Users: typeof import('./src/components/page/back/users/index.vue')['default']
     WelcomeBar: typeof import('./src/components/page/home/WelcomeBar.vue')['default']
   }
 }

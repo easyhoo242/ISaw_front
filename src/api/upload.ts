@@ -8,10 +8,10 @@ const { token } = localcache.getCache('user') || {
   token: 'unLogin'
 }
 
-enum uploadApi {
-  piciutr = '/api/upload/',
-  avatar = '/api/upload/avatar'
-}
+// enum uploadApi {
+//   piciutr = '/api/upload/',
+//   avatar = '/api/upload/avatar'
+// }
 
 export function getUplodBackName(momentId: number, parameter: any) {
   return axios({

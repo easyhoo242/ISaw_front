@@ -15,7 +15,7 @@ enum uploadApi {
 
 export function getUplodBackName(momentId: number, parameter: any) {
   return axios({
-    url: uploadApi.piciutr + momentId + '/picture',
+    url: process.env.NODE_ENV === 'production' ? '/upload/' : '/api/upload/' + momentId + '/picture',
     method: 'post',
     // 传输文件流需要单独设置请求头
     headers: {
@@ -28,7 +28,7 @@ export function getUplodBackName(momentId: number, parameter: any) {
 
 export function uploadAvatar(parameter: any) {
   return axios({
-    url: uploadApi.avatar,
+    url: process.env.NODE_ENV === 'production' ? '/upload/avatar' : '/api/upload/avatar',
     method: 'post',
     headers: {
       'Content-Type': 'multipart/form-data',

@@ -66,7 +66,7 @@ export default defineComponent({
 
     // 当进入 个人中心页的时候 被拦截 并换成被访问者的信息  
     // 只在个人中心页起效果
-    if (route.path.search(/user/) !== -1) {
+    if (route.path.split('/')[1] === 'user') {
       id = route.path.split('/')[2]
     }
 

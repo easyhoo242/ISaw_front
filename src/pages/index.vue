@@ -3,6 +3,8 @@
     <!-- 欢迎横幅 -->
     <WelcomeBar />
 
+    <AnnoVue v-if="!isLogin" class="-enter-y"/>
+
     <!-- 主体 -->
     <FlexCol>
       <template #body>
@@ -40,6 +42,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import localcache from '~/utils/cache'
+import AnnoVue from '~/components/page/home/Anno.vue';
 
 const userInfo = localcache.getCache('user')
 

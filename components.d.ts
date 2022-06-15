@@ -8,6 +8,7 @@ declare module '@vue/runtime-core' {
     A: typeof import('./src/components/global/A.vue')['default']
     AboutISaw: typeof import('./src/components/page/blog/AboutISaw.vue')['default']
     ActiveTop: typeof import('./src/components/global/ActiveTop.vue')['default']
+    Anno: typeof import('./src/components/page/home/Anno.vue')['default']
     BackTable: typeof import('./src/components/page/back/BackTable.vue')['default']
     BlogHeader: typeof import('./src/components/page/blog/BlogHeader.vue')['default']
     BranchCrumb: typeof import('./src/components/global/BranchCrumb.vue')['default']

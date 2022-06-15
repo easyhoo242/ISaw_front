@@ -1,62 +1,36 @@
 <template>
   <UserForm type="register">
     <section class="user">
-      <a-form
-        :model="formState"
-        name="basic"
-        autocomplete="off"
-        layout="vertical"
-        @finish="onFinish"
-        @finishFailed="onFinishFailed"
-        class="mt-5 px-4"
-      >
-        <a-form-item
-          label="用户名"
-          name="username"
-          :rules="[
-            { required: true, message: '请输入用户名' },
-            { pattern: usernameRule, message: '4~16位的字母或数字组成' }
-          ]"
-        >
+      <a-form :model="formState" name="basic" autocomplete="off" layout="vertical" @finish="onFinish"
+        @finishFailed="onFinishFailed" class="mt-5 px-4">
+        <a-form-item label="用户名" name="username" :rules="[
+          { required: true, message: '请输入用户名' },
+          { pattern: usernameRule, message: '4~16位的字母或数字组成' }
+        ]">
           <a-input v-model:value="formState.username" />
         </a-form-item>
 
-        <a-form-item
-          label="昵称"
-          name="nickname"
-          :rules="[{ required: true, message: '昵称不能为空~' }]"
-        >
+        <a-form-item label="昵称" name="nickname" :rules="[{ required: true, message: '昵称不能为空~' }]">
           <a-input v-model:value="formState.nickname" />
         </a-form-item>
 
-        <a-form-item
-          label="密码"
-          name="password"
-          :rules="[
-            { required: true, message: '请输入密码' },
-            { pattern: passwordRule, message: '4~16位的字母和数字组成' }
-          ]"
-        >
+        <a-form-item label="密码" name="password" :rules="[
+          { required: true, message: '请输入密码' },
+          { pattern: passwordRule, message: '4~16位的字母和数字组成' }
+        ]">
           <a-input-password v-model:value="formState.password" />
         </a-form-item>
 
-        <a-form-item
-          label="确认密码"
-          name="rePassword"
-          :rules="[
-            { required: true, message: '请确认密码' },
-            { pattern: passwordRule, message: '4~16位的字母和数字组成' }
-          ]"
-        >
+        <a-form-item label="确认密码" name="rePassword" :rules="[
+          { required: true, message: '请确认密码' },
+          { pattern: passwordRule, message: '4~16位的字母和数字组成' }
+        ]">
           <a-input-password v-model:value="formState.rePassword" />
         </a-form-item>
 
         <a-form-item class="mt-10">
-          <input
-            class="submit w-full font-bold text-stroke-cool-light-50 text-center py-2 rounded-lg"
-            value="注 册"
-            type="submit"
-          />
+          <input class="submit w-full font-bold text-stroke-cool-light-50 text-center py-2 rounded-lg" value="注 册"
+            type="submit" />
         </a-form-item>
       </a-form>
     </section>
@@ -108,7 +82,10 @@ export default defineComponent({
         password: formState.password
       }
 
-      const { flag, msg } = await registUser(data)
+      const { flag, msg } = await registUser(data) || {
+        flag: false,
+        msg: '未知错误'
+      }
 
       if (!flag) {
         message.error(msg, 2)

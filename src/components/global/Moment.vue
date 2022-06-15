@@ -1,22 +1,13 @@
 <template>
-  <Module class="moment flex">
-    <div
-      class="logo flex-0 w-210px h-158px rounded-md overflow-hidden mr-5 relative"
-    >
-      <span
-        class="logo-label absolute flex items-center justify-center px-3 py-1 rounded-full text-gray-50"
-      >
+  <Module class="moment flex relative">
+    <div class="logo flex-0 w-210px h-158px rounded-md overflow-hidden mr-5 relative">
+      <span class="logo-label absolute flex items-center justify-center px-3 py-1 rounded-full text-gray-50">
         {{ data.label.name }}
       </span>
       <!-- <A :href="`/blog/${item.id}`"> <img :src="item.img" alt="" /></A> -->
       <A :href="`/blog/${data.momentId}`">
         <!-- <img v-if="data.images" :src="data.images[0]" alt="" /> -->
-        <img
-          v-if="data.images"
-          :src="data.images[data.images.length - 1]"
-          alt=""
-          class="w-full h-full max-h-full"
-        />
+        <img v-if="data.images" :src="data.images[data.images.length - 1]" alt="" class="w-full h-full max-h-full" />
 
         <img v-else :src="BASE_LOGO" alt="" class="w-full h-full max-h-full" />
       </A>
@@ -52,11 +43,20 @@
         </div>
       </div>
     </div>
+
+    <div v-if="isShowMomentState" class="absolute right-5">
+      <a-tag :color="data.audit === 1 ? 'volcano' : 'green'">
+        {{ data.audit === 1 ? '审核中' : '已过审' }}
+      </a-tag>
+    </div>
+
+
   </Module>
 </template>
 
 <script lang="ts">
-import { PropType, defineComponent } from 'vue'
+import { PropType, defineComponent, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import type { IMomentType } from '~/api'
 import { BASE_LOGO } from '~/api'
 import { filterHtml } from '~/utils/filterHtml'
@@ -65,13 +65,24 @@ export default defineComponent({
   props: {
     data: {
       type: Object as PropType<IMomentType>,
-      default: () => {}
+      default: () => { }
     }
   },
   setup() {
+    const route = useRoute()
+
+    const isShowMomentState = ref(false)
+
+    if (
+      route.path.search(/user/) !== -1
+    ) {
+      isShowMomentState.value = true
+    }
+
     return {
       BASE_LOGO,
-      filterHtml
+      filterHtml,
+      isShowMomentState
     }
   }
 })

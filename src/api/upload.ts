@@ -13,9 +13,11 @@ const { token } = localcache.getCache('user') || {
 //   avatar = '/api/upload/avatar'
 // }
 
+const baseUrl = 'http://120.48.82.2:8005'
+
 export function getUplodBackName(momentId: number, parameter: any) {
   return axios({
-    url: process.env.NODE_ENV === 'production' ? '/upload/' : '/api/upload/' + momentId + '/picture',
+    url: process.env.NODE_ENV === 'production' ? `${baseUrl}/upload/${momentId}/picture` : `/api/upload/${momentId}/picture`,
     method: 'post',
     // 传输文件流需要单独设置请求头
     headers: {
@@ -28,7 +30,7 @@ export function getUplodBackName(momentId: number, parameter: any) {
 
 export function uploadAvatar(parameter: any) {
   return axios({
-    url: process.env.NODE_ENV === 'production' ? '/upload/avatar' : '/api/upload/avatar',
+    url: process.env.NODE_ENV === 'production' ? `${baseUrl}/upload/avatar` : '/api/upload/avatar',
     method: 'post',
     headers: {
       'Content-Type': 'multipart/form-data',

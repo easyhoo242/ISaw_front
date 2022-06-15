@@ -12,7 +12,7 @@
         </A>
       </div>
       <div class="content-item-time text-gray-500">
-        {{ item.updateTime.split('T')[0].substring(5) }}
+        {{ item.createTime.split('T')[0].substring(5) }}
       </div>
     </div>
   </div>

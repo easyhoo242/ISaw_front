@@ -1,16 +1,12 @@
 <template>
   <header class="flex bg-white shadow-md">
     <div
-      class="flex items-center justify-center w-full h-56px border-gray-100 dark:bg-gray-900 dark:border-b-0 border-b-1"
-    >
+      class="flex items-center justify-center w-full h-56px border-gray-100 dark:bg-gray-900 dark:border-b-0 border-b-1">
       <div class="w-1400px flex items-center justify-between relative">
         <!-- 左边 -->
         <div class="flex items-center">
           <div class="flex-0 flex mr-10">
-            <span
-              class="text-blue-900 dark:text-white font-bold text-xl"
-              style="user-select: none"
-            >
+            <span class="text-blue-900 dark:text-white font-bold text-xl" style="user-select: none">
               ISaw
             </span>
           </div>
@@ -55,10 +51,7 @@
 
         <!-- 右边 -->
         <div class="flex-0 flex items-center">
-          <a-switch
-            v-model:checked="darkSwitch"
-            class="bg-purple-500 my-switch"
-          >
+          <a-switch v-model:checked="darkSwitch" class="bg-purple-500 my-switch">
             <template #checkedChildren>
               <noto-v1:sun-with-face class="mt-0.5" />
             </template>
@@ -72,43 +65,26 @@
 
         <div class="absolute -right-10 t-2">
           <A href="/createBlog">
-            <div
-              class="h-8 w-8 rounded-full bortder-gray-700 border-2px text-center"
-              style="line-height: 30px"
-            >
+            <div class="h-8 w-8 rounded-full bortder-gray-700 border-2px text-center" style="line-height: 30px">
               文
             </div>
           </A>
         </div>
 
-        <a-button
-          v-if="userInfo.token !== 'unLogin'"
-          class="absolute -right-20 t-0"
-          type="primary"
-          shape="circle"
-          @click="showDrawer"
-        >
+        <a-button v-if="userInfo.token !== 'unLogin'" class="absolute -right-20 t-0" type="primary" shape="circle"
+          @click="showDrawer">
           聊
         </a-button>
       </div>
     </div>
 
-    <a-drawer
-      :width="500"
-      title="ISaw 聊天室"
-      placement="left"
-      :visible="visible"
-      @close="onClose"
-    >
+    <a-drawer :width="500" title="ISaw 聊天室" placement="left" :visible="visible" @close="onClose">
       <div class="text-base text-center mb-3">
         当前在线人数 : {{ isShowSocket ? currentOnlineNum : '?' }}
       </div>
 
-      <div
-        v-show="isShowSocket"
-        id="socketRef"
-        class="w-80% p-3 overflow-auto bg-gray-200 rounded-md dark:bg-dark-600 h-78vh"
-      >
+      <div v-show="isShowSocket" id="socketRef"
+        class="w-80% p-3 overflow-auto bg-gray-200 rounded-md dark:bg-dark-600 h-78vh">
         <div v-for="item in msgList" class="mb-2">
           <div v-if="userInfo.id !== item.user.id" class="flex -enter-x">
             <div class="logo flex-0 mr-3 pt-2">
@@ -119,9 +95,7 @@
                 {{ item.user.nickname }}
                 |
 
-                <span
-                  v-if="dayjs(item.createTime).fromNow().search(/天前/) !== -1"
-                >
+                <span v-if="dayjs(item.createTime).fromNow().search(/天前/) !== -1">
                   {{ dayjs(item.createTime).fromNow() }}
                 </span>
                 <span v-else class="text-xs">
@@ -139,13 +113,11 @@
           <div v-else class="flex -enter-x">
             <div class="body flex-1">
               <div class="title text-right">
-                <span
-                  v-if="dayjs(item.createTime).fromNow().search(/天前/) !== -1"
-                >
-                  {{ dayjs(item.createTime).fromNow() }}
+                <span v-if="dayjs(new Date(item.createTime).getTime()).fromNow().search(/天前/) !== -1">
+                  {{ dayjs(new Date(item.createTime).getTime()).fromNow() }}
                 </span>
                 <span v-else class="text-xs">
-                  {{ dayjs(item.createTime).format('HH : mm') }}
+                  {{ dayjs(new Date(item.createTime).getTime()).format('HH : mm') }}
                 </span>
                 |
                 {{ item.user?.nickname }}
@@ -165,25 +137,12 @@
       </div>
 
       <div v-if="isShowSocket" class="mt-4 flex">
-        <a-input
-          id="textareaRef"
-          v-model:value="cutrrentMessage"
-          placeholder="请输入聊天信息"
-          @keyup.enter.native="handleSend"
-          class="rounded-md"
-        />
+        <a-input id="textareaRef" v-model:value="cutrrentMessage" placeholder="请输入聊天信息" @keyup.enter.native="handleSend"
+          class="rounded-md" />
 
-        <Emoji
-          ref="getEmojiRef"
-          style="transform: translateY(-4px)"
-          @change="handleGetEmoji"
-        />
+        <Emoji ref="getEmojiRef" style="transform: translateY(-4px)" @change="handleGetEmoji" />
 
-        <a-button
-          type="default"
-          class="ml-3 mt-1 rounded-full"
-          @click="handleSend"
-        >
+        <a-button type="default" class="ml-3 mt-1 rounded-full" @click="handleSend">
           发送
         </a-button>
       </div>
@@ -200,15 +159,20 @@ import { watch, ref, onMounted, onUpdated, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import dayjs from 'dayjs'
-// import relativeTime from 'dayjs/plugin/relativeTime' // 到指定时间需要的插件
+import LocalizedFormat from 'dayjs/plugin/relativeTime' // 到指定时间需要的插件
 import 'dayjs/locale/zh' // 集成中文
+// import tz from 'dayjs/plugin/timezone'
+// import utc from 'dayjs/plugin/utc'
 import { useToggleDark, useWebsocket } from '~/hooks'
 import localcache from '~/utils/cache'
 import filterWords from '~/utils/filterWords'
 import { notification } from 'ant-design-vue'
 
-// dayjs.extend(relativeTime)
+dayjs.extend(LocalizedFormat)
 dayjs.locale('zh')
+
+
+
 
 interface IMsgType {
   content: string
@@ -263,7 +227,7 @@ ws.addEventListener(
 
       const socketRef = document.getElementById(
         'socketRef'
-      ) as HTMLTextAreaElement
+      ) as HTMLInputElement
 
       nextTick(() => {
         socketRef.scrollTop = socketRef.scrollHeight
@@ -281,7 +245,7 @@ ws.addEventListener(
 
       const socketRef = document.getElementById(
         'socketRef'
-      ) as HTMLTextAreaElement
+      ) as HTMLInputElement
 
       nextTick(() => {
         socketRef.scrollTop = socketRef.scrollHeight
@@ -364,7 +328,7 @@ onMounted(() => {
   msgList.value = localcache.getCache('socket')
 })
 
-onUpdated(() => {})
+onUpdated(() => { })
 </script>
 
 <style lang="less" scoped>
@@ -372,6 +336,7 @@ onUpdated(() => {})
   font-size: 14px;
   margin-bottom: 5px;
 }
+
 .content {
   position: relative;
   font-size: 16px;

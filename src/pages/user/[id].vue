@@ -11,21 +11,16 @@
             <Moment v-for="item in list" :key="item.momentId" :data="item" />
           </div>
 
-          <a-pagination
-            v-if="list?.length"
-            :current="currentPage"
-            v-model:pageSize="pageSize"
-            :total="total"
-            show-quick-jumper
-            hideOnSinglePage
-            class="my-3"
-            @change="onChange"
-          />
+          <a-pagination v-if="list?.length" :current="currentPage" v-model:pageSize="pageSize" :total="total"
+            show-quick-jumper hideOnSinglePage class="my-3" @change="onChange" />
         </div>
       </template>
 
       <template #side>
         <SideBar>
+
+          <HeadLogoVue v-if="!isShowChangeInfo" />
+
           <Casual />
 
           <ChangeInfo v-if="isShowChangeInfo" />
@@ -44,6 +39,7 @@ import type { IMomentType } from '~/api'
 import { Empty } from 'ant-design-vue'
 import Module from '~/components/global/Module.vue'
 import ChangeInfo from '~/components/page/user/ChangeInfo.vue'
+import HeadLogoVue from '~/components/global/SideBar/HeadLogo.vue'
 
 export default defineComponent({
   setup() {
@@ -91,7 +87,7 @@ export default defineComponent({
       simpleImage: Empty.PRESENTED_IMAGE_SIMPLE
     }
   },
-  components: { Module, ChangeInfo }
+  components: { Module, ChangeInfo, HeadLogoVue }
 })
 </script>
 

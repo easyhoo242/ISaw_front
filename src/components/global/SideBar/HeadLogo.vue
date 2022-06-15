@@ -1,28 +1,14 @@
 <template>
   <div class="w-full rounded-lg shadow-md z-10 overflow-hidden mt-3">
     <div class="header pt-12.5">
-      <div
-        class="mx-auto w-23 h-23 overflow-hidden rounded-full border-white border-5 z-30 mb-3"
-      >
-        <img
-          v-if="data.avatar"
-          :src="data.avatar"
-          alt=""
-          class="w-auto h-auto max-w-full max-h-full"
-        />
+      <div class="mx-auto w-23 h-23 overflow-hidden rounded-full border-white border-5 z-30 mb-3">
+        <img v-if="data.avatar" :src="data.avatar" alt="" class="w-auto h-auto max-w-full max-h-full" />
 
-        <img
-          v-else
-          :src="BASE_HEAD_LOGO"
-          alt=""
-          class="w-auto h-auto max-w-full max-h-full"
-        />
+        <img v-else :src="BASE_HEAD_LOGO" alt="" class="w-auto h-auto max-w-full max-h-full" />
       </div>
 
       <div class="slogan bg-white pb-2.5 px-5 text-center pt-2">
-        <div
-          class="title text-gray-700 font-bold flex items-center justify-center"
-        >
+        <div class="title text-gray-700 font-bold flex items-center justify-center">
           <div class="flex items-center">
             <a :href="`/user/${data.id}`" style="min-height: 22px">
               {{ data.nickname }}
@@ -68,13 +54,21 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import { getUserDetail, BASE_HEAD_LOGO } from '~/api'
 import type { IUserInfoType } from '~/api'
 import localcache from '~/utils/cache'
 
 export default defineComponent({
   setup(_) {
-    const currentUser = localcache.getCache('user')
+    const route = useRoute()
+    let { id } = localcache.getCache('user')
+
+    // 当进入 个人中心页的时候 被拦截 并换成被访问者的信息  
+    // 只在个人中心页起效果
+    if (route.path.search(/user/) !== -1) {
+      id = route.path.split('/')[2]
+    }
 
     //@ts-ignore
     const data = ref<IUserInfoType>({
@@ -82,7 +76,7 @@ export default defineComponent({
     })
 
     const getUserInfo = async () => {
-      const res = await getUserDetail(currentUser.id)
+      const res = await getUserDetail(id)
 
       data.value.avatar = ''
       data.value = res.data!
@@ -102,8 +96,7 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .header {
-  background: url(http://img.t.sinajs.cn/t5/skin/public/profile_cover/015.jpg?version=51d3ce829429dfsdfksef1feed06201411051715?/zb_users/theme/cardslee/style/images/aside-author-bg.jpg)
-    no-repeat center center;
+  background: url(http://img.t.sinajs.cn/t5/skin/public/profile_cover/015.jpg?version=51d3ce829429dfsdfksef1feed06201411051715?/zb_users/theme/cardslee/style/images/aside-author-bg.jpg) no-repeat center center;
   border-radius: 0.5rem 0.5rem 0 0;
   position: relative;
 
@@ -121,11 +114,9 @@ export default defineComponent({
 .slogan {
   .title {
     .v {
-      background-image: -webkit-linear-gradient(
-        0deg,
-        rgba(253, 165, 34, 0.9294117647058824) 0%,
-        #fd4c4c 100%
-      );
+      background-image: -webkit-linear-gradient(0deg,
+          rgba(253, 165, 34, 0.9294117647058824) 0%,
+          #fd4c4c 100%);
       font-size: 10px;
       color: #fff;
       display: inline-block;
@@ -136,6 +127,7 @@ export default defineComponent({
       margin-top: 1px;
     }
   }
+
   .desc {
     display: -webkit-box;
     -webkit-box-orient: vertical;

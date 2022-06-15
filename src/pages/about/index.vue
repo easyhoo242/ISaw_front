@@ -1,11 +1,7 @@
 <template>
   <div class="mt-20">
     <div class="profile-wrap">
-      <div
-        class="avatar-wrap"
-        :style="{ backgroundImage: `url(${BASE_HEAD_LOGO})` }"
-      />
-      <!-- :style="{ backgroundImage: `url(${profile.avatar})` }" -->
+      <div class="avatar-wrap" :style="{ backgroundImage: `url(${profile.avatar})` }" />
 
       <div class="main-wrap">
         <div class="header">
@@ -32,10 +28,10 @@
 
         <div class="body mt-3">
           {{
-            `网站logo寓意 绽放 
-          三个色彩取自打印机中的三原色即CMYK中的C（青）M（品）Y（黄），
-          打印机用这三种颜色打印出绚丽的图片，
-          论坛中的各位从讨论中获得多元多彩的结果；`
+              `网站logo寓意 绽放
+                    三个色彩取自打印机中的三原色即CMYK中的C（青）M（品）Y（黄），
+                    打印机用这三种颜色打印出绚丽的图片，
+                    论坛中的各位从讨论中获得多元多彩的结果；`
           }}
         </div>
       </div>
@@ -45,7 +41,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { getUserDetail, BASE_HEAD_LOGO } from '~/api'
+import { getUserDetail } from '~/api'
 import type { IUserInfoType } from '~/api'
 
 // @ts-ignore

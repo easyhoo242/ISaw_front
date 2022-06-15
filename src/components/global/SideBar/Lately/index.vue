@@ -1,15 +1,10 @@
 <template>
   <Module title="最近发表" corner logo>
     <div class="mt-4 px-3 pr-5">
-      <a-timeline-item
-        v-for="item in latelyList"
-        :key="item.momentId"
-        color="blue"
-        class="pb-1"
-      >
+      <a-timeline-item v-for="item in latelyList" :key="item.momentId" color="blue" class="pb-1">
         <div class="item ml-2 pt-1">
           <div class="item-title">
-            <A :href="`blog/${item.momentId}`">
+            <A :href="`${baseLatelyUrl}/blog/${item.momentId}`">
               {{ item.title || item.content }}
             </A>
           </div>
@@ -38,12 +33,24 @@ export default defineComponent({
       latelyList.value = res.data!
     }
 
+    let baseLatelyUrl = ''
+
+
+    if (process.env.NODE_ENV === 'development') {
+      baseLatelyUrl = ''
+    } else if (process.env.NODE_ENV === 'production') {
+      baseLatelyUrl = 'http://120.48.82.2:2426'
+    } else {
+      baseLatelyUrl = 'http://120.48.82.2:2426'
+    }
+
     onMounted(() => {
       getData()
     })
 
     return {
-      latelyList
+      latelyList,
+      baseLatelyUrl
     }
   }
 })
